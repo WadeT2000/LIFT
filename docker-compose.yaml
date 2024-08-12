@@ -1,13 +1,13 @@
 version: '3'
 services:
   db:
-    container_name: db
+    container_name: capdb
     image: postgres
     restart: always
     environment: 
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=my_database
+      - POSTGRES_DB=capstonedb
     ports:
       - "5432:5432"
     healthcheck:
@@ -21,7 +21,7 @@ services:
     networks:
       - freaky
   api:
-    container_name: api
+    container_name: capapi
     build: api/
     ports:
       - "8080:8080"
@@ -32,13 +32,13 @@ services:
         condition: service_healthy
     environment:
       - NODE_ENV=development
-      - DB_CONNECTION_STRING=postgresql://postgres:docker@db:5432/my_database
+      - DB_CONNECTION_STRING=postgresql://postgres:docker@db:5432/capstonedb
     volumes:
       - type: bind
         source: ./api
         target: /src/app
   ui:
-    container_name: ui
+    container_name: capui
     build: ui/
     ports:
       - "3000:3000"

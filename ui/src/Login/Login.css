@@ -1,0 +1,117 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease;
+}
+
+.loginbackground {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  transition: background-color 0.3s ease;
+}
+
+.loginbackground.dark-mode {
+  background-color: #333;
+}
+
+.loginbox {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.loginbox input[type="text"],
+.loginbox input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #000;
+}
+
+.loginbox input[type="text"]:focus,
+.loginbox input[type="password"]:focus {
+  border-color: #007bff;
+}
+
+.loginbox p {
+  color: #000;
+}
+
+.dark-mode .loginbox {
+  background-color: #444;
+}
+
+.dark-mode .loginbox input[type="text"],
+.dark-mode .loginbox input[type="password"] {
+  background-color: #555;
+  color: #fff;
+  border-color: #777;
+}
+
+.dark-mode .loginbox p {
+  color: #ccc;
+}
+
+.loginbox button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.loginbox button:hover {
+  background-color: #0056b3;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .loginbox button {
+  background-color: #555;
+}
+
+.dark-mode .loginbox button:hover {
+  background-color: #777;
+}
+
+.toggle-container {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding: 0 20px;
+}
+
+.mode-toggle-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.mode-toggle-button:hover {
+  background-color: #0056b3;
+}
+
+.dark-mode .mode-toggle-button {
+  background-color: #555;
+  color: #fff;
+}

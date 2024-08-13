@@ -84,6 +84,5 @@ exports.seed = async function(knex) {
     {...patientTemplate(), last_name: 'King', upr: 'Routine', destination_mtf: `81st MED GRP KEESLER AFB MS`, dds: `KBIX`},
 
   ]);
-  
 };
 

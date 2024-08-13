@@ -6,6 +6,7 @@ import LoginPage from './Login/Login';
 import HomePage from './Home/Home';
 import Logout from './Login/Logout';
 import PatientList from './Home/PatientList';
+import PatientEdit from './Home/PatientEdit';
 import LP from './Aircraft Loadout/LP'
 import PatientTable from './Aircraft Loadout/patientTable';
 //import Load from './Aircraft Loadout/load';
@@ -54,7 +55,8 @@ function App() {
               <Route path="/lp" element={<LP />} />
               {/* Will Delete */}
               <Route path='/table' element={<PatientTable />} />
-            </Routes>
+              <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
+          </Routes>
         </AuthContext.Provider>
       </Router>
     </DndProvider>

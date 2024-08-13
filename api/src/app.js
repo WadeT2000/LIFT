@@ -54,8 +54,15 @@ app.get('/users', (req, res) => {
 })
 
 app.get('/patientsmission1', (req, res) => {
-    knex('patient_mission_1').select('*').then(data => res.status(200).json(data))
-})
+    const { search } = req.query;
+    let query = knex('patient_mission_1').select('*');
+    if (search) {
+        query = query.where('id', search);
+    }
+    query
+        .then(data => res.status(200).json(data))
+        .catch(error => res.status(500).json({ error: error.message }));
+});
 
 app.get('/attendantsmission1', (req, res) => {
     knex('attendant_mission_1').select('*').then(data => res.status(200).json(data))
@@ -64,6 +71,33 @@ app.get('/attendantsmission1', (req, res) => {
 app.get('/aircraft', (req, res) => {
     knex('aircraft').select('*').then(data => res.status(200).json(data))
 })
+
+app.post('/addpatient', async (req, res) => {
+    const { patientInfo } = req.body;
+    let query = await knex('patient_mission_1').select('*').where("first_name", patientInfo.firstName)
+    if(query.length === 0) {
+        await knex('patient_mission_1').insert({first_name: patientInfo.firstName, last_name: patientInfo.lastName, patient_id: patientInfo.patientId, casualty_event: patientInfo.casualtyEvent, requirements: patientInfo.requirements.name, attendants: patientInfo.attendants, originating_mtf: patientInfo.originatingMtf, destination_mtf: patientInfo.destinationMtf, primary_diagnosis: patientInfo.primaryDiagnosis, secondary_diagnosis: patientInfo.secondaryDiagnosis, other_diagnosis: patientInfo.otherDiagnosis, eps: patientInfo.eps, dds: patientInfo.dds, upr: patientInfo.upr.name, age: patientInfo.age, gender: patientInfo.gender.name, passenger_weight: patientInfo.passenger_weight, grade: patientInfo.grade.name, equipment: patientInfo.equipment, diet: patientInfo.diet, max_alt: patientInfo.max_alt, spec: patientInfo.spec.name, special_team: patientInfo.specialTeam})
+        res.status(200).json({message: "Patient Added to the list"})
+    } else {
+        res.status(401).json({message: "Patient Already exists with that name"})
+    }
+})
+
+app.put('/patientmission1/:id', async (req, res) => {
+    const { id } = req.params;
+    const { first_name, last_name, patient_id, casualty_event, requirements, attendants, originating_mtf, destination_mtf, primary_diagnosis, secondary_diagnosis, other_diagnosis, eps, dds, upr, age, gender, passenger_weight, grade, equipment, diet, max_alt, spec, special_team} = req.body;
+
+    try {
+        await knex('patient_mission_1')
+            .where('id', id)
+            .update({first_name, last_name, patient_id, casualty_event, requirements, attendants, originating_mtf, destination_mtf, primary_diagnosis, secondary_diagnosis, other_diagnosis, eps, dds, upr, age, grade, passenger_weight, gender, equipment, diet, max_alt, spec, special_team});
+
+        res.status(200).json({ message: 'Item updated successfully' });
+    } catch (error) {
+        console.error("Error updating item:", error);
+        res.status(500).json({ message: 'Failed to update item' });
+    }
+});
 
 
 

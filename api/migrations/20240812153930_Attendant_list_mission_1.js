@@ -5,8 +5,8 @@
 exports.up = function(knex) {
   return knex.schema.createTable('attendant_mission_1', table => {
     table.increments();
-    table.string('patient_last_name', 250)
-    table.foreign('patient_last_name').references('last_name').inTable('patient_mission_1').onDelete('CASCADE');
+    table.integer('patient_id')
+    table.foreign('patient_id').references('id').inTable('patient_mission_1').onDelete('CASCADE');
     table.string('first_name', 250);
     table.string('last_name', 250);
     table.string('enplane', 100);

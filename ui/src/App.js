@@ -6,6 +6,15 @@ import LoginPage from './Login/Login';
 import HomePage from './Home/Home';
 import Logout from './Login/Logout';
 import PatientList from './Home/PatientList';
+import LP from './Aircraft Loadout/LP'
+import PatientTable from './Aircraft Loadout/patientTable';
+//import Load from './Aircraft Loadout/load';
+
+//touchscreen dependancies
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { TouchBackend } from 'react-dnd-touch-backend';
+// import { isTouchDevice } from './utils'; 
 
 
 
@@ -27,19 +36,28 @@ function App() {
     return <div>Loading...</div>;
   }
 
+  function isTouchDevice() {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  }
+
   return (
-    <Router>
-      <AuthContext.Provider value={{ auth, setAuth }}>
-          <Routes>
-            <Route path="/" element={<LoginPage />} />
-            {/* <Route path="/registration" element={<Register />} /> */}
-            <Route path='/home' element={<HomePage />} />
-            {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
-            <Route path="/logout" element={<Logout />} />
-            <Route path="/PatientList" element={<PatientList />} />
-          </Routes>
-      </AuthContext.Provider>
-    </Router>
+    <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}> 
+      <Router>
+        <AuthContext.Provider value={{ auth, setAuth }}>
+            <Routes>
+              <Route path="/" element={<LoginPage />} />
+              {/* <Route path="/registration" element={<Register />} /> */}
+              <Route path='/home' element={<HomePage />} />
+              {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
+              <Route path="/logout" element={<Logout />} />
+              <Route path="/PatientList" element={<PatientList />} />
+              <Route path="/lp" element={<LP />} />
+              {/* Will Delete */}
+              <Route path='/table' element={<PatientTable />} />
+            </Routes>
+        </AuthContext.Provider>
+      </Router>
+    </DndProvider>
   );
 }
 

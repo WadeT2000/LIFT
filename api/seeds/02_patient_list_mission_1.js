@@ -107,6 +107,5 @@ exports.seed = async function(knex) {
     {...patient3Template(), last_name: 'Oregano', requirements: '1A', attendants: 0, upr: 'Routine'},
     {...patientTemplate(), last_name: 'Sugar', requirements: '1A', attendants: 1, upr: 'Routine'},
   ]);
-  
 };
 

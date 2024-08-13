@@ -6,6 +6,7 @@ import LoginPage from './Login/Login';
 import HomePage from './Home/Home';
 import Logout from './Login/Logout';
 import PatientList from './Home/PatientList';
+import PatientEdit from './Home/PatientEdit';
 
 
 
@@ -37,6 +38,7 @@ function App() {
             {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
             <Route path="/logout" element={<Logout />} />
             <Route path="/PatientList" element={<PatientList />} />
+            <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
           </Routes>
       </AuthContext.Provider>
     </Router>

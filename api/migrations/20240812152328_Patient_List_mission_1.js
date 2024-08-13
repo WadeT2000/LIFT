@@ -6,7 +6,7 @@ exports.up = function(knex) {
   return knex.schema.createTable('patient_mission_1', table => {
     table.increments();
     table.string('first_name', 100);
-    table.string('last_name', 100).unique();
+    table.string('last_name', 100);
     table.bigInteger('patient_id');
     table.string('casualty_event', 250);
     table.string('requirements', 250);

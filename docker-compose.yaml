@@ -4,17 +4,17 @@ services:
     container_name: capdb
     image: postgres
     restart: always
-    environment: 
+    environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=capstonedb
     ports:
       - "5432:5432"
     healthcheck:
-        test: ["CMD-SHELL", "pg_isready -U postgres"]
-        interval: 5s
-        timeout: 5s
-        retries: 5
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
       - user-data:/var/lib/postgresql/data/
 
@@ -50,10 +50,10 @@ services:
       - type: bind
         source: ./ui
         target: /app
-      
+
 networks:
   freaky:
     driver: bridge
 
 volumes:
-  user-data: 
+  user-data:

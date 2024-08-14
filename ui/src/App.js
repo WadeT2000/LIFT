@@ -8,10 +8,9 @@ import Logout from './Login/Logout';
 import PatientList from './Patient/PatientList';
 import PatientEdit from './Patient/PatientEdit';
 import AddPatientPage from './Patient/AddPatientPage';
-import LP from './Aircraft Loadout/LP';
 import PatientTable from './Aircraft Loadout/patientTable';
 import { PrimeReactProvider } from 'primereact/api';
-//import Load from './Aircraft Loadout/load';
+import Load from './Aircraft Loadout/load';
 
 //touchscreen dependancies
 import { DndProvider } from 'react-dnd';
@@ -56,7 +55,7 @@ function App() {
                 <Route path="/logout" element={<Logout />} />
                 <Route path="/PatientList" element={<PatientList />} />
                 <Route path="/PatientAddPage" element={<AddPatientPage />} />
-                <Route path="/lp" element={<LP />} />
+                <Route path="/lp" element={<Load />} />
                 {/* Will Delete */}
                 <Route path='/table' element={<PatientTable />} />
                 <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />

@@ -43,12 +43,6 @@ export default function AddPatientPage() {
         specialTeam: '', 
       });
       const [attendantInfo, setAttendantInfo] = useState([]);
-    // const reqs = [{ name: '1A'}, { name: '1L'}]
-    // const upr = [{name: 'Routine'}, {name: 'Urgent'}, {name: 'Urgant Surgical'}, {name: 'Expectant'}]
-    // const spec = [{name:'Y'}, {name:'N'}]
-    // const gender = [{name: 'Male'}, {name: 'Female'}, {name: 'Non-Binary'}, {name: 'Trans-Male'}, {name: 'Trans-Female'}]
-    // const grade = [{name: `E01`}, {name: `E02`}, {name: `E03`}, {name: `E04`}, {name: `E05`}, {name: `E06`}, {name: `E07`}, {name: `E08`}, {name: `O01`}, {name: `O02`}, {name: `O03`}, {name: `O04`}, {name: `O05`}, {name: `O06`}, {name: 'Civilian'}]
-    // const attspec = [{name: 'Medical'}, {name: 'Non-Medical'}]
 
     const AddPatient = async (e) => {
         e.preventDefault();
@@ -64,12 +58,6 @@ export default function AddPatientPage() {
         setPatientInfo({ ...patientInfo, [name]: value });
       };
     
-      // const handleDropInputChange = (e) => {
-      //   const { name } = e.target;
-      //   const { value } = e;
-      //   setPatientInfo({ ...patientInfo, [name]: value.name });
-      // };
-
       const handleAttendantInputChange = (index, e) => {
         const { name, value } = e.target; 
         const updatedAttendants = [...attendantInfo];
@@ -80,18 +68,6 @@ export default function AddPatientPage() {
         setAttendantInfo(updatedAttendants);
       };
     
-      // const handleAttendantDropInputChange = (index, e) => {
-      //   const { name, value } = e.target;
-      //   const updatedAttendants = [...attendantInfo];
-      //   updatedAttendants[index] = {
-      //       ...updatedAttendants[index],
-      //       [name]: value.name,
-      //   };
-      //   setAttendantInfo(updatedAttendants);
-      // };
-
-
-
       function addAttendants() {
         if(patientInfo.attendants === 0) {
           return null
@@ -141,7 +117,6 @@ export default function AddPatientPage() {
                                 <label htmlFor={`gender-${i}`}>Gender</label>
                                 <InputText name="gender" value={attendantInfo[i]?.gender || ''} onChange={(e) => handleAttendantInputChange(i, e)} required style={{ marginRight: '10px' }} />
                             </FloatLabel>
-                            {/* <Dropdown name="gender" placeholder="Gender" value={attendantInfo[i]?.gender || ''} onChange={(e) => handleAttendantDropInputChange(i, e)} options={gender} optionLabel="name" className="w-full md:w-14rem" /> */}
                         </div>
 
                         <div className="edit-list">
@@ -156,7 +131,6 @@ export default function AddPatientPage() {
                                 <label htmlFor={`grade-${i}`}>Grade</label>
                                 <InputText name="grade" value={attendantInfo[i]?.grade || ''} onChange={(e) => handleAttendantInputChange(i, e)} required style={{ marginRight: '10px' }} />
                             </FloatLabel>
-                            {/* <Dropdown name="grade" placeholder="Grade" value={attendantInfo[i]?.grade || ''} onChange={(e) => handleAttendantDropInputChange(i, e)} options={grade} optionLabel="name" className="w-full md:w-14rem" /> */}
                         </div>
 
 
@@ -165,7 +139,6 @@ export default function AddPatientPage() {
                                 <label htmlFor={`attendant_specialty-${i}`}>Attendant Specialty</label>
                                 <InputText name="attendant_specialty" value={attendantInfo[i]?.attendant_specialty || ''} onChange={(e) => handleAttendantInputChange(i, e)} required style={{ marginRight: '10px' }} />
                             </FloatLabel>
-                            {/* <Dropdown name="attendant_specialty" placeholder="Attendant Specialty" value={attendantInfo[i]?.attendant_specialty || ''} onChange={(e) => handleAttendantDropInputChange(i, e)} options={attspec} optionLabel="name" className="w-full md:w-14rem" /> */}
                         </div>
                     </form>
                 </Card>
@@ -214,7 +187,6 @@ export default function AddPatientPage() {
             <label htmlFor='requirements'>Requirements</label>
             <InputText name='requirements' value={patientInfo.requirements || ''} onChange={handleInputChange} required style={{ marginRight: '10px'}} />
           </FloatLabel>
-          {/* <Dropdown className='dropdown-box' name='requirements' value={patientInfo.requirements || ''} onChange={(e) => setPatientInfo({ ...patientInfo, requirements: e.value.name })} options={reqs} optionLabel="name" placeholder="Requirements" /> */}
         </div>
         
         <div className="edit-list">
@@ -285,7 +257,6 @@ export default function AddPatientPage() {
           <label htmlFor="upr">UPR</label>
          <InputText name="upr"  value={patientInfo.upr || ''} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
         </FloatLabel>
-        {/* <Dropdown name='upr' value={patientInfo.upr || ''} onChange={(e) => setPatientInfo({ ...patientInfo, upr: e.value.name })} options={upr} optionLabel="name" className='dropdown-box' /> */}
       </div>
 
       <div className="edit-list">
@@ -300,7 +271,6 @@ export default function AddPatientPage() {
           <label htmlFor="gender">Gender</label>
           <InputText name="gender"  value={patientInfo.gender || ''} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
         </FloatLabel>
-        {/* <Dropdown name='gender' value={patientInfo.gender || ''} onChange={(e) => setPatientInfo({ ...patientInfo, gender: e.value.name })} options={gender} optionLabel="name" placeholder="Gender" className='dropdown-box' />  */}
       </div>
 
       <div className="edit-list">
@@ -315,7 +285,6 @@ export default function AddPatientPage() {
           <label htmlFor="grade">Grade</label>
           <InputText name="grade"  value={patientInfo.grade || ''} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
         </FloatLabel>
-        {/* <Dropdown name='grade' value={patientInfo.grade || ''} onChange={(e) => setPatientInfo({ ...patientInfo, grade: e.value.name })} options={grade} optionLabel="name"  className='dropdown-box' /> */}
       </div>
 
       <div className="edit-list">
@@ -344,7 +313,6 @@ export default function AddPatientPage() {
           <label htmlFor='spec'>Spec</label>
           <InputText name="spec"  value={patientInfo.spec || ''} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
         </FloatLabel>
-        {/* <Dropdown className='dropdown-box' name='spec' value={patientInfo.spec || ''} onChange={(e) => setPatientInfo({ ...patientInfo, spec: e.value.name })} options={spec} optionLabel="name" placeholder="Spec" /> */}
       </div>
 
       <div className="edit-list">

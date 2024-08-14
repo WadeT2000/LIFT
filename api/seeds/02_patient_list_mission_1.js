@@ -16,6 +16,7 @@ const patientTemplate = () => {
     patient_id: num(0, 9999999999),
     casualty_event: `CANCER`,
     requirements: '1L',
+    attendants: 0,
     originating_mtf: `LANDSTUHL REGIONAL MED CTR GE`,
     destination_mtf: `WAMC, FT BRAGG, NC (PRC)`,
     primary_med_spec: faker.person.fullName(),
@@ -34,7 +35,6 @@ const patientTemplate = () => {
     max_alt: `None`,
     spec: `N` ,
     special_team: `None`,
-    attendants: 0
   }
 }
 

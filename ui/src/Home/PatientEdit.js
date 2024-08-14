@@ -155,7 +155,7 @@ export default function PatientEdit() {
                   <InputText name="special_team" value={patientInfo.special_team} onChange={handleInputChange} required />
   
                   <div className="form-button">
-                      <Button label="Commit Changes" icon="pi pi-plus" type="submit" className="p-button-success"/>
+                      <Button label="Commit Changes" icon="pi pi-check" type="submit" className="p-button-success"/>
                   </div>
               </form>
           </Card>

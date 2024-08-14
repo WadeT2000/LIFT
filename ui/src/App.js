@@ -7,9 +7,8 @@ import HomePage from './Home/Home';
 import Logout from './Login/Logout';
 import PatientList from './Home/PatientList';
 import PatientEdit from './Home/PatientEdit';
-import LP from './Aircraft Loadout/LP'
 import PatientTable from './Aircraft Loadout/patientTable';
-//import Load from './Aircraft Loadout/load';
+import Load from './Aircraft Loadout/load';
 
 //touchscreen dependancies
 import { DndProvider } from 'react-dnd';
@@ -52,7 +51,7 @@ function App() {
               {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
               <Route path="/logout" element={<Logout />} />
               <Route path="/PatientList" element={<PatientList />} />
-              <Route path="/lp" element={<LP />} />
+              <Route path="/lp" element={<Load />} />
               {/* Will Delete */}
               <Route path='/table' element={<PatientTable />} />
               <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />

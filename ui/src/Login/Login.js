@@ -1,12 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useContext, useEffect } from 'react';
-import { ToggleButton } from 'primereact/togglebutton';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
-import authenticate from './Auth'
 import Cookies from 'js-cookie';
 import { AuthContext } from "../App";
-import './Login.css'
+import authenticate from './Auth';
+import './Login.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -16,15 +15,39 @@ export default function LoginPage() {
   const [checked, setChecked] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
-  const handlealert = (msg) => {
-    alert(msg)
-  }
+  useEffect(() => {
+    const rememberMe = Cookies.get('rememberMe') === 'true';
+    const savedUsername = Cookies.get('username');
+    if (rememberMe && savedUsername) {
+      setUsername(savedUsername);
+    }
+
+   
+    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    setDarkMode(savedDarkMode);
+
+    if (savedDarkMode) {
+      document.body.classList.add('dark-mode');
+    }
+  }, []);
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode);
+
+    if (newDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  };
 
   const login = async (e) => {
     e.preventDefault();
-    let userValidation = formValidation(username, `Username`);
-    let passValidation = formValidation(password, `Password`)
-    if (!userValidation && !passValidation){
+    const userValidation = formValidation(username, `Username`);
+    const passValidation = formValidation(password, `Password`);
+    if (!userValidation && !passValidation) {
       const status = await authenticate('', '', username, password, 'login');
       if (checked) {
         Cookies.set('username', username);
@@ -36,33 +59,29 @@ export default function LoginPage() {
       handleResponse(status);
     } else {
       let msg = '';
-      if (userValidation){
+      if (userValidation) {
         msg = msg.concat(userValidation);
       }
-      if (passValidation){
+      if (passValidation) {
         msg = msg.concat(passValidation);
       }
-      handlealert(msg)
+      handlealert(msg);
     }
   };
 
   const formValidation = (input, inputType) => {
-    let strRegex = new RegExp(/^[a-z0-9]+$/i);
-    let validChars = strRegex.test(input); 
-    let validLength =(input.length >=5) && (input.length <=30);
+    const strRegex = new RegExp(/^[a-z0-9]+$/i);
+    const validChars = strRegex.test(input); 
+    const validLength = (input.length >= 5) && (input.length <= 30);
     let message = '';
-    if (!validChars){
-      message = message.concat(`Invalid Characters in ${inputType}, only alphanumeric characters are acceptable.\n`)
+    if (!validChars) {
+      message = message.concat(`Invalid Characters in ${inputType}, only alphanumeric characters are acceptable.\n`);
     }
-    if (!validLength){
-      message = message.concat(`Invalid Length in ${inputType}, input must be 5-30 characters.\n`)
+    if (!validLength) {
+      message = message.concat(`Invalid Length in ${inputType}, input must be 5-30 characters.\n`);
     }
-    if (validChars && validLength){
-      return false;
-    } else {
-      return message
-    }
-  }
+    return validChars && validLength ? false : message;
+  };
 
   const handleResponse = (res) => {
     if (res.token) {
@@ -70,39 +89,40 @@ export default function LoginPage() {
       setAuth(true);
       navigate('/home');
     } else {
-      alert(res.message)
+      alert(res.message);
     }
   };
 
-  useEffect(() => {
-    const rememberMe = Cookies.get('rememberMe') === 'true';
-    if (rememberMe) {
-      const savedUsername = Cookies.get('username');
-      if (savedUsername) {
-        setUsername(savedUsername);
-      }
-    }
-  }, []);
-
-  const toggleDarkMode = () => {
-    setDarkMode(prevMode => !prevMode);
-  }
-
-
-
-  const handleRememberMe = () => {
-    setChecked(!checked);
+  const handlealert = (msg) => {
+    alert(msg);
   };
 
   return (
     <div className={`loginbackground ${darkMode ? 'dark-mode' : ''}`}>
       <div className="loginbox">
         <p className="loginUser">Username:</p>
-        <input type="text" className='loginuserinput' minLength="5" maxLength="30" placeholder={checked&&username!=='' ? username : ""} value={username} onChange={(e) => setUsername(e.target.value)} required/><br/>
+        <input 
+          type="text" 
+          className='loginuserinput' 
+          minLength="5" 
+          maxLength="30" 
+          placeholder={checked && username !== '' ? username : ""} 
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)} 
+          required
+        /><br/>
         <p className="loginPass">Password:</p>
-        <input type="password" className='loginpassinput' minLength="5" maxLength="30" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} required/><br/>
-        <button className="loginpbutton" onClick={(e)=>login(e)}>Login</button><br/>
-        {/* <button className="createpbutton" onClick={() => navigate('/registration')}>Create Account</button><br/> */}
+        <input 
+          type="password" 
+          className='loginpassinput' 
+          minLength="5" 
+          maxLength="30" 
+          placeholder="" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+          required
+        /><br/>
+        <button className="loginpbutton" onClick={login}>Login</button><br/>
       </div>
       <div className="toggle-container">
         <button 
@@ -113,5 +133,5 @@ export default function LoginPage() {
         </button>
       </div>
     </div>
-  )
+  );
 }

@@ -13,9 +13,12 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import addPatient from './AddPatient';
 
+
 export default function PatientList() {
   const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
+  const [attendantPresent, setAttendantPresent] = useState([]);
+  const [attendants, setAttendants] = useState([]);
   const [patientInfo, setPatientInfo] = useState({
     firstName: '',
     lastName: '',
@@ -56,8 +59,40 @@ const grade = [{name: `E01`}, {name: `E02`}, {name: `E03`}, {name: `E04`}, {name
     alert(status.message)
   }
 
+  async function deletepatient(selectedPatient) {
+    try {
+        await fetch(`http://localhost:8080/attendantmission1/${selectedPatient}`)
+            .then(res => res.json())
+            .then(data => setAttendantPresent(data));
+
+        if (attendantPresent.length > 0) {
+            const aresponse = await fetch(`http://localhost:8080/attendantmission1/${selectedPatient}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            if (!aresponse.ok) {
+                console.error("Failed to delete attendant");
+            }
+        }
+
+        const presponse = await fetch(`http://localhost:8080/patientmission1/${selectedPatient}`, {
+            method: 'DELETE',
+            credentials: 'include'
+        });
+        if (presponse.ok) {
+            setPatients(patients.filter(patient => patient.id !== selectedPatient));
+            setSelectedPatient(null);
+        } else {
+            console.error("Failed to delete item");
+        }
+    } catch (error) {
+        console.error("Error deleting item:", error);
+    }
+}
+
   useEffect(() => {
     fetch('http://localhost:8080/patientsmission1').then(res => res.json()).then(data => setPatients(data));
+    fetch('http://localhost:8080/attendantsmission1').then(res => res.json()).then(data => setAttendants(data));
   }, [])
 
   const handleInputChange = (e) => {
@@ -81,7 +116,7 @@ const grade = [{name: `E01`}, {name: `E02`}, {name: `E03`}, {name: `E04`}, {name
 //=================== File Upload Code==============================
 
 return (
-  <div style={{ padding: '20px', textAlign: 'center' }}>
+  <div className="container" style={{ padding: '20px', textAlign: 'center' }}>
     <div className="card flex justify-content-center">
       <Toast ref={toast}></Toast>
       <FileUpload 
@@ -98,34 +133,140 @@ return (
 
     <Card title="Patient List" style={{ width: '100%', maxWidth: '600px', marginTop: '20px' }}>
       <form onSubmit={AddPatient}>
-        <InputText name="firstName" placeholder="First Name" value={patientInfo.firstName} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+
+      <div>
+        <label>First Name</label>
+        <InputText name="firstName" placeholder="First Name" value={patientInfo.firstName || ''} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Last Name</label>
         <InputText name="lastName" placeholder="Last Name" value={patientInfo.lastName} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Patient ID</label>
         <InputNumber name='patientId' placeholder='Patient Id' value={patientInfo.patientId} onValueChange={handleInputChange} required style={{ marginRight: '10px' }} useGrouping={false}/>
-        <InputText name="casualtyEvent" placeholder="Casualty Event" value={patientInfo.casualtyEvent} onChange={handleInputChange} required style={{ marginRight: '10px' }} /> 
+      </div>
+
+      <div>
+        <label>Casualty Event</label>
+        <InputText name="casualtyEvent" placeholder="Casualty Event" value={patientInfo.casualtyEvent} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Requirements</label> 
         <Dropdown name='requirements' value={patientInfo.requirements} onChange={handleDropInputChange} options={reqs} optionLabel="name" placeholder="Requirement" className="w-full md:w-14rem" />
-        <InputNumber name="attendants" placeholder="Attendants" value={patientInfo.attendants} onValueChange={handleInputChange} required style={{ marginRight: '10px' }} /> 
-        <InputText name="originatingMtf" placeholder="Originating MTF" value={patientInfo.originatingMtf} onChange={handleInputChange} required style={{ marginRight: '10px' }} /> 
+      </div>
+
+      <div>
+        <label>Attendants</label>
+        <InputNumber name="attendants" placeholder="Attendants" value={patientInfo.attendants} onValueChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Originating MTF</label> 
+        <InputText name="originatingMtf" placeholder="Originating MTF" value={patientInfo.originatingMtf} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div> 
+
+      <div>
+        <label>Destination MTF</label> 
         <InputText name="destinationMtf" placeholder="Destination MTF" value={patientInfo.destinationMtf} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Primary Med Spec</label>
         <InputText name="primaryMedSpec" placeholder="Primary Med Spec" value={patientInfo.primaryMedSpec} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Primary Diagnosis</label>
         <InputText name="primaryDiagnosis" placeholder="Primary Diagnosis" value={patientInfo.primaryDiagnosis} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Secondary Diagnosis</label>
         <InputText name="secondaryDiagnosis" placeholder="Secondary Diagnosis" value={patientInfo.secondaryDiagnosis} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Other Diagnosis</label>
         <InputText name="otherDiagnosis" placeholder="Other Diagnosis" value={patientInfo.otherDiagnosis} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>E/PS</label>
+        <InputText name="eps" value={patientInfo.eps} onChange={handleInputChange} required />
+      </div>
+
+      <div>
         <InputText name="eps" placeholder="E/PS" value={patientInfo.eps} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>E/PS</label>
+        <InputText name="eps" value={patientInfo.eps} onChange={handleInputChange} required />
+      </div>
+
+      <div>
+        <label>D/DS</label>
         <InputText name="dds" placeholder="D/DS" value={patientInfo.dds} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>UPR</label>
         <Dropdown name='upr' value={patientInfo.upr} onChange={handleDropInputChange} options={upr} optionLabel="name" placeholder="UPR" className="w-full md:w-14rem" />
+      </div>
+
+      <div>
+        <label>Age</label>
         <InputNumber name="age" placeholder="Age" value={patientInfo.age} onValueChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Gender</label>
         <Dropdown name='gender' value={patientInfo.gender} onChange={handleDropInputChange} options={gender} optionLabel="name" placeholder="Gender" className="w-full md:w-14rem" /> 
+      </div>
+
+      <div>
+        <label>Weight</label>
         <InputNumber name="passengerWeight" placeholder="Passenger Weight" value={patientInfo.passengerWeight} onValueChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Grade</label>
         <Dropdown name='grade' value={patientInfo.grade} onChange={handleDropInputChange} options={grade} optionLabel="name" placeholder="Grade" className="w-full md:w-14rem" />
+      </div>
+
+      <div>
+        <label>Equipment</label>
         <InputText name="equipment" placeholder="Equipment" value={patientInfo.equipment} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Diet</label>
         <InputText name="diet" placeholder="Diet" value={patientInfo.diet} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
         <InputText name="maxAlt" placeholder="Max Altitude" value={patientInfo.maxAlt} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
+      </div>
+
+      <div>
+        <label>Spec</label>
         <Dropdown name='spec' value={patientInfo.spec} onChange={handleDropInputChange} options={spec} optionLabel="name" placeholder="Spec" className="w-full md:w-14rem" />
-        <InputText name="specialTeam" placeholder="Special Team" value={patientInfo.specialTeam} onChange={handleInputChange} required style={{ marginRight: '10px' }} />
-          <Button  label="Add Patient"  icon="pi pi-plus"  type="submit" className="p-button-success"/>
+      </div>
+
+      <div>
+        <label>Special Team</label>
+        <InputText name="specialTeam" placeholder="Special Team" value={patientInfo.specialTeam} onChange={handleInputChange} required style={{ marginRight: '10px' }} /> 
+      </div>
+
       </form>
     </Card>
 
+    <Button  label="Add Patient"  icon="pi pi-plus"  type="submit" className="p-button-success"/>
+    
     <div style={{ marginTop: '20px', width: '100%', maxWidth: '600px', margin: '0 auto' }}>
       <ListBox 
         value={selectedPatient} 
@@ -144,6 +285,13 @@ return (
         onChange={(e) => setSelectedPatient(e.value)}
         style={{ width: '100%' }}
       />
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        {attendants.map(attendant => (
+          <p key={attendant.first_name}>
+            {`${attendant.first_name} ${attendant.last_name} - ${attendant.patient_id}`}
+          </p>
+        ))}
+      </div>
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
         <Button 
@@ -157,7 +305,7 @@ return (
           label="Delete Patient" 
           icon="pi pi-trash" 
           className="p-button-danger" 
-          
+          onClick={() => deletepatient(selectedPatient)}
           disabled={selectedPatient === null}
         />
         <Button 

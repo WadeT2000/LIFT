@@ -1,6 +1,6 @@
 const additemServer = 'http://localhost:8080/addpatient';
 
-export default async function addPatient(patientInfo) {
+export default async function addPatient(patientInfo, attendantsInfo) {
   const response = await fetch(additemServer, {
     method: 'POST',
     headers: {
@@ -8,7 +8,8 @@ export default async function addPatient(patientInfo) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      patientInfo: patientInfo
+      patientInfo: patientInfo,
+      attendantInfo: attendantsInfo,
     }),
   })
   .then(res => res.json())

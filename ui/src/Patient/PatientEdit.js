@@ -4,6 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
+import { FloatLabel } from 'primereact/floatlabel';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './PatientEdit.css';
@@ -82,77 +83,125 @@ export default function PatientEdit() {
       <div className="container">
           <Card title={`${patientInfo.first_name} ${patientInfo.last_name}'s Info`} className="card">
               <form onSubmit={handleSubmit} className="form-grid">
+                <div className="edit-list">
                   <label>First Name</label>
                   <InputText name="first_name" value={patientInfo.first_name} onChange={handleInputChange} required />
-  
-                  <label>Last Name</label>
-                  <InputText name="last_name" value={patientInfo.last_name} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
+                  <label htmlFor="lastname">Last Name</label>
+                  <InputText id="last_name" value={patientInfo.last_name} onChange={handleInputChange} required />
+                </div>
+
+                <div className="edit-list">
                   <label>Patient ID</label>
                   <InputNumber name="patient_id" value={patientInfo.patient_id} onValueChange={handleInputChange} required useGrouping={false} />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Casualty Event</label>
                   <InputText name="casualty_event" value={patientInfo.casualty_event} onChange={handleInputChange} required />
-  
+                </div>
+                
+                <div className="edit-list">
                   <label>Requirements</label>
                   <InputText name="requirements" value={patientInfo.requirements} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Attendants</label>
                   <InputNumber name="attendants" value={patientInfo.attendants} onValueChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Originating MTF</label>
                   <InputText name="originating_mtf" value={patientInfo.originating_mtf} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Destination MTF</label>
                   <InputText name="destination_mtf" value={patientInfo.destination_mtf} onChange={handleInputChange} required />
+                </div>
   
+                <div className="edit-list">
                   <label>Primary Med Spec</label>
                   <InputText name="primary_med_spec" value={patientInfo.primary_med_spec} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Primary Diagnosis</label>
                   <InputText name="primary_diagnosis" value={patientInfo.primary_diagnosis} onChange={handleInputChange} required />
+                </div>
   
+                <div className="edit-list">
                   <label>Secondary Diagnosis</label>
                   <InputText name="secondary_diagnosis" value={patientInfo.secondary_diagnosis} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Other Diagnosis</label>
                   <InputText name="other_diagnosis" value={patientInfo.other_diagnosis} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>E/PS</label>
                   <InputText name="eps" value={patientInfo.eps} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>D/DS</label>
                   <InputText name="dds" value={patientInfo.dds} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>UPR</label>
                   <InputText name="upr" value={patientInfo.upr} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Age</label>
                   <InputNumber name="age" value={patientInfo.age} onValueChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Gender</label>
                   <InputText name="gender" value={patientInfo.gender} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Weight</label>
                   <InputNumber name="passenger_weight" value={patientInfo.passenger_weight} onValueChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Grade</label>
                   <InputText name="grade" value={patientInfo.grade} onChange={handleInputChange} required />
-  
+                </div>
+                
+                <div className="edit-list">
                   <label>Equipment</label>
                   <InputText name="equipment" value={patientInfo.equipment} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Diet</label>
                   <InputText name="diet" value={patientInfo.diet} onChange={handleInputChange} required />
-  
+                </div>
+
+                <div className="edit-list">
                   <label>Altitude Restriction</label>
                   <InputText name="max_alt" value={patientInfo.max_alt} onChange={handleInputChange} required />
+                </div>
   
+                <div className="edit-list">
                   <label>Spec</label>
                   <InputText name="spec" value={patientInfo.spec} onChange={handleInputChange} required />
+                </div>
   
+                <div className="edit-list">
                   <label>Specialty Team</label>
                   <InputText name="special_team" value={patientInfo.special_team} onChange={handleInputChange} required />
+                </div>
   
                   <div className="form-button">
                       <Button label="Commit Changes" icon="pi pi-check" type="submit" className="p-button-success"/>

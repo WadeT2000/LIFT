@@ -31,17 +31,17 @@ exports.seed = async function(knex) {
   // Deletes ALL existing entries
   await knex('attendant_mission_1').del()
   await knex('attendant_mission_1').insert([
-    {...attendantTemplate(), patient_id: 1, deplane: 'KSSC'},
-    {...attendantTemplate(), patient_id: 6, deplane: 'KSSC'},
-    {...attendantTemplate(), patient_id: 7, deplane: 'RODN'},
-    {...attendantTemplate(), patient_id: 11, deplane: 'ETAD'},
-    {...attendantTemplate(), patient_id: 11, deplane: 'ETAD'},
-    {...attendantTemplate(), patient_id: 15, deplane: 'RODN'},
-    {...attendantTemplate(), patient_id: 19, deplane: 'KLAV'},
-    {...attendantTemplate(), patient_id: 24, deplane: 'LIPA'},
-    {...attendantTemplate(), patient_id: 24, deplane: 'LIPA'}, 
-    {...attendantTemplate(), patient_id: 29, deplane: 'PHIK'},
-    {...attendantTemplate(), patient_id: 34, deplane: 'RKSO'},
-    {...attendantTemplate(), patient_id: 34, deplane: 'RKSO'},
+    {...attendantTemplate(), patient_id: 1, deplane: 'KSSC', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 6, deplane: 'KSSC', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 7, deplane: 'RODN', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 11, deplane: 'ETAD', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 11, deplane: 'ETAD', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 15, deplane: 'RODN', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 19, deplane: 'KLAV', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 24, deplane: 'LIPA', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 24, deplane: 'LIPA', attendant_specialty: 'Medical'}, 
+    {...attendantTemplate(), patient_id: 29, deplane: 'PHIK', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 34, deplane: 'RKSO', attendant_specialty: 'Medical'},
+    {...attendantTemplate(), patient_id: 34, deplane: 'RKSO', attendant_specialty: 'Medical'},
   ]);
 };

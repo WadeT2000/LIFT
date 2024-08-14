@@ -69,19 +69,85 @@ app.get('/attendantsmission1', (req, res) => {
 })
 
 app.get('/aircraft', (req, res) => {
-    knex('aircraft').select('*').then(data => res.status(200).json(data))
+    const { search } = req.query
+    let query = knex('aircraft').select('*')
+    if(search) {
+        query = query.where('ac_name', search);
+    }
+    query
+        .then(data => res.status(200).json(data))
+        .catch(error => res.status(500).json({ error: error.message }));
 })
 
 app.post('/addpatient', async (req, res) => {
-    const { patientInfo } = req.body;
-    let query = await knex('patient_mission_1').select('*').where("first_name", patientInfo.firstName)
-    if(query.length === 0) {
-        await knex('patient_mission_1').insert({first_name: patientInfo.firstName, last_name: patientInfo.lastName, patient_id: patientInfo.patientId, casualty_event: patientInfo.casualtyEvent, requirements: patientInfo.requirements.name, attendants: patientInfo.attendants, originating_mtf: patientInfo.originatingMtf, destination_mtf: patientInfo.destinationMtf, primary_diagnosis: patientInfo.primaryDiagnosis, secondary_diagnosis: patientInfo.secondaryDiagnosis, other_diagnosis: patientInfo.otherDiagnosis, eps: patientInfo.eps, dds: patientInfo.dds, upr: patientInfo.upr.name, age: patientInfo.age, gender: patientInfo.gender.name, passenger_weight: patientInfo.passenger_weight, grade: patientInfo.grade.name, equipment: patientInfo.equipment, diet: patientInfo.diet, max_alt: patientInfo.max_alt, spec: patientInfo.spec.name, special_team: patientInfo.specialTeam})
-        res.status(200).json({message: "Patient Added to the list"})
+    const { patientInfo, attendantInfo } = req.body;
+    console.log("testing:", attendantInfo)
+    let patientExists = await knex('patient_mission_1')
+        .select('*')
+        .where("first_name", patientInfo.firstName)
+        .andWhere("last_name", patientInfo.lastName)
+        .andWhere('patient_id', patientInfo.patientId);
+
+    if (patientExists.length === 0) {
+        let patientId = await knex('patient_mission_1')
+            .insert({
+                first_name: patientInfo.firstName,
+                last_name: patientInfo.lastName,
+                patient_id: patientInfo.patientId,
+                casualty_event: patientInfo.casualtyEvent,
+                requirements: patientInfo.requirements.name,
+                attendants: patientInfo.attendants,
+                originating_mtf: patientInfo.originatingMtf,
+                destination_mtf: patientInfo.destinationMtf,
+                primary_diagnosis: patientInfo.primaryDiagnosis,
+                secondary_diagnosis: patientInfo.secondaryDiagnosis,
+                other_diagnosis: patientInfo.otherDiagnosis,
+                eps: patientInfo.eps,
+                dds: patientInfo.dds,
+                upr: patientInfo.upr.name,
+                age: patientInfo.age,
+                gender: patientInfo.gender.name,
+                passenger_weight: patientInfo.passengerWeight,
+                grade: patientInfo.grade.name,
+                equipment: patientInfo.equipment,
+                diet: patientInfo.diet,
+                max_alt: patientInfo.maxAlt,
+                spec: patientInfo.spec.name,
+                special_team: patientInfo.specialTeam
+            })
+            .returning('id');
+
+        if (attendantInfo.length > 0) {
+            for (let attendant of attendantInfo) {
+                let atquery = await knex('attendant_mission_1')
+                    .select('*')
+                    .where('first_name', attendant.first_name)
+                    .andWhere("last_name", attendant.last_name)
+                    .andWhere('age', attendant.age)
+                    .andWhere("gender", attendant.gender);
+
+                if (atquery.length === 0) {
+                    await knex('attendant_mission_1').insert({
+                        patient_id: patientId[0].id,
+                        first_name: attendant.first_name,
+                        last_name: attendant.last_name,
+                        enplane: attendant.enplane,
+                        deplane: attendant.deplane,
+                        age: attendant.age,
+                        gender: attendant.gender,
+                        passenger_weight: attendant.passenger_weight,
+                        grade: attendant.grade,
+                        created_on: "Lo-Side",
+                        attendant_specialty: attendant.attendant_specialty
+                    });
+                }
+            }
+        }
+        res.status(200).json({ message: "Patient and Attendants Added to the list" });
     } else {
-        res.status(401).json({message: "Patient Already exists with that name"})
+        res.status(401).json({ message: "Patient already exists" });
     }
-})
+});
 
 app.put('/patientmission1/:id', async (req, res) => {
     const { id } = req.params;
@@ -96,6 +162,43 @@ app.put('/patientmission1/:id', async (req, res) => {
     } catch (error) {
         console.error("Error updating item:", error);
         res.status(500).json({ message: 'Failed to update item' });
+    }
+});
+
+app.delete('/patientmission1/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await knex('patient_mission_1')
+            .where({ id })
+            .del();
+
+        res.status(200).json({ message: 'Patient deleted successfully' });
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        res.status(500).json({ message: 'Failed to delete item' });
+    }
+});
+
+app.get('/attendantmission1/:id', async (req, res) => {
+    const { id } = req.params;
+        await knex('attendant_mission_1')
+            .where('patient_id', id)
+            .then(data => res.status(200).json(data))
+});
+
+app.delete('/attendantmission1/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await knex('attendant_mission_1')
+            .where('patient_id', id)
+            .del();
+
+        res.status(200).json({ message: 'Attendant deleted successfully' });
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        res.status(500).json({ message: 'Failed to delete item' });
     }
 });
 

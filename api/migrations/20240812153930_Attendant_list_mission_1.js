@@ -16,6 +16,7 @@ exports.up = function(knex) {
     table.integer('passenger_weight');
     table.string('grade', 100);
     table.string('created_on', 100);
+    table.string('attendant_specialty', 250);
   })
 };
 

@@ -5,10 +5,12 @@ import Cookies from 'js-cookie';
 import LoginPage from './Login/Login';
 import HomePage from './Home/Home';
 import Logout from './Login/Logout';
-import PatientList from './Home/PatientList';
-import PatientEdit from './Home/PatientEdit';
-import LP from './Aircraft Loadout/LP'
+import PatientList from './Patient/PatientList';
+import PatientEdit from './Patient/PatientEdit';
+import AddPatientPage from './Patient/AddPatientPage';
+import LP from './Aircraft Loadout/LP';
 import PatientTable from './Aircraft Loadout/patientTable';
+import { PrimeReactProvider } from 'primereact/api';
 //import Load from './Aircraft Loadout/load';
 
 //touchscreen dependancies
@@ -43,22 +45,25 @@ function App() {
 
   return (
     <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}> 
-      <Router>
-        <AuthContext.Provider value={{ auth, setAuth }}>
-            <Routes>
-              <Route path="/" element={<LoginPage />} />
-              {/* <Route path="/registration" element={<Register />} /> */}
-              <Route path='/home' element={<HomePage />} />
-              {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
-              <Route path="/logout" element={<Logout />} />
-              <Route path="/PatientList" element={<PatientList />} />
-              <Route path="/lp" element={<LP />} />
-              {/* Will Delete */}
-              <Route path='/table' element={<PatientTable />} />
-              <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
-          </Routes>
-        </AuthContext.Provider>
-      </Router>
+      <PrimeReactProvider>
+        <Router>
+          <AuthContext.Provider value={{ auth, setAuth }}>
+              <Routes>
+                <Route path="/" element={<LoginPage />} />
+                {/* <Route path="/registration" element={<Register />} /> */}
+                <Route path='/home' element={<HomePage />} />
+                {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
+                <Route path="/logout" element={<Logout />} />
+                <Route path="/PatientList" element={<PatientList />} />
+                <Route path="/PatientAddPage" element={<AddPatientPage />} />
+                <Route path="/lp" element={<LP />} />
+                {/* Will Delete */}
+                <Route path='/table' element={<PatientTable />} />
+                <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
+            </Routes>
+          </AuthContext.Provider>
+        </Router>
+      </PrimeReactProvider>
     </DndProvider>
   );
 }

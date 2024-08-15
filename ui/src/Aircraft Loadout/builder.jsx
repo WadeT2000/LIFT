@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDrag, useDrop } from 'react-dnd';
 
 function renderRows(planeData, patients, occupiedSeats, movePatient) {
   return (
@@ -7,7 +8,7 @@ function renderRows(planeData, patients, occupiedSeats, movePatient) {
         <div className="airplane-section left-section">
           <div className="ambulatory-seats">
             <Ambulatory length={planeData.ambulatory_left}
-              location="Left Ambulatory"
+              location="LA"
               patients={patients}
               occupiedSeats={occupiedSeats}
               movePatient={movePatient}
@@ -18,7 +19,7 @@ function renderRows(planeData, patients, occupiedSeats, movePatient) {
           <div className="litter-beds-container">
             <div className="litter-beds">
               <Litter length={planeData.litter_left}
-                location="Left Litter"
+                location="LL"
                 patients={patients}
                 occupiedSeats={occupiedSeats}
                 movePatient={movePatient}
@@ -26,7 +27,7 @@ function renderRows(planeData, patients, occupiedSeats, movePatient) {
             </div>
             <div className="litter-beds">
               <Litter length={planeData.litter_right}
-                location="Right Litter"
+                location="RL"
                 patients={patients}
                 occupiedSeats={occupiedSeats}
                 movePatient={movePatient}
@@ -37,7 +38,7 @@ function renderRows(planeData, patients, occupiedSeats, movePatient) {
         <div className="airplane-section right-section">
           <div className="ambulatory-seats">
             <Ambulatory length={planeData.ambulatory_right}
-              location="Right Ambulatory"
+              location="RA"
               patients={patients}
               occupiedSeats={occupiedSeats}
               movePatient={movePatient}
@@ -55,7 +56,7 @@ function Ambulatory({ length, location, patients, occupiedSeats, movePatient }) 
       {[...Array(length)].map((_, index) => (
         <AmbulatorySlot
           key={index}
-          slotId={`${location}_${index}`}
+          slotId={`${location} ${index}`}
           patients={patients}
           occupiedSeats={occupiedSeats}
           movePatient={movePatient}
@@ -71,7 +72,7 @@ function Litter({ length, location, patients, occupiedSeats, movePatient }) {
       {[...Array(length)].map((_, index) => (
         <LitterSlot
           key={index}
-          slotId={`${location}_${index}`}
+          slotId={`${location} ${index}`}
           patients={patients}
           occupiedSeats={occupiedSeats}
           movePatient={movePatient}
@@ -120,7 +121,7 @@ function AmbulatorySlot({ slotId, patients, occupiedSeats, movePatient }) {
         opacity: isDragging ? 0.5 : 1
       }}
     >
-      {occupant ? `${occupant.first_name} ${occupant.last_name}` : slotId}
+      {occupant ? `${slotId} ${occupant.first_name} ${occupant.last_name}` : slotId}
     </div>
   );
 }
@@ -160,11 +161,11 @@ function LitterSlot({ slotId, patients, occupiedSeats, movePatient }) {
       ref={node => drag(drop(node))}
       className="LitterSlot"
       style={{
-        backgroundColor: isOver ? 'lightblue' : 'white',
+        backgroundColor: isOver ? 'lightgreen' : 'white',
         opacity: isDragging ? 0.5 : 1
       }}
     >
-      {occupant ? `${occupant.first_name} ${occupant.last_name}` : slotId}
+      {occupant ? `${slotId} ${occupant.first_name} ${occupant.last_name}` : slotId}
     </div>
   );
 }
@@ -229,3 +230,5 @@ function DraggablePerson({ person, movePatient }) {
     </div>
   );
 }
+
+export { renderRows, Ambulatory, Litter, AmbulatorySlot, LitterSlot, PersonList, DraggablePerson }

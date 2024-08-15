@@ -8,6 +8,8 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV || "development"]);
 
+
+
 const SECRET_KEY = "my_secret_key"; 
 
 app.use(cors({
@@ -288,6 +290,123 @@ app.delete('/attendantmission1/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to delete item' });
     }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // After this line will be the route to the seating saver
+
+
+// app.get('/patient-seatings', async (req, res) => {
+//     try {
+//       const seatings = await knex('patient_seatings').select('*');
+//       res.json(seatings);
+//     } catch (error) {
+//       res.status(500).json({ error: 'Could not retrieve patient seatings' });
+//     }
+//   });
+  
+//   app.post('/patient-seatings', async (req, res) => {
+//     const { patient_id, seat_type, seat_location } = req.body;
+//     try {
+//       const [id] = await knex('patient_seatings').insert({
+//         patient_id,
+//         seat_type,
+//         seat_location
+//       }).returning('id');
+//       res.status(201).json({ id, message: 'Patient seating added successfully' });
+//     } catch (error) {
+//       res.status(500).json({ error: 'Could not add patient seating' });
+//     }
+//   });
+  
+//   app.put('/patient-seatings/:id', async (req, res) => {
+//     const { id } = req.params;
+//     const { patient_id, seat_type, seat_location } = req.body;
+//     try {
+//       await knex('patient_seatings').where({ id }).update({
+//         patient_id,
+//         seat_type,
+//         seat_location
+//       });
+//       res.json({ message: 'Patient seating updated successfully' });
+//     } catch (error) {
+//       res.status(500).json({ error: 'Could not update patient seating' });
+//     }
+//   });
+  
+//   app.delete('/patient-seatings/:id', async (req, res) => {
+//     const { id } = req.params;
+//     try {
+//       await knex('patient_seatings').where({ id }).del();
+//       res.json({ message: 'Patient seating deleted successfully' });
+//     } catch (error) {
+//       res.status(500).json({ error: 'Could not delete patient seating' });
+//     }
+//   });
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

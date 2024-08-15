@@ -11,6 +11,7 @@ import AddPatientPage from './Patient/AddPatientPage';
 import PatientTable from './Aircraft Loadout/patientTable';
 import { PrimeReactProvider } from 'primereact/api';
 import Load from './Aircraft Loadout/load';
+// import StopsInOrder from './Aircraft Loudout/Stops';
 
 //touchscreen dependancies
 import { DndProvider } from 'react-dnd';
@@ -58,7 +59,8 @@ function App() {
                 <Route path="/lp" element={<Load />} />
                 {/* Will Delete */}
                 <Route path='/table' element={<PatientTable />} />
-                <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
+              <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
+              {/* <Route path="/Stops" element={<StopsInOrder />} /> */}
             </Routes>
           </AuthContext.Provider>
         </Router>

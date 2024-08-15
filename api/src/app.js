@@ -95,7 +95,7 @@ app.post('/addpatient', async (req, res) => {
                 last_name: patientInfo.lastName,
                 patient_id: patientInfo.patientId,
                 casualty_event: patientInfo.casualtyEvent,
-                requirements: patientInfo.requirements.name,
+                requirements: patientInfo.requirements,
                 attendants: patientInfo.attendants,
                 originating_mtf: patientInfo.originatingMtf,
                 destination_mtf: patientInfo.destinationMtf,
@@ -104,21 +104,24 @@ app.post('/addpatient', async (req, res) => {
                 other_diagnosis: patientInfo.otherDiagnosis,
                 eps: patientInfo.eps,
                 dds: patientInfo.dds,
-                upr: patientInfo.upr.name,
+                upr: patientInfo.upr,
                 age: patientInfo.age,
-                gender: patientInfo.gender.name,
+                gender: patientInfo.gender,
                 passenger_weight: patientInfo.passengerWeight,
-                grade: patientInfo.grade.name,
+                grade: patientInfo.grade,
                 equipment: patientInfo.equipment,
                 diet: patientInfo.diet,
                 max_alt: patientInfo.maxAlt,
-                spec: patientInfo.spec.name,
+                spec: patientInfo.spec,
                 special_team: patientInfo.specialTeam
             })
             .returning('id');
 
         if (attendantInfo.length > 0) {
             for (let attendant of attendantInfo) {
+                if(attendant.passenger_weight === null) {
+                    continue;
+                }
                 let atquery = await knex('attendant_mission_1')
                     .select('*')
                     .where('first_name', attendant.first_name)
@@ -164,6 +167,90 @@ app.put('/patientmission1/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to update item' });
     }
 });
+
+app.put('/attendant1', async (req, res) => {
+    const attendantAdjustInfo = req.body;
+    try {
+        for (let attendant of attendantAdjustInfo) {
+            const { id, first_name, last_name, enplane, deplane, age, gender, passenger_weight, grade, attendant_specialty } = attendant;
+            let existingAttendant = await knex('attendant_mission_1')
+                .select('*')
+                .where('id', id);
+            if (existingAttendant.length > 0) {
+                await knex('attendant_mission_1')
+                    .where('id', id)
+                    .update({
+                        first_name,
+                        last_name,
+                        enplane,
+                        deplane,
+                        age,
+                        gender,
+                        passenger_weight,
+                        grade,
+                        attendant_specialty
+                    });
+            }
+        }
+        res.status(200).json({ message: 'Attendants updated successfully' });
+    } catch (error) {
+        console.error('Error updating attendants:', error);
+        res.status(500).json({ message: 'Failed to update attendants' });
+    }
+});
+
+app.post('/attendant1/:id', async (req, res) => {
+    const { id } = req.params;
+    const { attendantInfo } = req.body;
+    console.log(attendantInfo)
+    if (attendantInfo.length > 0) {
+        for (let attendant of attendantInfo) {
+            
+            if(attendant.passenger_weight === null) {
+                continue;
+            }
+            let atquery = await knex('attendant_mission_1')
+                .select('*')
+                .where('first_name', attendant.first_name)
+                .andWhere("last_name", attendant.last_name)
+                .andWhere('age', attendant.age)
+                .andWhere("gender", attendant.gender);
+
+            if (atquery.length === 0) {
+                await knex('attendant_mission_1').insert({
+                    patient_id: id,
+                    first_name: attendant.first_name,
+                    last_name: attendant.last_name,
+                    enplane: attendant.enplane,
+                    deplane: attendant.deplane,
+                    age: attendant.age,
+                    gender: attendant.gender,
+                    passenger_weight: attendant.passenger_weight,
+                    grade: attendant.grade,
+                    created_on: "Lo-Side",
+                    attendant_specialty: attendant.attendant_specialty
+                });
+            }
+        }
+    res.status(200).json({ message: "Attendant(s) Added to the list" });
+    } else {
+    res.status(401).json({ message: "Patient already exists" });
+    }
+})
+
+app.delete('/attendant1/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        await knex('attendant_mission_1')
+            .where({ id })
+            .del();
+
+        res.status(200).json({ message: 'Attendant deleted successfully' });
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        res.status(500).json({ message: 'Failed to delete item' });
+    }
+})
 
 app.delete('/patientmission1/:id', async (req, res) => {
     const { id } = req.params;

@@ -4,7 +4,7 @@ import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
-import { FloatLabel } from 'primereact/floatlabel';
+import { FloatLabel } from "primereact/floatlabel";
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './PatientEdit.css';
@@ -12,6 +12,8 @@ import './PatientEdit.css';
 export default function PatientEdit() {
     const navigate = useNavigate();
     const { patientid } = useParams();
+    const [attendantInfo, setAttendantInfo] = useState([]);
+    const [attendantAdjustInfo, setAttendantAdjustInfo] = useState([]);
     const [patientInfo, setPatientInfo] = useState({
         id: `${patientid}`,
         first_name: '',
@@ -39,15 +41,34 @@ export default function PatientEdit() {
         spec: '',  
         special_team: '', 
       });
-      
 
-    useEffect(() => {
+      useEffect(() => {
         fetch(`http://localhost:8080/patientsmission1?search=${patientid}`)
         .then(res => res.json())
         .then(data => {
-            setPatientInfo(data[0])
-    });
-    }, [patientid])
+          setPatientInfo(data[0])
+        });
+      }, [patientid])
+      
+      const handleAttendantInputChange = (index, e) => {
+        const { name, value } = e.target; 
+        const updatedAttendants = [...attendantInfo];
+        updatedAttendants[index] = {
+            ...updatedAttendants[index],
+            [name]: value,
+        };
+        setAttendantInfo(updatedAttendants);
+    };
+
+    const handleAttendantAdjustInputChange = (index, e) => {
+        const { name, value } = e.target; 
+        const updatedAttendants = [...attendantAdjustInfo];
+        updatedAttendants[index] = {
+            ...updatedAttendants[index],
+            [name]: value,
+        };
+        setAttendantAdjustInfo(updatedAttendants);
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -68,7 +89,6 @@ export default function PatientEdit() {
             if (response.ok) {
                 const data = await response.json();
                 alert(data.message);
-                navigate('/PatientList');
             } else {
                 console.error('Failed to update item');
             }
@@ -77,12 +97,290 @@ export default function PatientEdit() {
         }
     };
 
+    const handleAttendantAdjustmentSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await fetch(`http://localhost:8080/attendant1`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(attendantAdjustInfo)
+        });
+    
+        if (response.ok) {
+            const data = await response.json();
+            alert(data.message);
+        } else {
+            console.error('Failed to update item');
+        }
+    } catch (error) {
+        console.error('Error updating item:', error);
+    }
+    }
 
+    const handleAttendantAdditionSubmit = async (e) => {
+      e.preventDefault();
+      if (attendantInfo.length === 0) {
+        return null;
+      }
+      try{
+        console.log(patientInfo.id)
+        const response = await fetch(`http://localhost:8080/attendant1/${patientInfo.id}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            attendantInfo: attendantInfo})
+        });
+    
+        if (response.ok) {
+            const data = await response.json();
+            alert(data.message);
+        } else {
+            console.error('Failed to update item');
+        }
+    } catch (error) {
+        console.error('Error updating item:', error);
+    }
+    }
+
+    const handleAttendantDelete = async (attDeleted, e) => {
+      e.preventDefault();
+      try{
+        const response = await fetch(`http://localhost:8080/attendant1/${attDeleted}`, {
+          method: 'DELETE',
+          credentials: 'include',
+        });
+        if(response.ok){
+          const updatedAttendantAdjustInfo = attendantAdjustInfo.filter(attendant => attendant.id !== attDeleted);
+          const updatedAttendantInfo = attendantInfo.filter(attendant => attendant.id !== attDeleted);
+
+          setAttendantAdjustInfo(updatedAttendantAdjustInfo);
+          setAttendantInfo(updatedAttendantInfo);
+
+          if (updatedAttendantAdjustInfo.length === 0) {
+              setAttendantAdjustInfo([]);
+              setAttendantInfo([]);
+          }
+        } else{
+          console.error('Failed to delete attendant.')
+        }
+    } catch (error) {
+      console.error('Error deleting item:', error)
+    }
+  }
+
+    const validateFields = () => {
+      for (const key in patientInfo) {
+          if (patientInfo[key] === '' || patientInfo[key] === null) {
+              return false;
+          }
+      }
+      // for (const attendant of attendantInfo) {
+      //     for (const key in attendant) {
+      //         if (attendant[key] === '' || attendant[key] === null) {
+      //             return false;
+      //         }
+      //     }
+      // }
+      for (const attendant of attendantAdjustInfo) {
+        for (const key in attendant) {
+            if (attendant[key] === '' || attendant[key] === null) {
+                return false;
+            }
+        }
+    }
+      return true;
+  };
+
+    const handleAllSubmit = async (e) => {
+      e.preventDefault();
+      if (!validateFields()) {
+        alert('Please fill in all the fields before submitting.');
+        return;
+    }
+    await handleSubmit(e);
+    await handleAttendantAdjustmentSubmit(e);
+    await handleAttendantAdditionSubmit(e);
+    navigate('/PatientList');
+    }
+
+    useEffect(() => {
+      fetch(`http://localhost:8080/attendantmission1/${patientid}`)
+      .then(res => res.json())
+      .then(data => setAttendantAdjustInfo(data))
+    }, [patientid])
+
+    const showAttendants = () => {
+      console.log("current Attendants:", attendantAdjustInfo)
+      if(attendantAdjustInfo.length === 0) {
+        return null;
+      } else {
+          return attendantAdjustInfo.map((attendant, index) => (
+              <Card key={index} title={`Attendant ${index + 1}`} style={{ marginTop: '10px', marginBottom: '20px' }}>
+                    <form >
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`firstname-${index}`}>First Name</label>
+                                <InputText name="first_name" placeholder="First Name" value={attendant.first_name} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required  />
+                            </FloatLabel>
+                        </div>
+
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`lastname-${index}`}>Last Name</label>
+                                <InputText name="last_name" placeholder="Last Name" value={attendant.last_name} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required  />
+                            </FloatLabel>
+                        </div>
+
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`enplane-${index}`}>Enplane</label>
+                                <InputText name="enplane" placeholder="Enplane" value={attendant.enplane} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
+                            </FloatLabel>
+                        </div>
+
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`enplane-${index}`}>Deplane</label>
+                                <InputText name="deplane" placeholder="Deplane" value={attendant.deplane} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
+                            </FloatLabel>
+                        </div>
+
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`age-${index}`}>Age</label>
+                                <InputNumber name="age" placeholder="Age" value={attendant.age} onValueChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
+                            </FloatLabel>
+                        </div>
+
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`gender-${index}`}>Gender</label>
+                                <InputText name="gender" value={attendant.gender} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
+                            </FloatLabel>
+                        </div>
+
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`passenger-weight-${index}`}>Weight</label>
+                                <InputNumber name="passenger_weight" value={attendant.passenger_weight} onValueChange={(e) => handleAttendantAdjustInputChange(index, e)} required  />
+                            </FloatLabel>
+                        </div>
+
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`grade-${index}`}>Grade</label>
+                                <InputText name="grade" value={attendant.grade} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
+                            </FloatLabel>
+                        </div>
+
+
+                        <div className="edit-list">
+                            <FloatLabel>
+                                <label htmlFor={`attendant_specialty-${index}`}>Attendant Specialty</label>
+                                <InputText name="attendant_specialty" value={attendant.attendant_specialty} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
+                            </FloatLabel>
+                        </div>
+                    </form>
+                    <Button onClick={(e) => handleAttendantDelete(attendant.id, e)} disabled={patientInfo.attendants >= attendantAdjustInfo.length}>Delete</Button>
+                </Card>
+            )
+          );
+      }
+    }
+
+    function AddAttendants2() {
+      console.log("Added Attendants:", attendantInfo)
+      if(patientInfo.attendants < attendantAdjustInfo.length) {
+        alert("Please Delete an attendant or change the patients attendants")
+        return null
+      } else if(patientInfo.attendants > attendantAdjustInfo.length) {
+        let newAtt = (patientInfo.attendants - attendantAdjustInfo.length)
+        const attendantCards = [];
+        for(let i = 0; i < newAtt; i++) {
+          attendantCards.push(
+            <Card key={i} title={`Attendant ${i + attendantAdjustInfo.length + 1}`} style={{ marginTop: '10px', marginBottom: '20px' }}>
+                  <form>
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`firstname-${i}`}>First Name</label>
+                              <InputText name="first_name" placeholder="First Name" value={attendantInfo[i]?.first_name || ''} onChange={(e) => handleAttendantInputChange(i, e)} required  />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`lastname-${i}`}>Last Name</label>
+                              <InputText name="last_name" placeholder="Last Name" value={attendantInfo[i]?.last_name || ''} onChange={(e) => handleAttendantInputChange(i, e)} required  />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`enplane-${i}`}>Enplane</label>
+                              <InputText name="enplane" placeholder="Enplane" value={attendantInfo[i]?.enplane || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`enplane-${i}`}>Deplane</label>
+                              <InputText name="deplane" placeholder="Deplane" value={attendantInfo[i]?.deplane || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`age-${i}`}>Age</label>
+                              <InputNumber name="age" placeholder="Age" value={attendantInfo[i]?.age || ''} onValueChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`gender-${i}`}>Gender</label>
+                              <InputText name="gender" value={attendantInfo[i]?.gender || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label>Weight</label>
+                              <InputNumber name="passenger_weight" value={attendantInfo[i]?.passenger_weight || ''} onValueChange={(e) => handleAttendantInputChange(i, e)} required  />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`grade-${i}`}>Grade</label>
+                              <InputText name="grade" value={attendantInfo[i]?.grade || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+
+                      <div className="edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`attendant_specialty-${i}`}>Attendant Specialty</label>
+                              <InputText name="attendant_specialty" value={attendantInfo[i]?.attendant_specialty || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+                  </form>
+              </Card>
+          );
+      }
+      return <>{attendantCards}</>;
+    }
+  } 
+    
 
     return (
       <div className="container">
           <Card title={`${patientInfo.first_name} ${patientInfo.last_name}'s Info`} className="card">
-              <form onSubmit={handleSubmit} className="form-grid">
+              <form className="form-grid" onSubmit={handleAllSubmit}>
+
                 <div className="edit-list">
                   <label>First Name</label>
                   <InputText name="first_name" value={patientInfo.first_name} onChange={handleInputChange} required />
@@ -110,7 +408,7 @@ export default function PatientEdit() {
 
                 <div className="edit-list">
                   <label>Attendants</label>
-                  <InputNumber name="attendants" value={patientInfo.attendants} onValueChange={handleInputChange} required />
+                  <InputNumber name="attendants" value={patientInfo.attendants} onValueChange={handleInputChange} min={0} max={15} required />
                 </div>
 
                 <div className="edit-list">
@@ -144,7 +442,7 @@ export default function PatientEdit() {
                 </div>
 
                 <div className="edit-list">
-                  <label>E/PS</label>
+                  <label>E/PS </label>
                   <InputText name="eps" value={patientInfo.eps} onChange={handleInputChange} required />
                 </div>
 
@@ -154,12 +452,12 @@ export default function PatientEdit() {
                 </div>
 
                 <div className="edit-list">
-                  <label>UPR</label>
+                  <label>UPR </label>
                   <InputText name="upr" value={patientInfo.upr} onChange={handleInputChange} required />
                 </div>
 
                 <div className="edit-list">
-                  <label>Age</label>
+                  <label>Passenger Age</label>
                   <InputNumber name="age" value={patientInfo.age} onValueChange={handleInputChange} required />
                 </div>
 
@@ -184,7 +482,7 @@ export default function PatientEdit() {
                 </div>
 
                 <div className="edit-list">
-                  <label>Diet</label>
+                  <label>Diet Restrictions</label>
                   <InputText name="diet" value={patientInfo.diet} onChange={handleInputChange} required />
                 </div>
 
@@ -206,6 +504,8 @@ export default function PatientEdit() {
                   <div className="form-button">
                       <Button label="Commit Changes" icon="pi pi-check" type="submit" className="p-button-success"/>
                   </div>
+                  {showAttendants()}
+                  {AddAttendants2()}
               </form>
           </Card>
       </div>

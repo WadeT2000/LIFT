@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const knex = require('knex')(require('../knexfile.js')[process.env.NODE_ENV || "development"]);
 
+
 const SECRET_KEY = "my_secret_key"; 
 
 app.use(cors({

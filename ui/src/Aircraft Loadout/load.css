@@ -1,4 +1,29 @@
-.airplane-container {
+.load-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+
+.main-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stops {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+}
+
+.airplane-section {
+  flex: 1;
+  margin-right: 20px;
+  overflow-y: auto;
+}
+
+v.airplane-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -11,6 +36,8 @@
   padding: 20px;
   display: flex;
   justify-content: space-between;
+  border: 2px solid #d1d5db;
+  margin: 10px;
 }
 
 .airplane-section {
@@ -33,12 +60,16 @@
   border-radius: 10px;
   padding: 10px;
   margin-bottom: 10px;
-  margin-top: 40px
+  margin-top: 40px;
+}
+
+.ambulatory-seats {
+  width: 68%;
 }
 
 .litter-beds {
-  width: 48%;
   background-color: #ffb3b3;
+  width: 88%;
 }
 
 .litter-beds-container {
@@ -59,6 +90,21 @@
   font-weight: bold;
   margin-bottom: 5px;
   margin-top: 40px;
+}
+
+.stops {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 20px;
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.stops-list {
+  font-size: 25px;
 }
 
 @media (max-width: 768px) {

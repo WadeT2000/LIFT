@@ -1,18 +1,26 @@
 .patient-list-container {
   padding: 24px;
   border: 2px solid #d1d5db;
-  border-radius: 8px;
+  border-radius: 20px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  line-height: 4;
+  margin: 10px;
+  overflow-y: auto;
+  height: 900px;
 }
 
 .patient-list-title {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: bold;
-  margin-bottom: 16px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  text-decoration: underline;
+  text-align: center;
 }
 
 .table-container {
   display: flex;
+  flex-grow: 1;
   overflow-y: auto;
 }
 
@@ -65,4 +73,37 @@
 .error {
   border-color: #ef4444;
   color: #ef4444;
+}
+
+.litter-beds {
+  line-height: 2;
+  text-align: center;
+  font-size: 20px;
+  border: 2px solid slategray;
+  margin-right: 4px;
+}
+
+.LitterSlot {
+  border: 1px solid slategray;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+.ambulatory-seats {
+  line-height: 2;
+  text-align: center;
+  font-size: 20px;
+  border: 2px solid slategray;
+  margin-right: 4px;
+}
+
+.AmbulatorySlot {
+  border: 1px solid slategray;
+  border-radius: 8px;
+  margin-top: 4px;
+}
+
+
+.patient-list-container div {
+  font-size: 18px;
 }

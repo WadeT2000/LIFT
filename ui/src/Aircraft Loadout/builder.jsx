@@ -56,7 +56,7 @@ function Ambulatory({ length, location, patients, occupiedSeats, movePatient }) 
       {[...Array(length)].map((_, index) => (
         <AmbulatorySlot
           key={index}
-          slotId={`${location}_${index}`}
+          slotId={`${location} ${index}`}
           patients={patients}
           occupiedSeats={occupiedSeats}
           movePatient={movePatient}
@@ -72,7 +72,7 @@ function Litter({ length, location, patients, occupiedSeats, movePatient }) {
       {[...Array(length)].map((_, index) => (
         <LitterSlot
           key={index}
-          slotId={`${location}_${index}`}
+          slotId={`${location} ${index}`}
           patients={patients}
           occupiedSeats={occupiedSeats}
           movePatient={movePatient}
@@ -121,7 +121,7 @@ function AmbulatorySlot({ slotId, patients, occupiedSeats, movePatient }) {
         opacity: isDragging ? 0.5 : 1
       }}
     >
-      {occupant ? `${occupant.first_name} ${occupant.last_name}` : slotId}
+      {occupant ? `${slotId} ${occupant.first_name} ${occupant.last_name}` : slotId}
     </div>
   );
 }
@@ -165,7 +165,7 @@ function LitterSlot({ slotId, patients, occupiedSeats, movePatient }) {
         opacity: isDragging ? 0.5 : 1
       }}
     >
-      {occupant ? `${occupant.first_name} ${occupant.last_name}` : slotId}
+      {occupant ? `${slotId} ${occupant.first_name} ${occupant.last_name}` : slotId}
     </div>
   );
 }

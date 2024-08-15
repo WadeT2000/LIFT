@@ -4,6 +4,7 @@ import './Stops.css';
 
 const StopsInOrder = () => {
   const [patients, setPatients] = useState([]);
+  const [sortedStops, setSortedStops] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -28,16 +29,43 @@ const StopsInOrder = () => {
   }, []);
 
 
-  const getUniqueStops = () => {
-    const uniqueStops = new Set(patients.map(patient => patient.dds));
-    return Array.from(uniqueStops);
+  // const getUniqueStops = () => {
+  //   const uniqueStops = new Set(patients.map(patient => patient.dds));
+  //   return Array.from(uniqueStops);
+  // };
+
+  // const sortedStops = getUniqueStops().sort((a, b) => {
+  //   const indexA = patients.findIndex(p => p.dds === a);
+  //   const indexB = patients.findIndex(p => p.dds === b);
+  //   return indexA - indexB;
+  // });
+
+  useEffect(() => {
+    const uniqueStops = Array.from(new Set(patients.map(patient => patient.dds)));
+    const sorted = uniqueStops.sort((a, b) => {
+      const indexA = patients.findIndex(p => p.dds === a);
+      const indexB = patients.findIndex(p => p.dds === b);
+      return indexA - indexB;
+    });
+    setSortedStops(sorted);
+  }, [patients]);
+
+  const handleDragStart = (e, index) => {
+    e.dataTransfer.setData('text/plain', index);
   };
 
-  const sortedStops = getUniqueStops().sort((a, b) => {
-    const indexA = patients.findIndex(p => p.dds === a);
-    const indexB = patients.findIndex(p => p.dds === b);
-    return indexA - indexB;
-  });
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, dropIndex) => {
+    e.preventDefault();
+    const dragIndex = Number(e.dataTransfer.getData('text/plain'));
+    const newStops = [...sortedStops];
+    const [reorderedItem] = newStops.splice(dragIndex, 1);
+    newStops.splice(dropIndex, 0, reorderedItem);
+    setSortedStops(newStops);
+  }
 
 
   if (isLoading) return <div className="stops-in-order">Loading stops...</div>
@@ -48,7 +76,14 @@ const StopsInOrder = () => {
       {sortedStops.length > 0 ? (
         <ul>
           {sortedStops.map((stop, index) => (
-            <div key={stop.dds} className='stop-item'>
+            <div
+              key={stop}
+              className="stop-item"
+              draggable
+              onDragStart={(e) => handleDragStart(e, index)}
+              onDragOver={handleDragOver}
+              onDrop={(e) => handleDrop(e, index)}
+            >
               <span className="stop-number"> {index + 1}</span>
               <span className="stop-code">{stop}</span>
             </div>

@@ -100,14 +100,23 @@ export default function HomePage() {
               </option>
             ))}
           </select>
-          {planeData ? (
+          {planeData ? (<>
+              <Button onClick={() => navigate('/lp')}>Select this aircraft</Button> 
             <div className="airplane-preview">
-              <PreviewAmbulatory length={planeData.ambulatory_left} location="LA" />
-              <PreviewLitter length={planeData.litter_left} location="LL" />
-              <PreviewLitter length={planeData.litter_right} location="RL" />
-              <PreviewAmbulatory length={planeData.ambulatory_right} location="RA" />
+              <div className="preview-ambulatory la">
+                <PreviewAmbulatory length={planeData.ambulatory_left} location="LA" />
+              </div>
+               <div className="preview-litter ll">
+                <PreviewLitter length={planeData.litter_left} location="LL" />
+              </div>
+              <div className="preview-litter rl">
+                <PreviewLitter length={planeData.litter_right} location="RL" />
+                </div>
+              <div className="preview-ambulatory ra">
+                <PreviewAmbulatory length={planeData.ambulatory_right} location="RA" />
+                </div>
             </div>
-          ) : null}
+          </>) : null}
         </div>
       );
     }

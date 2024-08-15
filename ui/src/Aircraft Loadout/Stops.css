@@ -34,20 +34,34 @@
   align-items: center;
   justify-content: center;
   padding: 15px;
+  /* background: linear-gradient(to right,
+      #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff, #ff0000);
+  background-size: 200% 100%;
+  animation: rainbow-barbershop 5s linear infinite; */
 }
+
+/* @keyframes rainbow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 200% 50%;
+  }
+} */
 
 .stops-list h2 {
   text-decoration: underline;
   width: 100%;
   text-align: center;
   margin-bottom: 15px;
+  font-size: 50px;
 }
 
 
 .stop-number {
   color: #006699;
   font-size: 1em;
-  margin-bottom: 5px;
   text-align: right;
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
-function renderRows(planeData, patients, occupiedSeats, movePatient) {
+function renderRows(planeData, patients, attendants, occupiedSeats, movePatient, moveAttendant) {
   return (
     <div className="airplane-container">
       <div className="airplane-body">
@@ -10,8 +10,10 @@ function renderRows(planeData, patients, occupiedSeats, movePatient) {
             <Ambulatory length={planeData.ambulatory_left}
               location="LA"
               patients={patients}
+              attendants={attendants}
               occupiedSeats={occupiedSeats}
               movePatient={movePatient}
+              moveAttendant={moveAttendant}
             />
           </div>
         </div>
@@ -21,16 +23,20 @@ function renderRows(planeData, patients, occupiedSeats, movePatient) {
               <Litter length={planeData.litter_left}
                 location="LL"
                 patients={patients}
+                attendants={attendants}
                 occupiedSeats={occupiedSeats}
                 movePatient={movePatient}
+                moveAttendant={moveAttendant}
               />
             </div>
             <div className="litter-beds">
               <Litter length={planeData.litter_right}
                 location="RL"
                 patients={patients}
+                attendants={attendants}
                 occupiedSeats={occupiedSeats}
                 movePatient={movePatient}
+                moveAttendant={moveAttendant}
               />
             </div>
           </div>
@@ -40,8 +46,10 @@ function renderRows(planeData, patients, occupiedSeats, movePatient) {
             <Ambulatory length={planeData.ambulatory_right}
               location="RA"
               patients={patients}
+              attendants={attendants}
               occupiedSeats={occupiedSeats}
               movePatient={movePatient}
+              moveAttendant={moveAttendant}
             />
           </div>
         </div>
@@ -50,7 +58,7 @@ function renderRows(planeData, patients, occupiedSeats, movePatient) {
   );
 }
 
-function Ambulatory({ length, location, patients, occupiedSeats, movePatient }) {
+function Ambulatory({ length, location, patients, attendants, occupiedSeats, movePatient, moveAttendant }) {
   return (
     <div className={`Ambulatory ${location}`}>
       {[...Array(length)].map((_, index) => (
@@ -58,15 +66,17 @@ function Ambulatory({ length, location, patients, occupiedSeats, movePatient }) 
           key={index}
           slotId={`${location} ${index}`}
           patients={patients}
+          attendants={attendants}
           occupiedSeats={occupiedSeats}
           movePatient={movePatient}
+          moveAttendant={moveAttendant}
         />
       ))}
     </div>
   );
 }
 
-function Litter({ length, location, patients, occupiedSeats, movePatient }) {
+function Litter({ length, location, patients, attendants, occupiedSeats, movePatient, moveAttendant }) {
   return (
     <div className={`Litter ${location}`}>
       {[...Array(length)].map((_, index) => (
@@ -74,17 +84,19 @@ function Litter({ length, location, patients, occupiedSeats, movePatient }) {
           key={index}
           slotId={`${location} ${index}`}
           patients={patients}
+          attendants={attendants}
           occupiedSeats={occupiedSeats}
           movePatient={movePatient}
+          moveAttendant={moveAttendant}
         />
       ))}
     </div>
   );
 }
 
-function AmbulatorySlot({ slotId, patients, occupiedSeats, movePatient }) {
+function AmbulatorySlot({ slotId, patients, attendants, occupiedSeats, movePatient, moveAttendant }) {
   const occupantId = occupiedSeats[slotId];
-  const occupant = patients.find(p => p.patient_id === occupantId);
+  const occupant = patients.find(p => p.patient_id === occupantId) || attendants.find(a => a.id === occupantId);
 
   const [{ isDragging }, drag] = useDrag({
     type: 'PERSON',
@@ -93,7 +105,11 @@ function AmbulatorySlot({ slotId, patients, occupiedSeats, movePatient }) {
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && !dropResult) {
-        movePatient(item.patient_id, null);
+        if (patients.find(p => p.patient_id === item.patient_id)) {
+          movePatient(item.patient_id, null);
+        } else {
+          moveAttendant(item.id, null);
+        }
       }
     },
     collect: (monitor) => ({
@@ -104,7 +120,11 @@ function AmbulatorySlot({ slotId, patients, occupiedSeats, movePatient }) {
   const [{ isOver }, drop] = useDrop({
     accept: 'PERSON',
     drop: (item) => {
-      movePatient(item.patient_id, slotId);
+      if (patients.find(p => p.patient_id === item.patient_id)) {
+        movePatient(item.patient_id, slotId);
+      } else {
+        moveAttendant(item.id, slotId);
+      }
       return { slotId };
     },
     collect: (monitor) => ({
@@ -126,9 +146,9 @@ function AmbulatorySlot({ slotId, patients, occupiedSeats, movePatient }) {
   );
 }
 
-function LitterSlot({ slotId, patients, occupiedSeats, movePatient }) {
+function LitterSlot({ slotId, patients, attendants, occupiedSeats, movePatient, moveAttendant }) {
   const occupantId = occupiedSeats[slotId];
-  const occupant = patients.find(p => p.patient_id === occupantId);
+  const occupant = patients.find(p => p.patient_id === occupantId) || attendants.find(a => a.id === occupantId);
 
   const [{ isDragging }, drag] = useDrag({
     type: 'PERSON',
@@ -137,7 +157,11 @@ function LitterSlot({ slotId, patients, occupiedSeats, movePatient }) {
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && !dropResult) {
-        movePatient(item.patient_id, null);
+        if (patients.find(p => p.patient_id === item.patient_id)) {
+          movePatient(item.patient_id, null);
+        } else {
+          moveAttendant(item.id, null);
+        }
       }
     },
     collect: (monitor) => ({
@@ -148,7 +172,11 @@ function LitterSlot({ slotId, patients, occupiedSeats, movePatient }) {
   const [{ isOver }, drop] = useDrop({
     accept: 'PERSON',
     drop: (item) => {
-      movePatient(item.patient_id, slotId);
+      if (patients.find(p => p.patient_id === item.patient_id)) {
+        movePatient(item.patient_id, slotId);
+      } else {
+        moveAttendant(item.id, slotId);
+      }
       return { slotId };
     },
     collect: (monitor) => ({
@@ -170,12 +198,16 @@ function LitterSlot({ slotId, patients, occupiedSeats, movePatient }) {
   );
 }
 
-function PersonList({ people, movePatient }) {
+function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
   const [{ isOver }, drop] = useDrop({
     accept: 'PERSON',
     drop: (item) => {
-      movePatient(item.patient_id, null);
-      return { name: 'PatientList' };
+      if (isAttendantList) {
+        moveAttendant(item.id, null);
+      } else {
+        movePatient(item.patient_id, null);
+      }
+      return { name: isAttendantList ? 'AttendantList' : 'PatientList' };
     },
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -184,22 +216,26 @@ function PersonList({ people, movePatient }) {
 
   return (
     <div ref={drop} className="patient-list-container" style={{ backgroundColor: isOver ? 'lightyellow' : 'white' }}>
-      <h2 className="patient-list-title">Patient List</h2>
+      <h2 className="patient-list-title">{isAttendantList ? "Attendant List" : "Patient List"}</h2>
       <div className="table-container">
         <table className="patient-table">
           <thead>
             <tr>
-              <th>Patient Name</th>
-              <th>Code</th>
+              <th>{isAttendantList ? "Attendant Name" : "Patient Name"}</th>
+              <th>{isAttendantList ? "Role" : "Code"}</th>
             </tr>
           </thead>
           <tbody>
-            {people.map((patient) => (
-              <tr key={patient.patient_id}>
+            {people.map((person) => (
+              <tr key={isAttendantList ? person.id : person.patient_id}>
                 <td>
-                  <DraggablePerson person={patient} movePatient={movePatient} />
+                  <DraggablePerson
+                    person={person}
+                    movePatient={isAttendantList ? moveAttendant : movePatient}
+                    isAttendant={isAttendantList}
+                  />
                 </td>
-                <td>{patient.dds}</td>
+                <td>{isAttendantList ? person.role : person.dds}</td>
               </tr>
             ))}
           </tbody>
@@ -209,14 +245,14 @@ function PersonList({ people, movePatient }) {
   );
 }
 
-function DraggablePerson({ person, movePatient }) {
+function DraggablePerson({ person, movePatient, isAttendant }) {
   const [{ isDragging }, drag] = useDrag({
     type: 'PERSON',
     item: { ...person },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
-        movePatient(item.patient_id, dropResult.slotId);
+        movePatient(isAttendant ? item.id : item.patient_id, dropResult.slotId);
       }
     },
     collect: (monitor) => ({

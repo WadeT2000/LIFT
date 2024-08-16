@@ -230,6 +230,7 @@ export default function PatientList() {
                 </div>
 
                 <div>
+                    <h1 className="heading-list">Patients</h1>
                     <ListBox
                         value={selectedPatient}
                         options={patients.map(patient => ({
@@ -237,6 +238,7 @@ export default function PatientList() {
                                 <div>
                                     {`${patient.first_name} ${patient.last_name} - ${patient.patient_id}`}
                                     <RadioButton
+                                        className="radiobutton"
                                         value={patient.id}
                                         checked={selectedPatient === patient.id}
                                     />
@@ -245,7 +247,7 @@ export default function PatientList() {
                             value: patient.id,
                         }))}
                         onChange={(e) => setSelectedPatient(e.value)}
-                        style={{ width: '100%' }}
+                        className="listbox"
                     />
                 </div>
 
@@ -272,10 +274,11 @@ export default function PatientList() {
                     />
                 </div>
 
-                <div>
+                <div >
+                    <h1 className="heading-list">Attendants</h1>
                     {attendants.map(attendant => (
                         <div key={attendant.first_name}>
-                            <p>
+                            <p className="heading-list">
                                 {`${attendant.first_name} ${attendant.last_name} - ${attendant.patient_id}`}
                             </p>
                         </div>

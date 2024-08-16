@@ -17,8 +17,27 @@ html {
   margin: 15px;
 }
 
-.preview-column {
+.preview-column,
+.preview-column2 {
   padding: 0 15px;
+  font-size: 30px;
+  color: yellow;
+  text-align: left;
+  border: 2px solid #d1d5db;
+  border-radius: 12px;
+  line-height: 1.2;
+  margin: 10px;
+  background-color: #333;
+}
+
+.preview-column p,
+.preview-column2 p {
+  text-align: center;
+  font-size: 40px;
+  text-decoration: underline;
+  color: whitesmoke;
+  text-transform: uppercase;
+  margin-bottom: 50px;
 }
 
 .homepage-container {
@@ -46,7 +65,7 @@ html {
 }
 
 .homepage-title {
-  font-size: 30px;
+  font-size: 50px;
   margin-bottom: 20px;
 }
 
@@ -68,12 +87,21 @@ html {
   text-align: center;
   width: 100%;
   text-align: left;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+  padding-bottom: 20px;
+  background-color: #333;
+  width: 45%;
 }
 
 .patientselectbox h2 {
   margin-bottom: 10px;
+  font-size: x-large;
 }
 
+.patientselectbox p {
+  font-size: large;
+}
 
 .aircraftbox {
   display: flex;

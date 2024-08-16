@@ -282,7 +282,7 @@ app.delete('/attendantmission1/:id', async (req, res) => {
     try {
         await knex('attendant_mission_1')
             .where('patient_id', id)
-            .del();
+            .del();s
 
         res.status(200).json({ message: 'Attendant deleted successfully' });
     } catch (error) {

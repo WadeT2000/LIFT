@@ -70,7 +70,7 @@ export default function HomePage() {
                     ))}
                 </ul>
             </div>
-            <div className="preview-column">
+            <div className="preview-column2">
                 <p>Destination:</p>
                 <ul>
                     {patients.map(patient => (

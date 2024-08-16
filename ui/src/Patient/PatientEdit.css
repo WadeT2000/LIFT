@@ -130,13 +130,14 @@
 
 /* Warning button styles */
 .p-button-warning {
-  padding: 10px 20px;
+  padding: 10px;
   border: none;
   border-radius: 5px;
   background-color: #ffc107;
   color: #fff;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 10px;
 }
 
 .p-button-warning:hover {
@@ -145,13 +146,14 @@
 
 /* Danger button styles */
 .p-button-danger {
-  padding: 10px 20px;
+  padding: 10px;
   border: none;
   border-radius: 5px;
   background-color: #dc3545;
   color: #fff;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 10px;
 }
 
 .p-button-danger:hover {
@@ -160,13 +162,14 @@
 
 /* Secondary button styles */
 .p-button-secondary {
-  padding: 10px 20px;
+  padding: 10px;
   border: none;
   border-radius: 5px;
   background-color: #6c757d;
   color: #fff;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 10px;
 }
 
 .p-button-secondary:hover {
@@ -214,6 +217,19 @@
   margin-bottom: 20px;
 }
 
+.p-listbox-item {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.p-listb
+
+
+.p-radiobutton {
+  margin-left: 350px;
+}
+
 .edit-list {
   display: inline-block;
   margin-top: 13px;
@@ -222,22 +238,25 @@
   justify-content: center;
 }
 
+.p-listbox.p-component.listbox {
+  margin-left: 23%;
+}
 
-.edit-list .p-dropdown-panel {
+.p-dropdown- anel {
   background-color: #fff;
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
-  z-index: 1000; 
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 
 .edit-list .p-dropdown {
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-  padding: 5px; 
-  background-color: #fff; 
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); 
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: #fff;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
 .form-grid {
@@ -245,3 +264,26 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 25px;
 }
+
+.form-button {
+  grid-column: span 3;
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+}
+
+.heading-list {
+  display: flex;
+  justify-content: center;
+}
+
+.listbox {
+  width: 53%;
+  display: flex;
+  justify-content: center;
+}
+
+/* .radiobutton {
+  display: flex;
+  justify-content: right;
+} */

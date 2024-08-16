@@ -9,13 +9,23 @@ function Load() {
   const [patients, setPatients] = useState([]);
   const [plane, setPlane] = useState({});
   const [occupiedSeats, setOccupiedSeats] = useState({});
+  const [attendants, setAttendants] = useState([])
 
   useEffect(() => {
     fetch('http://localhost:8080/patientsmission1')
       .then(response => response.json())
-      .then(data => setPatients(data))
+      .then(data => setPatients(data)) // Correctly stores patient data
       .catch(error => console.error('Error fetching patients:', error));
   }, []);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/attendantsmission1')
+      .then(response => response.json())
+      .then(data => setAttendants(data)) // Correctly stores attendant data
+      .catch(error => console.error('Error fetching attendants:', error));
+  }, []);
+
+
 
   useEffect(() => {
     fetch('http://localhost:8080/aircraft')
@@ -41,6 +51,25 @@ function Load() {
     });
   };
 
+  const moveAttendant = (attendantId, toSlot) => {
+    setOccupiedSeats(prev => {
+      const newOccupiedSeats = { ...prev };
+      // Remove attendant from previous slot
+      Object.keys(newOccupiedSeats).forEach(slot => {
+        if (newOccupiedSeats[slot] === attendantId) {
+          delete newOccupiedSeats[slot];
+        }
+      });
+      // Add attendant to new slot
+      if (toSlot) {
+        newOccupiedSeats[toSlot] = attendantId;
+      }
+      return newOccupiedSeats;
+    });
+  };
+
+
+
   return (
     <div className="load-container">
       <div className="stops">
@@ -48,19 +77,27 @@ function Load() {
       </div>
       <div className="main-content">
         <div className="airplane-section">
-          {renderRows(plane, patients, occupiedSeats, movePatient)}
+          {renderRows(plane, patients, attendants, occupiedSeats, movePatient, moveAttendant)}
         </div>
         <div className="person-list">
           <PersonList
             people={patients.filter(p => !Object.values(occupiedSeats).includes(p.patient_id))}
             movePatient={movePatient}
+            isAttendantList={false} // Specifies this is the Patient List
           />
         </div>
+        <div className="person-list">
+          <PersonList
+            people={attendants.filter(a => !Object.values(occupiedSeats).includes(a.id))}
+            movePatient={moveAttendant}
+            isAttendantList={true} // Specifies this is the Attendant List
+          />
+        </div>
+
       </div>
     </div>
   );
 }
-
 
 
 export default Load;

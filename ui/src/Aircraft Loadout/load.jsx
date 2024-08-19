@@ -95,8 +95,7 @@ function Load() {
 
   return (
     <div className="load-container">
-     <button className='Back-bttn' onClick={handleClick}>Home
-</button>
+     <button className='Back-bttn' onClick={handleClick}>Home</button>
       <div className="stops">
         <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
         <StopsInOrder />
@@ -117,9 +116,8 @@ function Load() {
             people={attendants.filter(a => !Object.values(occupiedSeats).includes(a.id))}
             moveAttendant={moveAttendant} // Change this line
             isAttendantList={true} // Specifies this is the Attendant List
-/>
+            />
         </div>
-      </div>
 
       </div>
         <div className="darkmode-container">

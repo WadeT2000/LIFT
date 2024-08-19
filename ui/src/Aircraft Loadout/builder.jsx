@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
+import DarkModeToggle from '../DarkMode/DarkModeToggle';
+import './builder.css';
 
 function renderRows(planeData, patients, attendants, occupiedSeats, movePatient, moveAttendant) {
   return (
@@ -217,7 +219,8 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
   });
 
   return (
-    <div ref={drop} className="patient-list-container" style={{ backgroundColor: isOver ? 'lightyellow' : 'white' }}>
+    <>
+    <div ref={drop} className="patient-list-container" >
       <h2 className="patient-list-title">{isAttendantList ? "Attendant List" : "Patient List"}</h2>
       <div className="table-container">
         <table className="patient-table">
@@ -229,7 +232,7 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
           </thead>
           <tbody>
             {people.map((person) => (
-              <tr key={isAttendantList ? person.id : person.patient_id}>
+              <tr key={isAttendantList ? person.id : person.patient_id}> 
                 <td>
                   <DraggablePerson
                     person={person}
@@ -249,6 +252,7 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
         </table>
       </div>
     </div>
+    </>
   );
 }
 //Did a change here reminder

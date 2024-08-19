@@ -1,0 +1,22 @@
+/* Default table header styles (light mode) */
+table thead {
+  background-color: #f0f0f0; /* Light background */
+  color: #000; /* Dark text */
+}
+
+/* Dark mode table header styles */
+body.dark-mode table thead {
+  background-color: #333 !important; /* Dark background */
+  color: #fff !important; /* Light text */
+}
+
+/* Optional: Dark mode table rows */
+body.dark-mode table tbody tr {
+  background-color: #444; /* Slightly lighter dark background */
+}
+
+/* Optional: Dark mode table row hover */
+body.dark-mode table tbody tr:hover {
+  background-color: #555; /* Slightly lighter dark background on hover */
+}
+

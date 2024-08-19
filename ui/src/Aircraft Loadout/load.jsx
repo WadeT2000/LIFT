@@ -3,10 +3,13 @@ import { useDrag, useDrop } from 'react-dnd';
 import { renderRows, Ambulatory, Litter, AmbulatorySlot, LitterSlot, PersonList, DraggablePerson } from './builder.jsx'
 import './patientTable.css';
 import './load.css';
+
+
 import StopsInOrder from './Stops';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import useAutoAssign from './autoAssign';
+import  DarkModeToggle from '../DarkMode/DarkModeToggle';
 
 function Load() {
   const navigate = useNavigate();
@@ -35,9 +38,12 @@ function Load() {
   useEffect(() => {
     //turn selectedPlane data to relevant array location
     console.log(selectedPlane)
+    let arrayspot = null
+    if (selectedPlane) {arrayspot = 0} //
+    else if (selectedPlane) {arrayspot = 1}
     fetch('http://localhost:8080/aircraft')
       .then(response => response.json())
-      .then(data => setPlane(data[selectedPlane.id -1 ]))
+      .then(data => setPlane(data[0]))
       .catch(error => console.error('Error fetching plane data:', error));
   }, []);
 
@@ -114,6 +120,11 @@ function Load() {
 />
         </div>
       </div>
+
+      </div>
+        <div className="darkmode-container">
+              <DarkModeToggle />
+        </div>
     </div>
   );
 }

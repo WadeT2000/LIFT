@@ -31,7 +31,7 @@ v.airplane-container {
 }
 
 .airplane-body {
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
   border-radius: 20px;
   padding: 20px;
   display: flex;
@@ -117,7 +117,7 @@ v.airplane-container {
   align-items: center;
   margin-top: 20px;
   margin: 10px;
-  background-color: #fff;
+  /* background-color: #fff; */
   border-radius: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -128,7 +128,7 @@ v.airplane-container {
 
 .custom-button {
   background-color: #6c757d;
-  color: white;
+  /* color: white; */
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -171,4 +171,39 @@ v.airplane-container {
   .litter-beds {
     width: 100%;
   }
+}
+
+/* Default Styles */
+.person-list {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+}
+
+/* Dark Mode Styles */
+body.dark-mode .person-list {
+  background-color: #2c2c2c;
+  color: #ffffff;
+  border: 1px solid #444;
+}
+
+/* Other related dark mode styles */
+body.dark-mode .load-container {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+body.dark-mode .stops {
+  background-color: #2c2c2c;
+  color: #ffffff;
+}
+
+body.dark-mode .airplane-body {
+  background-color: #2c2c2c;
+}
+
+/* Ensure card components are also dark-themed */
+body.dark-mode .card {
+  background-color: #333;
+  color: #fff;
 }

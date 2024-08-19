@@ -9,6 +9,8 @@ import  DarkModeToggle from '../DarkMode/DarkModeToggle';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './PatientEdit.css';
+
+
 export default function PatientEdit() {
     const navigate = useNavigate();
     const { patientid } = useParams();
@@ -379,6 +381,10 @@ export default function PatientEdit() {
     return (
       <div className="container">
           <Card title={`${patientInfo.first_name} ${patientInfo.last_name}'s Info`} className="card">
+          <div className="darkmode-container">
+            <DarkModeToggle />
+          </div>
+              
               <form className="form-grid" onSubmit={handleAllSubmit}>
 
                 <div className="edit-list">
@@ -508,7 +514,7 @@ export default function PatientEdit() {
                   {AddAttendants2()}
               </form>
           </Card>
-          <DarkModeToggle></DarkModeToggle>
+          
       </div>
   );
 }

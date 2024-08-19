@@ -3,9 +3,12 @@ import { useDrag, useDrop } from 'react-dnd';
 import { renderRows, Ambulatory, Litter, AmbulatorySlot, LitterSlot, PersonList, DraggablePerson } from './builder.jsx'
 import './patientTable.css';
 import './load.css';
+
+
 import StopsInOrder from './Stops';
 import { useNavigate } from 'react-router-dom';
 import {useLocation} from 'react-router-dom'
+import  DarkModeToggle from '../DarkMode/DarkModeToggle';
 
 function Load() {
   const navigate = useNavigate();
@@ -107,6 +110,9 @@ function Load() {
         </div>
 
       </div>
+        <div className="darkmode-container">
+              <DarkModeToggle />
+        </div>
     </div>
   );
 }

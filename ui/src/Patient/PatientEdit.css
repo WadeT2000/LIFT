@@ -92,7 +92,6 @@
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
-  /* max-height: 100%; */
 }
 
 /* Card styles */
@@ -102,8 +101,6 @@
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 8px;
-  background-color: #fff;
-  /* max-height: 100%; */
 }
 
 /* Button container styles */
@@ -165,16 +162,16 @@
   padding: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #6c757d;
+  background-color: #007bff;
   color: #fff;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   margin: 10px;
 }
 
-.p-button-secondary:hover {
+/* .p-button-secondary:hover {
   background-color: #5a6268;
-}
+} */
 
 /* Patient list styles */
 .patient-list {
@@ -221,7 +218,7 @@
   display: flex;
   justify-content: flex-end;
   align-content: center;
-  width: 30%;
+
 }
 
 .p-listbox-item div text {
@@ -229,40 +226,20 @@
 
 }
 
-.p-listb
-
-
 .p-radiobutton {
   margin-left: 350px;
 }
 
-.edit-list {
+/* .edit-list {
   display: inline-block;
   margin-top: 13px;
   margin-bottom: 13px;
   align-items: center;
   justify-content: center;
-}
+} */
 
 .p-listbox.p-component.listbox {
   margin-left: 23%;
-}
-
-.p-dropdown- anel {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-
-.edit-list .p-dropdown {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 5px;
-  background-color: #fff;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
 
 .form-grid {
@@ -289,22 +266,137 @@
   justify-content: center;
 }
 
-/* .radiobutton {
-  display: flex;
-  justify-content: right;
-} */
-
 body.dark-mode {
-  background-color: #121212;
+  background-color: #333;
   color: #ffffff;
 }
 
+.card.dark-mode {
+  background-color: #555;
+  box-shadow: 0px 9px 46px 8px rgba(255, 255, 255, 0.12), 0px 24px 38px 3px rgba(255, 255, 255, 0.14), 0px 11px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Button styles */
+.p-button-success,
+.p-button-warning,
+.p-button-danger,
+.p-button-secondary {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.p-button-success {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.p-button-warning {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.p-button-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.p-button-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+/* Button hover states */
+.p-button-success:hover {
+  background-color: #0056b3;
+}
+
+.p-button-warning:hover {
+  background-color: #e0a800;
+}
+
+.p-button-danger:hover {
+  background-color: #c82333;
+}
+
+.p-button-secondary:hover {
+  background-color: #5a6268;
+}
+
+/* Dark mode button styles */
+.p-button-success.dark-mode,
+.p-button-warning.dark-mode,
+.p-button-danger.dark-mode,
+.p-button-secondary.dark-mode {
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+.darkmode-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px; 
+}
+
+/* Dark mode button styles */
 .mode-toggle-button.dark-mode {
-  background-color: #333;
+  background-color: #555;
   color: #fff;
 }
 
 .mode-toggle-button.light-mode {
-  background-color: #fff;
-  color: #000;
+  background-color: #007bff;
+  color: #fff;
+}
+
+
+.listbox.dark-mode {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Container styles */
+.patient-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  /* max-height: 100%; */
+}
+
+/* Card styles */
+.patient-card.dark-mode {
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  /* max-height: 100%; */
+}
+
+
+.edit-list.dark-mode {
+  border: 1px solid #666;
+  background-color: #444;
+  color: #fff;
+}
+
+.edit-list.dark-mode .form-field input {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+.edit-list.dark-mode .form-field input {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+.edit-list.dark-mode .form-field select {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #666;
 }

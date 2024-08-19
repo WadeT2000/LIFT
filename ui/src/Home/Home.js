@@ -101,7 +101,7 @@ export default function HomePage() {
             ))}
           </select>
           {planeData ? (<>
-              <Button onClick={() => navigate('/lp')}>Select this aircraft</Button> 
+              <Button onClick={() => navigate('/lp', {state: {selectedPlane: planeData}}) }>Select this aircraft</Button> 
             <div className="airplane-preview">
               <div className="preview-ambulatory la">
                 <PreviewAmbulatory length={planeData.ambulatory_left} location="LA" />

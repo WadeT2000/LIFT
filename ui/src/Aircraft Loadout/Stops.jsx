@@ -28,18 +28,7 @@ const StopsInOrder = () => {
     fetchData();
   }, []);
 
-
-  // const getUniqueStops = () => {
-  //   const uniqueStops = new Set(patients.map(patient => patient.dds));
-  //   return Array.from(uniqueStops);
-  // };
-
-  // const sortedStops = getUniqueStops().sort((a, b) => {
-  //   const indexA = patients.findIndex(p => p.dds === a);
-  //   const indexB = patients.findIndex(p => p.dds === b);
-  //   return indexA - indexB;
-  // });
-
+  
   useEffect(() => {
     const uniqueStops = Array.from(new Set(patients.map(patient => patient.dds)));
     const sorted = uniqueStops.sort((a, b) => {

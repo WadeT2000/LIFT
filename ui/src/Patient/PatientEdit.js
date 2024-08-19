@@ -5,10 +5,10 @@ import { Card } from 'primereact/card';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
 import { FloatLabel } from "primereact/floatlabel";
+import  DarkModeToggle from '../DarkMode/DarkModeToggle';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './PatientEdit.css';
-
 export default function PatientEdit() {
     const navigate = useNavigate();
     const { patientid } = useParams();
@@ -508,6 +508,7 @@ export default function PatientEdit() {
                   {AddAttendants2()}
               </form>
           </Card>
+          <DarkModeToggle></DarkModeToggle>
       </div>
   );
 }

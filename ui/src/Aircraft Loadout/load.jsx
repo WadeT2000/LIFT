@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { renderRows, Ambulatory, Litter, AmbulatorySlot, LitterSlot, PersonList, DraggablePerson } from './builder.jsx'
 import './patientTable.css';
 import './load.css';
 import StopsInOrder from './Stops';
+import { useNavigate } from 'react-router-dom';
+import {useLocation} from 'react-router-dom'
 
 function Load() {
+  const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
-  const [plane, setPlane] = useState({});
+  const location = useLocation()
+  const selectedPlane = location.state?.selectedPlane //this grabs what plane was chosen on the homepage
+  const [plane, setPlane] = useState({}); //this grabs seat data from the fetch, depending on which plane was set in 'selectedPlane'
   const [occupiedSeats, setOccupiedSeats] = useState({});
   const [attendants, setAttendants] = useState([])
 
@@ -25,9 +30,12 @@ function Load() {
       .catch(error => console.error('Error fetching attendants:', error));
   }, []);
 
-
-
   useEffect(() => {
+    //turn selectedPlane data to relevant array location
+    console.log(selectedPlane)
+    let arrayspot = null
+    if (selectedPlane) {arrayspot = 0} //
+    else if (selectedPlane) {arrayspot = 1}
     fetch('http://localhost:8080/aircraft')
       .then(response => response.json())
       .then(data => setPlane(data[0]))
@@ -68,10 +76,14 @@ function Load() {
     });
   };
 
-
+  const handleClick = () => {
+    navigate('/home');
+  }
 
   return (
     <div className="load-container">
+     <button onClick={handleClick}>
+     </button>
       <div className="stops">
         <StopsInOrder />
       </div>

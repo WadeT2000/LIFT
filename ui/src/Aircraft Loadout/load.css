@@ -126,6 +126,26 @@ v.airplane-container {
   font-size: 25px;
 }
 
+.custom-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.custom-button i {
+  margin-right: 0.5rem;
+}
+
+.custom-button:hover {
+  background-color: #5a6268;
+}
+
+
 @media (max-width: 768px) {
   .airplane-body {
     flex-direction: column;

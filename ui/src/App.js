@@ -17,6 +17,7 @@ import Load from './Aircraft Loadout/load';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TouchBackend } from 'react-dnd-touch-backend';
+import { DarkModeProvider } from './DarkMode/DarkModeContext'
 // import { isTouchDevice } from './utils'; 
 
 
@@ -46,24 +47,26 @@ function App() {
   return (
     <DndProvider backend={isTouchDevice() ? TouchBackend : HTML5Backend}> 
       <PrimeReactProvider>
-        <Router>
-          <AuthContext.Provider value={{ auth, setAuth }}>
-              <Routes>
-                <Route path="/" element={<LoginPage />} />
-                {/* <Route path="/registration" element={<Register />} /> */}
-                <Route path='/home' element={<HomePage />} />
-                {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
-                <Route path="/logout" element={<Logout />} />
-                <Route path="/PatientList" element={<PatientList />} />
-                <Route path="/PatientAddPage" element={<AddPatientPage />} />
-                <Route path="/lp" element={<Load />} />
-                {/* Will Delete */}
-                <Route path='/table' element={<PatientTable />} />
-              <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
-              {/* <Route path="/Stops" element={<StopsInOrder />} /> */}
-            </Routes>
-          </AuthContext.Provider>
-        </Router>
+        <DarkModeProvider>
+          <Router>
+            <AuthContext.Provider value={{ auth, setAuth }}>
+                <Routes>
+                  <Route path="/" element={<LoginPage />} />
+                  {/* <Route path="/registration" element={<Register />} /> */}
+                  <Route path='/home' element={<HomePage />} />
+                  {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
+                  <Route path="/logout" element={<Logout />} />
+                  <Route path="/PatientList" element={<PatientList />} />
+                  <Route path="/PatientAddPage" element={<AddPatientPage />} />
+                  <Route path="/lp" element={<Load />} />
+                  {/* Will Delete */}
+                  <Route path='/table' element={<PatientTable />} />
+                <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
+                {/* <Route path="/Stops" element={<StopsInOrder />} /> */}
+              </Routes>
+            </AuthContext.Provider>
+          </Router>
+        </DarkModeProvider>
       </PrimeReactProvider>
     </DndProvider>
   );

@@ -219,8 +219,14 @@
 
 .p-listbox-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-content: center;
+  width: 30%;
+}
+
+.p-listbox-item div text {
+  justify-self: flex-start;
+
 }
 
 .p-listb
@@ -287,3 +293,18 @@
   display: flex;
   justify-content: right;
 } */
+
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.mode-toggle-button.dark-mode {
+  background-color: #333;
+  color: #fff;
+}
+
+.mode-toggle-button.light-mode {
+  background-color: #fff;
+  color: #000;
+}

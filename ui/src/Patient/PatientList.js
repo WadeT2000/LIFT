@@ -147,6 +147,7 @@ import { ListBox } from 'primereact/listbox';
 import { RadioButton } from 'primereact/radiobutton';
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
+import DarkModeToggle from '../DarkMode/DarkModeToggle'
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import './PatientEdit.css';

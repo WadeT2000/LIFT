@@ -221,12 +221,6 @@
   display: flex;
   justify-content: flex-end;
   align-content: center;
-  width: 30%;
-}
-
-.p-listbox-item div text {
-  justify-self: flex-start;
-
 }
 
 .p-listb

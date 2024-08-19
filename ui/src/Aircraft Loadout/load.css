@@ -145,6 +145,11 @@ v.airplane-container {
   background-color: #5a6268;
 }
 
+.auto-assign-btn {
+  margin-top: 20px; /* Space between the lists and the button */
+  align-self: flex-start; /* Ensures the button stays under the lists */
+}
+
 
 @media (max-width: 768px) {
   .airplane-body {

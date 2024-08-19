@@ -155,7 +155,8 @@ ul {
   background-repeat: no-repeat;
   background-position: calc(100% -10px) center;
   text-align: center;
-
+  margin: 15px;
+  margin-bottom: 27px;
 }
 
 .aircraft-dropdown:hover {
@@ -198,6 +199,18 @@ ul {
   grid-area: rl;
 }
 
+.p-button.p-component {
+  margin: 15px;
+  margin-bottom: 20px;
+}
+
+.AmbulatorySlot {
+  color: #002244;
+}
+
+.LitterSlot {
+  color: #AA0000;
+}
 
 @media (max-width: 768px) {
   .aircraft-dropdown {

@@ -1,0 +1,9 @@
+.Back-bttn {
+    color: black;
+    border-radius: 20px;
+    height: 70px;
+    margin: 10px;
+    border: 1px black;
+    font-size: 40px;
+    cursor: pointer;
+}

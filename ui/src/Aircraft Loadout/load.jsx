@@ -5,7 +5,8 @@ import './patientTable.css';
 import './load.css';
 import StopsInOrder from './Stops';
 import { useNavigate } from 'react-router-dom';
-import {useLocation} from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+import useAutoAssign from './autoAssign';
 
 function Load() {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ function Load() {
   const [plane, setPlane] = useState({}); //this grabs seat data from the fetch, depending on which plane was set in 'selectedPlane'
   const [occupiedSeats, setOccupiedSeats] = useState({});
   const [attendants, setAttendants] = useState([])
+  const { autoAssignPatients, loading} = useAutoAssign();
 
   useEffect(() => {
     fetch('http://localhost:8080/patientsmission1')
@@ -77,11 +79,20 @@ function Load() {
     navigate('/home');
   }
 
+  const handleAutoAssign = () => {
+    const assignments = autoAssignPatients();
+    if (assignments) {
+      setOccupiedSeats(assignments);
+      console.log("Seats assigned:", assignments);
+    }
+  };
+
   return (
     <div className="load-container">
-     <button onClick={handleClick}>
-     </button>
+     <button className='Back-bttn' onClick={handleClick}>Home
+</button>
       <div className="stops">
+        <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
         <StopsInOrder />
       </div>
       <div className="main-content">
@@ -96,13 +107,12 @@ function Load() {
           />
         </div>
         <div className="person-list">
-          <PersonList
+            <PersonList
             people={attendants.filter(a => !Object.values(occupiedSeats).includes(a.id))}
-            movePatient={moveAttendant}
+            moveAttendant={moveAttendant} // Change this line
             isAttendantList={true} // Specifies this is the Attendant List
-          />
+/>
         </div>
-
       </div>
     </div>
   );

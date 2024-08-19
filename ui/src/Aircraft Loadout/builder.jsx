@@ -131,6 +131,7 @@ function AmbulatorySlot({ slotId, patients, attendants, occupiedSeats, movePatie
       isOver: monitor.isOver(),
     }),
   });
+  
 
   return (
     <div
@@ -202,6 +203,7 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
   const [{ isOver }, drop] = useDrop({
     accept: 'PERSON',
     drop: (item) => {
+
       if (isAttendantList) {
         moveAttendant(item.id, null);
       } else {
@@ -221,8 +223,8 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
         <table className="patient-table">
           <thead>
             <tr>
-              <th>{isAttendantList ? "Attendant Name" : "Patient Name"}</th>
-              <th>{isAttendantList ? "Role" : "Code"}</th>
+              <th>{isAttendantList ? "Attendant" : "Patient"}</th>
+              <th>{isAttendantList ? "Watching" : "Code"}</th>
             </tr>
           </thead>
           <tbody>
@@ -231,11 +233,16 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
                 <td>
                   <DraggablePerson
                     person={person}
-                    movePatient={isAttendantList ? moveAttendant : movePatient}
+                    movePatient={movePatient}
+                    moveAttendant={moveAttendant}
                     isAttendant={isAttendantList}
+                    // movePatient={isAttendantList ? moveAttendant : movePatient}
+                    // isAttendant={isAttendantList}
+                  
                   />
                 </td>
-                <td>{isAttendantList ? person.role : person.dds}</td>
+                {/* <td>{isAttendantList ? person.watching : person.dds}</td> */}
+                <td>{isAttendantList ? person.patient_id : person.dds}</td>
               </tr>
             ))}
           </tbody>
@@ -244,15 +251,46 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
     </div>
   );
 }
+//Did a change here reminder
+// function DraggablePerson({ person, movePatient,moveAttendant, isAttendant }) {
+//   const [{ isDragging }, drag] = useDrag({
+//     type: 'PERSON',
+//     item: { ...person },
+//     end: (item, monitor) => {
+//       const dropResult = monitor.getDropResult();
+//       if (item && dropResult) {
+//         if(isAttendant) {
+//           moveAttendant(item.id,dropResult.slotId);
+//         } else {
+//           movePatient(item.patient_id, dropResult.slotId);
+//         }
+//       //   movePatient(isAttendant ? item.id : item.patient_id, dropResult.slotId);
+//       }
+//     },
+//     collect: (monitor) => ({
+//       isDragging: monitor.isDragging(),
+//     }),
+//   });
 
-function DraggablePerson({ person, movePatient, isAttendant }) {
+//   return (
+//     <div ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
+//       {`${person.first_name} ${person.last_name}`}
+//     </div>
+//   );
+// }
+
+function DraggablePerson({ person, movePatient, moveAttendant, isAttendant }) {
   const [{ isDragging }, drag] = useDrag({
     type: 'PERSON',
     item: { ...person },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {
-        movePatient(isAttendant ? item.id : item.patient_id, dropResult.slotId);
+        if (isAttendant) {
+          moveAttendant(item.id, dropResult.slotId);
+        } else {
+          movePatient(item.patient_id, dropResult.slotId);
+        }
       }
     },
     collect: (monitor) => ({
@@ -266,5 +304,6 @@ function DraggablePerson({ person, movePatient, isAttendant }) {
     </div>
   );
 }
+
 
 export { renderRows, Ambulatory, Litter, AmbulatorySlot, LitterSlot, PersonList, DraggablePerson }

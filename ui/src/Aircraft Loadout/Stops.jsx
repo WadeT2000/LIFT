@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './Stops.css';
 
-
 const StopsInOrder = () => {
   const [patients, setPatients] = useState([]);
   const [sortedStops, setSortedStops] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [uprOrder, setUprOrder] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +18,22 @@ const StopsInOrder = () => {
         })
         .then(data => {
           setPatients(data);
+          
+          // Extract unique UPR values and create UPR order
+          const uniqueUPRs = [...new Set(data.map(patient => patient.upr))];
+          const order = {};
+          ['Priority', 'Urgent', 'Routine'].forEach((upr, index) => {
+            if (uniqueUPRs.includes(upr)) {
+              order[upr] = index;
+            }
+          });
+          uniqueUPRs.forEach(upr => {
+            if (!(upr in order)) {
+              order[upr] = Object.keys(order).length;
+            }
+          });
+          setUprOrder(order);
+
           setIsLoading(false);
         })
         .catch(error => {
@@ -28,16 +44,21 @@ const StopsInOrder = () => {
     fetchData();
   }, []);
 
-  
   useEffect(() => {
-    const uniqueStops = Array.from(new Set(patients.map(patient => patient.dds)));
-    const sorted = uniqueStops.sort((a, b) => {
-      const indexA = patients.findIndex(p => p.dds === a);
-      const indexB = patients.findIndex(p => p.dds === b);
-      return indexA - indexB;
-    });
-    setSortedStops(sorted);
-  }, [patients]);
+    if (patients.length && Object.keys(uprOrder).length) {
+      // Sort patients first by UPR, then by their order in the original list
+      const sortedPatients = [...patients].sort((a, b) => {
+        if (uprOrder[a.upr] !== uprOrder[b.upr]) {
+          return uprOrder[a.upr] - uprOrder[b.upr];
+        }
+        return patients.indexOf(a) - patients.indexOf(b);
+      });
+
+      // Extract unique stops from the sorted patients
+      const uniqueStops = Array.from(new Set(sortedPatients.map(patient => patient.dds)));
+      setSortedStops(uniqueStops);
+    }
+  }, [patients, uprOrder]);
 
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData('text/plain', index);
@@ -56,12 +77,11 @@ const StopsInOrder = () => {
     setSortedStops(newStops);
   }
 
-
   if (isLoading) return <div className="stops-in-order">Loading stops...</div>
 
   return (
     <div className="stops-list">
-      <h2> Stops in Order </h2>
+      <h2>Stops in Order</h2>
       {sortedStops.length > 0 ? (
         <ul>
           {sortedStops.map((stop, index) => (
@@ -73,7 +93,7 @@ const StopsInOrder = () => {
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, index)}
             >
-              <span className="stop-number"> {index + 1}</span>
+              <span className="stop-number">{index + 1}</span>
               <span className="stop-code">{stop}</span>
             </div>
           ))}

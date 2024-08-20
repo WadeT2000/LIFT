@@ -29,9 +29,11 @@ function Load() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/attendantsmission1')
+    fetch('http://localhost:8080/loadattendants')
       .then(response => response.json())
-      .then(data => setAttendants(data)) // Correctly stores attendant data
+      .then(data => {
+        setAttendants(data)
+      })
       .catch(error => console.error('Error fetching attendants:', error));
   }, []);
 
@@ -114,8 +116,9 @@ function Load() {
         <div className="person-list">
             <PersonList
             people={attendants.filter(a => !Object.values(occupiedSeats).includes(a.id))}
-            moveAttendant={moveAttendant} // Change this line
+            moveAttendant={moveAttendant} 
             isAttendantList={true} // Specifies this is the Attendant List
+            //patient={patient_firstname}
             />
         </div>
 

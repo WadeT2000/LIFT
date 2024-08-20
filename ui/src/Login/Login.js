@@ -45,6 +45,9 @@ export default function LoginPage() {
 
   const login = async (e) => {
     e.preventDefault();
+    if(username == 'rickroll' || 'Rick Astley' || password == 'rickroll'){
+      window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+    }
     const userValidation = formValidation(username, `Username`);
     const passValidation = formValidation(password, `Password`);
     if (!userValidation && !passValidation) {

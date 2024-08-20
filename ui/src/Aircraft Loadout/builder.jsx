@@ -259,7 +259,7 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
     </>
   );
 }
-//Did a change here reminder
+// Did a change here reminder
 // function DraggablePerson({ person, movePatient,moveAttendant, isAttendant }) {
 //   const [{ isDragging }, drag] = useDrag({
 //     type: 'PERSON',

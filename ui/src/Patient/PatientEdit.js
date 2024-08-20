@@ -321,7 +321,7 @@ export default function PatientEdit() {
         const attendantCards = [];
         for(let i = 0; i < newAtt; i++) {
           attendantCards.push(
-            <Card key={i} title={`Attendant ${i + attendantAdjustInfo.length + 1}`} style={{ marginTop: '10px', marginBottom: '20px' }}>
+            <Card key={i} title={`Attendant ${i + attendantAdjustInfo.length + 1}`} className="attedant-title">
                   <form>
                       <div className="edit-list">
                           <FloatLabel>

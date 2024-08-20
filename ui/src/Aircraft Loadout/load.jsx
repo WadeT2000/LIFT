@@ -1,4 +1,4 @@
-import React, { useState, useEffect, } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { renderRows, Ambulatory, Litter, AmbulatorySlot, LitterSlot, PersonList, DraggablePerson } from './builder.jsx'
 import './patientTable.css';
@@ -9,7 +9,7 @@ import StopsInOrder from './Stops';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import useAutoAssign from './autoAssign';
-import  DarkModeToggle from '../DarkMode/DarkModeToggle';
+import DarkModeToggle from '../DarkMode/DarkModeToggle';
 
 function Load() {
   const navigate = useNavigate();
@@ -19,7 +19,8 @@ function Load() {
   const [plane, setPlane] = useState({}); //this grabs seat data from the fetch, depending on which plane was set in 'selectedPlane'
   const [occupiedSeats, setOccupiedSeats] = useState({});
   const [attendants, setAttendants] = useState([])
-  const { autoAssignPatients, loading} = useAutoAssign();
+  const { autoAssignPatients, loading } = useAutoAssign();
+  const [, forceUpdate] = useReducer(x => x + 1, 0);
 
   useEffect(() => {
     fetch('http://localhost:8080/patientsmission1')
@@ -29,11 +30,9 @@ function Load() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/loadattendants')
+    fetch('http://localhost:8080/attendantsmission1')
       .then(response => response.json())
-      .then(data => {
-        setAttendants(data)
-      })
+      .then(data => setAttendants(data)) // Correctly stores attendant data
       .catch(error => console.error('Error fetching attendants:', error));
   }, []);
 
@@ -41,8 +40,8 @@ function Load() {
     //turn selectedPlane data to relevant array location
     console.log(selectedPlane)
     let arrayspot = null
-    if (selectedPlane) {arrayspot = 0} //
-    else if (selectedPlane) {arrayspot = 1}
+    if (selectedPlane) { arrayspot = 0 } //
+    else if (selectedPlane) { arrayspot = 1 }
     fetch('http://localhost:8080/aircraft')
       .then(response => response.json())
       .then(data => setPlane(data[0]))
@@ -88,16 +87,17 @@ function Load() {
   }
 
   const handleAutoAssign = () => {
-    const assignments = autoAssignPatients();
-    if (assignments) {
-      setOccupiedSeats(assignments);
-      console.log("Seats assigned:", assignments);
+    const newOccupiedSeats = autoAssignPatients();
+    if (newOccupiedSeats) {
+      setOccupiedSeats(newOccupiedSeats);
+      forceUpdate();
+      console.log("Seats assigned:", newOccupiedSeats);
     }
   };
 
   return (
     <div className="load-container">
-     <button className='Back-bttn' onClick={handleClick}>Home</button>
+      <button className='Back-bttn' onClick={handleClick}>Home</button>
       <div className="stops">
         <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
         <StopsInOrder />
@@ -114,18 +114,17 @@ function Load() {
           />
         </div>
         <div className="person-list">
-            <PersonList
+          <PersonList
             people={attendants.filter(a => !Object.values(occupiedSeats).includes(a.id))}
-            moveAttendant={moveAttendant} 
+            moveAttendant={moveAttendant} // Change this line
             isAttendantList={true} // Specifies this is the Attendant List
-            //patient={patient_firstname}
-            />
+          />
         </div>
 
       </div>
-        <div className="darkmode-container">
-              <DarkModeToggle />
-        </div>
+      <div className="darkmode-container">
+        <DarkModeToggle />
+      </div>
     </div>
   );
 }

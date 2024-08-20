@@ -10,7 +10,7 @@ import  DarkModeToggle from '../DarkMode/DarkModeToggle';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova/theme.css';
-import './PatientEdit.css';
+import './AddPatientPage.css';
 
 
 
@@ -49,20 +49,11 @@ export default function AddPatientPage() {
       console.log("patient info:", patientInfo)
       console.log("attendant info:", attendantInfo)
       for (const key in patientInfo) {
-        if (patientInfo[key] === '' || patientInfo[key] === null) {
-            return false;
-        }
-    }
-    for (let i = 0; i < attendantInfo.length; i++) {
-        const attendant = attendantInfo[i];
-        for (const key in attendant) {
-            if (attendant[key] === '' || attendant[key] === null) {
-                return false;
-            }
-        }
-    }
-
-    return true;
+          if (patientInfo[key] === '' || patientInfo[key] === null) {
+              return false;
+          }
+      }
+      return true;
   };
 
   const AddPatient = async (e) => {
@@ -79,26 +70,8 @@ export default function AddPatientPage() {
     }
 
     const handleInputChange = (e) => {
-      console.log("patient info:", patientInfo)
-      console.log("attendant info:", attendantInfo)
       const { name, value } = e.target;
-      setPatientInfo((prevInfo) => {
-        const updatedInfo = { ...prevInfo, [name]: value };
-    
-        if (name === 'attendants') {
-          const attendantsCount = parseInt(value, 10) || 0;
-          const filteredAttendantInfo = attendantInfo.filter(attendant => attendant.passenger_weight !== null);
-          let updatedAttendantInfo = filteredAttendantInfo.slice(0, attendantsCount);
-          while (updatedAttendantInfo.length < attendantsCount) {
-            updatedAttendantInfo.push({});
-          }
-          if (updatedAttendantInfo.length > attendantsCount) {
-            updatedAttendantInfo = updatedAttendantInfo.slice(0, attendantsCount);
-          }
-          setAttendantInfo(updatedAttendantInfo);
-        }
-        return updatedInfo;
-      });
+      setPatientInfo({ ...patientInfo, [name]: value });
     };
 
     const handleAttendantInputChange = (index, e) => {
@@ -110,86 +83,6 @@ export default function AddPatientPage() {
       };
       setAttendantInfo(updatedAttendants);
     };
-
-    function addAttendants() {
-      if(patientInfo.attendants === 0) {
-        return null
-      } else if(patientInfo.attendants > 0) {
-        const attendantCards = [];
-        for(let i = 0; i < patientInfo.attendants; i++) {
-          attendantCards.push(
-            <Card key={i} title={`Attendant ${i + 1}`} style={{ marginTop: '10px', marginBottom: '20px' }}>
-                  <form onSubmit={AddPatient}>
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label htmlFor={`firstname-${i}`}>First Name</label>
-                              <InputText name="first_name" placeholder="First Name" value={attendantInfo[i]?.first_name || ''} onChange={(e) => handleAttendantInputChange(i, e)} required  />
-                          </FloatLabel>
-                      </div>
-
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label htmlFor={`lastname-${i}`}>Last Name</label>
-                              <InputText name="last_name" placeholder="Last Name" value={attendantInfo[i]?.last_name || ''} onChange={(e) => handleAttendantInputChange(i, e)} required  />
-                          </FloatLabel>
-                      </div>
-
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label htmlFor={`enplane-${i}`}>Enplane</label>
-                              <InputText name="enplane" placeholder="Enplane" value={attendantInfo[i]?.enplane || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
-                          </FloatLabel>
-                      </div>
-
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label htmlFor={`enplane-${i}`}>Deplane</label>
-                              <InputText name="deplane" placeholder="Deplane" value={attendantInfo[i]?.deplane || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
-                          </FloatLabel>
-                      </div>
-
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label htmlFor={`age-${i}`}>Age</label>
-                              <InputNumber name="age" placeholder="Age" value={attendantInfo[i]?.age || ''} onValueChange={(e) => handleAttendantInputChange(i, e)} required />
-                          </FloatLabel>
-                      </div>
-
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label htmlFor={`gender-${i}`}>Gender</label>
-                              <InputText name="gender" value={attendantInfo[i]?.gender || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
-                          </FloatLabel>
-                      </div>
-
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label>Weight</label>
-                              <InputNumber name="passenger_weight" value={attendantInfo[i]?.passenger_weight || ''} onValueChange={(e) => handleAttendantInputChange(i, e)} required  />
-                          </FloatLabel>
-                      </div>
-
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label htmlFor={`grade-${i}`}>Grade</label>
-                              <InputText name="grade" value={attendantInfo[i]?.grade || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
-                          </FloatLabel>
-                      </div>
-
-
-                      <div className="edit-list">
-                          <FloatLabel>
-                              <label htmlFor={`attendant_specialty-${i}`}>Attendant Specialty</label>
-                              <InputText name="attendant_specialty" value={attendantInfo[i]?.attendant_specialty || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
-                          </FloatLabel>
-                      </div>
-                  </form>
-              </Card>
-          );
-      }
-      return <>{attendantCards}</>;
-    }
-  }
 
     return (
       <div className="patient-container">
@@ -234,7 +127,7 @@ export default function AddPatientPage() {
           <div className="edit-list">
             <FloatLabel>
               <label htmlFor="attendants">Attendants</label>
-              <InputNumber name="attendants" value={patientInfo.attendants || 0} onValueChange={handleInputChange} min={0} max={15} required  />
+              <InputNumber name="attendants" value={patientInfo.attendants || 0} onValueChange={(e) => setPatientInfo({...patientInfo, attendants: e.value})} min={0} max={15} required  />
             </FloatLabel>
           </div>
           
@@ -318,7 +211,7 @@ export default function AddPatientPage() {
         <div className="edit-list">
           <FloatLabel>
             <label>Weight</label>
-            <InputNumber name="passengerWeight" value={patientInfo.passengerWeight || ''} onValueChange={handleInputChange} required  />
+            <InputNumber name="passengerWeight" placeholder="Passenger Weight" value={patientInfo.passengerWeight || ''} onValueChange={handleInputChange} required  />
           </FloatLabel>
         </div>
 
@@ -372,4 +265,86 @@ export default function AddPatientPage() {
       </Card>
       </div>
       )
+
+    function addAttendants() {
+      if(patientInfo.attendants === 0) {
+        return null
+      } else if(patientInfo.attendants > 0) {
+        const attendantCards = [];
+        for(let i = 0; i < patientInfo.attendants; i++) {
+          attendantCards.push(
+          <div className='attendant-container'>
+            <Card key={i} title={`Attendant ${i + 1}`} className='attendant-title' >
+                  <form onSubmit={AddPatient}>
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`firstname-${i}`}>First Name</label>
+                              <InputText name="first_name" placeholder="First Name" value={attendantInfo[i]?.first_name || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`lastname-${i}`}>Last Name</label>
+                              <InputText name="last_name" placeholder="Last Name" value={attendantInfo[i]?.last_name || ''} onChange={(e) => handleAttendantInputChange(i, e)} required  />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`enplane-${i}`}>Enplane</label>
+                              <InputText name="enplane" placeholder="Enplane" value={attendantInfo[i]?.enplane || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`enplane-${i}`}>Deplane</label>
+                              <InputText name="deplane" placeholder="Deplane" value={attendantInfo[i]?.deplane || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`age-${i}`}>Age</label>
+                              <InputNumber name="age" placeholder="Age" value={attendantInfo[i]?.age || ''} onValueChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`gender-${i}`}>Gender</label>
+                              <InputText name="gender" value={attendantInfo[i]?.gender || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label>Weight</label>
+                              <InputNumber name="passenger_weight" value={attendantInfo[i]?.passenger_weight || ''} onValueChange={(e) => handleAttendantInputChange(i, e)} required  />
+                          </FloatLabel>
+                      </div>
+
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`grade-${i}`}>Grade</label>
+                              <InputText name="grade" value={attendantInfo[i]?.grade || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+
+
+                      <div className="attendant-edit-list">
+                          <FloatLabel>
+                              <label htmlFor={`attendant_specialty-${i}`}>Attendant Specialty</label>
+                              <InputText name="attendant_specialty" value={attendantInfo[i]?.attendant_specialty || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
+                          </FloatLabel>
+                      </div>
+                  </form>
+              </Card>
+            </div>
+          );
+      }
+      return <>{attendantCards}</>;
+    }
+  }
 }

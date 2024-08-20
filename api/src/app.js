@@ -96,7 +96,6 @@ app.get('/loadattendants', async (req, res) => {
                 // "am1.grade",
                 // "am1.created_on",
                 // "am1.attendant_specialty",
-
             );
 
         res.status(200).json(data);
@@ -136,6 +135,7 @@ app.post('/addpatient', async (req, res) => {
                 attendants: patientInfo.attendants,
                 originating_mtf: patientInfo.originatingMtf,
                 destination_mtf: patientInfo.destinationMtf,
+                primary_med_spec: patientInfo.primaryMedSpec,
                 primary_diagnosis: patientInfo.primaryDiagnosis,
                 secondary_diagnosis: patientInfo.secondaryDiagnosis,
                 other_diagnosis: patientInfo.otherDiagnosis,

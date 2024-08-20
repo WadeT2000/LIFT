@@ -65,7 +65,7 @@ export default function HomePage() {
                 <ul>
                     {patients.map(patient => (
                         <li key={patient.first_name}>
-                            {patient.first_name} {patient.last_name} {patient.attendants}
+                            {patient.first_name} {patient.last_name}
                         </li>
                     ))}
                 </ul>

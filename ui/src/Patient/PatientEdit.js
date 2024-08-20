@@ -74,7 +74,24 @@ export default function PatientEdit() {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setPatientInfo(prevState => ({ ...prevState, [name]: value }));
+        setPatientInfo((prevInfo) => {
+          const updatedInfo = { ...prevInfo, [name]: value };
+      
+          if (name === 'attendants') {
+            const attC = parseInt(value, 10) || 0;
+            const attendantsCount = attC - attendantAdjustInfo.length;
+            const filteredAttendantInfo = attendantInfo.filter(attendant => attendant.passenger_weight !== null);
+            let updatedAttendantInfo = filteredAttendantInfo.slice(0, attendantsCount);
+            while (updatedAttendantInfo.length < attendantsCount) {
+              updatedAttendantInfo.push({});
+            }
+            if (updatedAttendantInfo.length > attendantsCount) {
+              updatedAttendantInfo = updatedAttendantInfo.slice(0, attendantsCount);
+            }
+            setAttendantInfo(updatedAttendantInfo);
+          }
+          return updatedInfo;
+        });
       };
 
       const handleSubmit = async (e) => {
@@ -180,13 +197,13 @@ export default function PatientEdit() {
               return false;
           }
       }
-      // for (const attendant of attendantInfo) {
-      //     for (const key in attendant) {
-      //         if (attendant[key] === '' || attendant[key] === null) {
-      //             return false;
-      //         }
-      //     }
-      // }
+      for (const attendant of attendantInfo) {
+          for (const key in attendant) {
+              if (attendant[key] === '' || attendant[key] === null) {
+                  return false;
+              }
+          }
+      }
       for (const attendant of attendantAdjustInfo) {
         for (const key in attendant) {
             if (attendant[key] === '' || attendant[key] === null) {

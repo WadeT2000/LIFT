@@ -55,7 +55,7 @@ export default function PatientList() {
 
     useEffect(() => {
         fetch('http://localhost:8080/patientsmission1').then(res => res.json()).then(data => setPatients(data));
-        fetch('http://localhost:8080/attendantsmission1').then(res => res.json()).then(data => setAttendants(data));
+        fetch('http://localhost:8080/loadattendants').then(res => res.json()).then(data => setAttendants(data));
     }, []);
 
     // File Upload functionality
@@ -147,7 +147,7 @@ export default function PatientList() {
                     {attendants.map(attendant => (
                         <div key={attendant.first_name}>
                             <p className="heading-list">
-                                {`${attendant.first_name} ${attendant.last_name} - ${attendant.patient_id}`}
+                                {`${attendant.first_name} ${attendant.last_name} - ${attendant.patient_fn} ${attendant.patient_ln}`}
                             </p>
                         </div>
                     ))}

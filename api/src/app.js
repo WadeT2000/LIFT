@@ -67,7 +67,7 @@ app.get('/patientsmission1', (req, res) => {
 });
 
 app.get('/attendantsmission1', (req, res) => {
-    knex('attendant_mission_1').select('*')//.join('patient_mission_1').where('patient_id', '=', 'id')
+    knex('attendant_mission_1').select('*')
         .then(data => res.status(200).json(data))
 })
 
@@ -317,7 +317,7 @@ app.delete('/attendantmission1/:id', async (req, res) => {
     try {
         await knex('attendant_mission_1')
             .where('patient_id', id)
-            .del();s
+            .del();
 
         res.status(200).json({ message: 'Attendant deleted successfully' });
     } catch (error) {
@@ -327,7 +327,37 @@ app.delete('/attendantmission1/:id', async (req, res) => {
 });
 
 
+app.delete('/attendant/:id', async (req, res) => {
+    const { id } = req.params;
 
+    try {
+        await knex('attendant_mission_1')
+            .where({ id })
+            .del();
+
+        res.status(200).json({ message: 'Attendant deleted successfully' });
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        res.status(500).json({ message: 'Failed to delete item' });
+    }
+});
+
+app.get('/attendantm1/:id', async (req, res) => {
+    const { id } = req.params
+    try {
+        await knex('attendant_mission_1')
+        .where({ id })
+        .then(data => res.status(200).json(data))
+    } catch (error) {
+        console.error("Error Fetching Attendant:", error);
+        res.status(500).json({ message: 'Failed to find attendant' });
+    }
+})
+
+
+app.post('/updatepatients', (req, res) => {
+    console.log(req.body)
+})
 
 
 

@@ -1,0 +1,190 @@
+/* Container styles */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Card styles */
+.card {
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+
+/* Dark mode card */
+.card.dark-mode {
+  background-color: #333;
+  box-shadow: 0px 9px 46px 8px rgba(255, 255, 255, 0.12), 0px 24px 38px 3px rgba(255, 255, 255, 0.14), 0px 11px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Button styles */
+.p-button-success,
+.p-button-warning,
+.p-button-danger,
+.p-button-secondary {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  margin: 10px;
+}
+
+.p-button-success {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.p-button-warning {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.p-button-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.p-button-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+/* Button hover states */
+.p-button-success:hover {
+  background-color: #0056b3;
+}
+
+.p-button-warning:hover {
+  background-color: #e0a800;
+}
+
+.p-button-danger:hover {
+  background-color: #c82333;
+}
+
+.p-button-secondary:hover {
+  background-color: #5a6268;
+}
+
+
+
+/* Dark mode button styles */
+.p-button-success.dark-mode,
+.p-button-warning.dark-mode,
+.p-button-danger.dark-mode,
+.p-button-secondary.dark-mode {
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Patient list styles */
+.patient-list {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+.patient-list.dark-mode {
+  background-color: #444;
+  border-color: #666;
+}
+
+/* Patient list item */
+.patient-list-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.patient-list-item:last-child {
+  border-bottom: none;
+}
+
+.patient-list-container th {
+  color: red;
+}
+
+.patient-list-item.dark-mode {
+  background-color: #555;
+  color: #fff;
+  border-bottom-color: #666;
+}
+
+/* Radio button styles */
+.p-radiobutton {
+  margin-left: 30px;
+
+}
+
+/* File upload styles */
+.file-upload-container {
+  margin-bottom: 10px;
+
+}
+
+/* ListBox styles */
+.p-listbox {
+  background-color: #fff;
+  color: #000;
+}
+
+.dark-mode .p-listbox {
+  background-color: #333;
+  color: #fff;
+}
+
+.p-listbox-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.p-listbox-item.dark-mode {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Heading styles */
+.heading-list {
+  display: flex;
+  justify-content: center;
+  font-size: 1.5em;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.heading-list.dark-mode {
+  color: #fff;
+}
+
+/* Dark mode container */
+.darkmode-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+/* Form button styles */
+.form-button {
+  display: flex;
+  justify-content: center;
+  padding: 8px;
+}
+
+.form-button.dark-mode {
+  background-color: #444;
+  color: #fff;
+}

@@ -189,6 +189,7 @@
   justify-content: space-between;
   padding: 8px;
   border-bottom: 1px solid #eee;
+
 }
 
 .patient-list-item:last-child {
@@ -218,7 +219,18 @@
   display: flex;
   justify-content: flex-end;
   align-content: center;
+  background-color: #333;
+  color: whitesmoke
+}
 
+.p-listbox-item.dark-mode {
+  color: red;
+  background-color: red;
+}
+
+.p-listbox.dark-mode {
+  color: red;
+  background-color: red;
 }
 
 .p-listbox-item div text {
@@ -336,7 +348,7 @@ body.dark-mode {
 .darkmode-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 /* Dark mode button styles */
@@ -351,10 +363,10 @@ body.dark-mode {
 }
 
 
-.listbox.dark-mode {
+/* .listbox.dark-mode {
   background-color: #444;
   color: #fff;
-}
+} */
 
 /* Container styles */
 .patient-container {
@@ -375,7 +387,6 @@ body.dark-mode {
   border-radius: 8px;
   /* max-height: 100%; */
 }
-
 
 .edit-list.dark-mode {
   border: 1px solid #666;

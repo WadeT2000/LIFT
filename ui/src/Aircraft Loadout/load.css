@@ -23,7 +23,7 @@
   overflow-y: auto;
 }
 
-v.airplane-container {
+.airplane-container {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -146,8 +146,28 @@ v.airplane-container {
 }
 
 .auto-assign-btn {
-  margin-top: 20px; /* Space between the lists and the button */
-  align-self: flex-start; /* Ensures the button stays under the lists */
+  padding: 10px;
+  margin-left: 25px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.auto-assign-btn button:hover {
+  background-color: #0056b3;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .auto-assign-btn button {
+  background-color: #555;
+}
+
+.dark-mode .auto-assign-btn button:hover {
+  background-color: #777;
 }
 
 
@@ -175,16 +195,14 @@ v.airplane-container {
 
 /* Default Styles */
 .person-list {
-  background-color: #fff;
   color: #000;
-  border: 1px solid #ccc;
+  height: 100%;
+  padding-top: 17px;
 }
 
 /* Dark Mode Styles */
 body.dark-mode .person-list {
-  background-color: #2c2c2c;
   color: #ffffff;
-  border: 1px solid #444;
 }
 
 /* Other related dark mode styles */

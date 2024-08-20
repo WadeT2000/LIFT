@@ -6,9 +6,11 @@ import { RadioButton } from 'primereact/radiobutton';
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
 import DarkModeToggle from '../DarkMode/DarkModeToggle'
+
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import './PatientEdit.css';
+import './PatientList.css';
+
 
 export default function PatientList() {
     const navigate = useNavigate();
@@ -17,6 +19,8 @@ export default function PatientList() {
     const [attendants, setAttendants] = useState([]);
     const [selectedPatient, setSelectedPatient] = useState(null);
 
+  
+  
     async function deletepatient(selectedPatient) {
         try {
             await fetch(`http://localhost:8080/attendantmission1/${selectedPatient}`)
@@ -66,11 +70,13 @@ export default function PatientList() {
             <div className="card">
                 <div className="darkmode-container">
                    <DarkModeToggle />
-                     </div>
+                </div>
 
                 <Toast ref={toast} />
 
                 <div className="form-button">
+                {/* <div className={`form-button ${darkMode ? 'dark' : 'light'}`}>
+                <div className={darkMode ? 'dark' : 'light'}> */}
                     <FileUpload
                         mode="basic"
                         name="demo[]"

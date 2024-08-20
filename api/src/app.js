@@ -67,8 +67,43 @@ app.get('/patientsmission1', (req, res) => {
 });
 
 app.get('/attendantsmission1', (req, res) => {
-    knex('attendant_mission_1').select('*').then(data => res.status(200).json(data))
+    knex('attendant_mission_1').select('*')//.join('patient_mission_1').where('patient_id', '=', 'id')
+        .then(data => res.status(200).json(data))
 })
+
+app.get('/mission1', (req, res) => {
+    knex('attendant_mission_1')
+        .join('patient_mission_1', 'patient_mission_1.id', 'attendant_mission_1.patient_id')
+        .then(data => res.status(200).json(data))
+})
+
+app.get('/loadattendants', async (req, res) => {
+    try {
+        const data = await knex('attendant_mission_1 as am1')
+            .join('patient_mission_1 as pm1', 'pm1.id', 'am1.patient_id')
+            .select(
+                "am1.id",
+                "am1.patient_id",
+                "pm1.first_name as patient_fn",
+                "pm1.last_name as patient_ln",
+                "am1.first_name",
+                "am1.last_name",
+                // "am1.enplane",
+                // "am1.deplane",
+                // "am1.age",
+                // "am1.gender",
+                // "am1.passenger_weight",
+                // "am1.grade",
+                // "am1.created_on",
+                // "am1.attendant_specialty",
+
+            );
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while fetching data.' });
+    }
+});
 
 app.get('/aircraft', (req, res) => {
     const { search } = req.query

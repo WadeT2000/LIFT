@@ -110,23 +110,27 @@ const useAutoAssign = () => {
                 const seat = seatPool1.shift();
                 assignments[seat.id] = patient.patient_id;
 
-                const attendant = attendants.find(a => a.patient_id === patient.patient_id);
-                if (attendant && seatPool1.length > 0) {
-                    const attendantSeat = seatPool1.shift();
-                    assignments[attendantSeat.id] = `attendant_${attendant.id}`;
-                }
-                } else if (seatPool2.length > 0) {
-                    const seat = seatPool2.shift();
-                assignments[seat.id] = patient.patient_id;
-                                    
-                const attendant = attendants.find(a => a.patient_id === patient.patient_id);
-                    if (attendant && seatPool2.length > 0) {
-                        const attendantSeat = seatPool2.shift();
-                        assignments[attendantSeat.id] = `attendant_${attendant.id}`;
-                }
-            }                    
-        };
+                const patientAttendants = attendants.filter(a => a.patient_id === patient.id);
+                patientAttendants.forEach(attendant => {
+                    if (seatPool1.length > 0) {
+                        const attendantSeat = seatPool1.shift();
+                        assignments[attendantSeat.id] = `attendant_${ attendant.id }`;
+                    }
+                });
 
+            } else if (seatPool2.length > 0) {
+                const seat = seatPool2.shift();
+                assignments[seat.id] = patient.id;
+                                    
+                const patientAttendants = attendants.filter(a => a.patient_id === patient.id);
+                patientAttendants.forEach(attendant => {
+                    if (seatPool1.length > 0) {
+                        const attendantSeat = seatPool1.shift();
+                        assignments[attendantSeat.id] = `attendant_${ attendant.id }`;
+                    }
+                });
+            };
+        }
            // Assign litter patients
     litterPatients.forEach((patient, index) => {
         if (index % 2 === 0) {

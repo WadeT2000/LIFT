@@ -112,9 +112,6 @@
   border-bottom: none;
 }
 
-.patient-list-container th {
-  color: red;
-}
 
 .patient-list-item.dark-mode {
   background-color: #555;

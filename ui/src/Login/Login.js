@@ -126,7 +126,7 @@ export default function LoginPage() {
           onChange={(e) => setPassword(e.target.value)} 
           required
         /><br/>
-        <button className="loginpbutton" onClick={login}>Login</button><br/>
+        <button className="login-button" onClick={login}>Login</button><br/>
       </div>
       <div className="toggle-container">
         <button 

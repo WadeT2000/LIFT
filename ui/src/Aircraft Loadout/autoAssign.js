@@ -144,13 +144,6 @@ const useAutoAssign = () => {
             assignPatientAndAttendant(patient, rightAmbulatorySeats, leftAmbulatorySeats);
         }
     });
-        // litterPatients.forEach((patient) => {
-        //     assignPatientAndAttendant(patient, leftLitterSeats, rightLitterSeats)
-        // });
-
-        // ambulatoryPatients.forEach((patient) => {
-        //     assignPatientAndAttendant(patient, leftAmbulatorySeats, rightAmbulatorySeats);
-        // });
 
         return assignments;
     };

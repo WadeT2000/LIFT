@@ -451,6 +451,10 @@ app.post('/aircraftcreate', async (req, res) => {
             }
 })
 
+app.get('/loadplans', (req, res) => {
+    knex('load_plan').select('*').then(data => res.status(200).json(data))
+})
+
 app.post('/updatepatients', (req, res) => {
     console.log(req.body)
 })

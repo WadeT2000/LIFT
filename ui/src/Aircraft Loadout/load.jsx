@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import useAutoAssign from './autoAssign';
 import DarkModeToggle from '../DarkMode/DarkModeToggle';
+import { Button } from 'primereact/button';
 
 function Load() {
   const navigate = useNavigate();
@@ -87,6 +88,30 @@ function Load() {
     }
   };
 
+
+
+
+
+  const saveLP = () => {
+
+  }
+
+useEffect(()=>{
+  console.log("Testing", occupiedSeats)
+}, [occupiedSeats])
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="load-container">
       <button className='Back-bttn' onClick={handleClick}>Home</button>
@@ -114,6 +139,7 @@ function Load() {
         </div>
 
       </div>
+      <Button>Save</Button>
       <div className="darkmode-container">
         <DarkModeToggle />
       </div>

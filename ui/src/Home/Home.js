@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RadioButton } from 'primereact/radiobutton';
+import { ListBox } from 'primereact/listbox';
 import './Home.css'
 import { Button } from 'primereact/button';
 import {renderRows} from '../Aircraft Loadout/builder.jsx'
@@ -34,6 +36,8 @@ export default function HomePage() {
     const [plane, setPlane] = useState([]);
     const [selectedAircraft, setSelectedAircraft] = useState('');
     const [planeData, setPlaneData] = useState(null);
+    const [loadPlans, setLoadPlans] = useState([]);
+    const [selectedLoadPlan, setSelectedLoadPlan] = useState(null);
     const navigate = useNavigate();
   
     useEffect(() => {
@@ -43,6 +47,9 @@ export default function HomePage() {
       fetch('http://localhost:8080/aircraft')
         .then(res => res.json())
         .then(data => setPlane(data));
+        fetch('http://localhost:8080/loadplans')
+        .then(res => res.json())
+        .then(data => setLoadPlans(data))
     }, []);
   
     function handleAircraftChange(event) {
@@ -137,6 +144,45 @@ export default function HomePage() {
               <h2>Aircraft List</h2>
               {aircraftoptions()}
             </div>
+          </div>
+          <div className='loadplanbox'>
+          <div>
+                    <h1 className="heading-list">LoadPlans</h1>
+                    <ListBox
+                        value={selectedLoadPlan}
+                        options={loadPlans.map(loadPlan => ({
+                            label: (
+                                <div>
+                                    {`${loadPlan.lp_name}`}
+                                    <RadioButton
+                                        value={loadPlan.id}
+                                        checked={selectedLoadPlan === loadPlan.id}
+                                    />
+                                </div>
+                            ),
+                            value: loadPlan.id,
+                        }))}
+                        onChange={(e) => setSelectedLoadPlan(e.value)}
+                        className="listbox"
+                    />
+                </div>
+
+                <div className="form-button">
+                    <Button
+                        label="Edit Aircraft"
+                        icon="pi pi-pencil"
+                        className="p-button-warning"
+                        onClick={() => navigate(`/LoadPlanView/${selectedLoadPlan}`)}
+                        disabled={selectedLoadPlan === null}
+                    />
+                    <Button
+                        label="Edit Load Plan"
+                        icon="pi pi-trash"
+                        className="p-button-danger"
+                        onClick={() => navigate(`/LoadPlanEdit/${selectedLoadPlan}`)}
+                        disabled={selectedLoadPlan === null}
+                    />
+                </div>
           </div>
         </div>
       </div>

@@ -44,7 +44,7 @@ function Load() {
     else if (selectedPlane) { arrayspot = 1 }
     fetch('http://localhost:8080/aircraft')
       .then(response => response.json())
-      .then(data => setPlane(data[0]))
+      .then(data => setPlane(data[selectedPlane.id -1]))
       .catch(error => console.error('Error fetching plane data:', error));
   }, []);
 

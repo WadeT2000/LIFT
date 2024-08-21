@@ -31,7 +31,6 @@ function PreviewLitter({ length, location }) {
 
 export default function HomePage() {
     const [patients, setPatients] = useState([]);
-    const [attendantslist, setAttendantslist] = useState([]);
     const [plane, setPlane] = useState([]);
     const [selectedAircraft, setSelectedAircraft] = useState('');
     const [planeData, setPlaneData] = useState(null);
@@ -41,9 +40,6 @@ export default function HomePage() {
       fetch('http://localhost:8080/patientsmission1')
         .then(res => res.json())
         .then(data => setPatients(data));
-      fetch('http://localhost:8080/attendantsmission1')
-        .then(res => res.json())
-        .then(data => setAttendantslist(data));
       fetch('http://localhost:8080/aircraft')
         .then(res => res.json())
         .then(data => setPlane(data));
@@ -100,6 +96,7 @@ export default function HomePage() {
               </option>
             ))}
           </select>
+          <Button onClick={() => navigate('/AircraftList') }>View Aircraft List</Button> 
           {planeData ? (<>
               <Button onClick={() => navigate('/lp', {state: {selectedPlane: planeData}}) }>Select this aircraft</Button> 
             <div className="airplane-preview">

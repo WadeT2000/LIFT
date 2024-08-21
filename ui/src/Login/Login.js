@@ -135,6 +135,7 @@ export default function LoginPage() {
           required
         /><br/>
         <button className="login-button" onClick={login}>Login</button><br/>
+        <button className="register-button" onClick={() => navigate('/registration')}>Create Account</button>
       </div>
       <div className="toggle-container">
         <button 

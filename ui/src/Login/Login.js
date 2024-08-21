@@ -45,6 +45,10 @@ export default function LoginPage() {
 
   const login = async (e) => {
     e.preventDefault();
+    if(username == 'rickroll' || username == 'Rick Astley' || password == 'rickroll'){
+      window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
+      
+    }
     const userValidation = formValidation(username, `Username`);
     const passValidation = formValidation(password, `Password`);
     if (!userValidation && !passValidation) {
@@ -66,6 +70,12 @@ export default function LoginPage() {
         msg = msg.concat(passValidation);
       }
       handlealert(msg);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      login(e);
     }
   };
 
@@ -108,7 +118,8 @@ export default function LoginPage() {
           maxLength="30" 
           placeholder={checked && username !== '' ? username : ""} 
           value={username} 
-          onChange={(e) => setUsername(e.target.value)} 
+          onChange={(e) => setUsername(e.target.value)}
+          onKeyPress={handleKeyPress} 
           required
         /><br/>
         <p className="loginPass">Password:</p>
@@ -120,9 +131,10 @@ export default function LoginPage() {
           placeholder="" 
           value={password} 
           onChange={(e) => setPassword(e.target.value)} 
+          onKeyPress={handleKeyPress}
           required
         /><br/>
-        <button className="loginpbutton" onClick={login}>Login</button><br/>
+        <button className="login-button" onClick={login}>Login</button><br/>
       </div>
       <div className="toggle-container">
         <button 

@@ -1,103 +1,16 @@
-/* .container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.card {
-  width: 100%;
-  max-width: 800px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #fff;
-}
-
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-}
-
-
-.edit-list {
-  display: inline-block;
-  margin-top: 13px;
-  margin-bottom: 13px;
-  align-items: center;
-  justify-content: center;
-}
-
-
-.edit-list .p-dropdown-panel {
-  background-color: #fff;
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
-  z-index: 1000; 
-}
-
-
-.edit-list .p-dropdown {
-  border: 1px solid #ccc; 
-  border-radius: 5px; 
-  padding: 5px; 
-  background-color: #fff; 
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); 
-}
-
-
-.form-button {
-  grid-column: span 3;
-  display: flex;
-  justify-content: center;
-}
-
-.p-button-success {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-.p-button-success:hover {
-  background-color: #0056b3;
-}
-
-.p-card-title {
-  display: flex;
-  justify-content: center;
-}
-
-.patient-list {
-  display: flex;
-  justify-content: space-between;
-} */
-
 /* Container styles */
 .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
 /* Card styles */
 .card {
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 8px;
@@ -157,7 +70,7 @@
   background-color: #c82333;
 }
 
-/* Secondary button styles */
+
 .p-button-secondary {
   padding: 10px;
   border: none;
@@ -169,9 +82,6 @@
   margin: 10px;
 }
 
-/* .p-button-secondary:hover {
-  background-color: #5a6268;
-} */
 
 /* Patient list styles */
 .patient-list {
@@ -183,12 +93,12 @@
   overflow-y: auto;
 }
 
-/* Patient list item */
 .patient-list-item {
   display: flex;
   justify-content: space-between;
   padding: 8px;
   border-bottom: 1px solid #eee;
+
 }
 
 .patient-list-item:last-child {
@@ -200,6 +110,8 @@
   margin-left: 10px;
 }
 
+
+
 /* Attendants list styles */
 .attendants-list {
   margin-top: 20px;
@@ -208,6 +120,8 @@
 .attendant-item {
   margin-bottom: 10px;
 }
+
+*/
 
 /* File upload styles */
 .file-upload-container {
@@ -218,29 +132,33 @@
   display: flex;
   justify-content: flex-end;
   align-content: center;
-
+  background-color: #333;
+  color: whitesmoke
 }
+
+
 
 .p-listbox-item div text {
   justify-self: flex-start;
 
 }
 
+
 .p-radiobutton {
   margin-left: 350px;
 }
 
-/* .edit-list {
-  display: inline-block;
-  margin-top: 13px;
-  margin-bottom: 13px;
+.edit-list {
+  margin-bottom: 5px;
+  display: flex;
   align-items: center;
   justify-content: center;
-} */
+}
 
-.p-listbox.p-component.listbox {
+*/ .p-listbox.p-component.listbox {
   margin-left: 23%;
 }
+
 
 .form-grid {
   display: grid;
@@ -277,7 +195,7 @@ body.dark-mode {
 }
 
 /* Button styles */
-.p-button-success,
+/* .p-button-success,
 .p-button-warning,
 .p-button-danger,
 .p-button-secondary {
@@ -286,7 +204,7 @@ body.dark-mode {
   border-radius: 5px;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
+} */
 
 .p-button-success {
   background-color: #007bff;
@@ -307,6 +225,8 @@ body.dark-mode {
   background-color: #6c757d;
   color: #fff;
 }
+
+*/
 
 /* Button hover states */
 .p-button-success:hover {
@@ -336,7 +256,7 @@ body.dark-mode {
 .darkmode-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
 }
 
 /* Dark mode button styles */
@@ -351,11 +271,6 @@ body.dark-mode {
 }
 
 
-.listbox.dark-mode {
-  background-color: #444;
-  color: #fff;
-}
-
 /* Container styles */
 .patient-container {
   display: flex;
@@ -363,39 +278,65 @@ body.dark-mode {
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
-  /* max-height: 100%; */
+
+}
+
+/* General Dark Mode Styles */
+body.dark-mode {
+  background-color: #333;
+  color: #ffffff;
+}
+
+/* Patient container */
+.patient-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* Card styles */
-.patient-card.dark-mode {
+.patient-card {
   width: 100%;
-  max-width: 800px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
   padding: 20px;
   border-radius: 8px;
-  /* max-height: 100%; */
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 
+*/
 
-.edit-list.dark-mode {
-  border: 1px solid #666;
+/* Dark mode for patient container and card */
+.dark-mode .patient-container {
   background-color: #444;
-  color: #fff;
 }
 
-.edit-list.dark-mode .form-field input {
+.dark-mode .patient-card {
+  background-color: #555;
+  color: #ffffff;
+  box-shadow: 0px 9px 46px 8px rgba(255, 255, 255, 0.12), 0px 24px 38px 3px rgba(255, 255, 255, 0.14), 0px 11px 15px rgba(255, 255, 255, 0.2);
+}
+
+.attendant-container .dark-mode {
   background-color: #444;
-  color: #fff;
-  border: 1px solid #666;
 }
 
-.edit-list.dark-mode .form-field input {
+.attendant-title {
+  margin-top: 10px;
+}
+
+.attendant-edit-list {
+  margin-bottom: 27px;
+  align-items: center;
+  justify-content: center;
+}
+
+.darkmode .attendant-title {
   background-color: #444;
-  color: #fff;
-  border: 1px solid #666;
 }
 
-.edit-list.dark-mode .form-field select {
+.darkmode .attendant-edit-list {
   background-color: #444;
   color: #fff;
   border: 1px solid #666;

@@ -227,7 +227,9 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
           <thead>
             <tr>
               <th>{isAttendantList ? "Attendant" : "Patient"}</th>
-              <th>{isAttendantList ? "Watching" : "Code"}</th>
+              <th>{isAttendantList ? "Watching" : "DDS"}</th>
+              <th>{isAttendantList ? null: "Requirements"}</th>
+              <th>{isAttendantList ? null: "Attendants"}</th>
             </tr>
           </thead>
           <tbody>
@@ -245,7 +247,9 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
                   />
                 </td>
                 {/* <td>{isAttendantList ? person.watching : person.dds}</td> */}
-                <td>{isAttendantList ? person.patient_id : person.dds}</td>
+                <td>{isAttendantList ? `${person.patient_fn} ${person.patient_ln}` : person.dds}</td>
+                <td>{isAttendantList ? null: person.requirements}</td>
+                <td>{isAttendantList ? null: person.attendants==0 ? null : person.attendants}</td>
               </tr>
             ))}
           </tbody>
@@ -255,7 +259,7 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
     </>
   );
 }
-//Did a change here reminder
+// Did a change here reminder
 // function DraggablePerson({ person, movePatient,moveAttendant, isAttendant }) {
 //   const [{ isDragging }, drag] = useDrag({
 //     type: 'PERSON',

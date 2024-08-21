@@ -86,6 +86,9 @@ function Load() {
       setOccupiedSeats(result.newOccupiedSeats);
       setAssignedPatients(result.assignedPatients);
       setAssignedAttendants(result.assignedAttendants);
+      console.log("Occupied Seats:", result.newOccupiedSeats);
+      console.log("Assigned Patients:", result.assignedPatients);
+      console.log("Assigned Attendants:", result.assignedAttendants);
     }
   };
 

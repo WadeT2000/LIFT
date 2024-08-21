@@ -8,7 +8,7 @@ import { FileUpload } from 'primereact/fileupload';
 import DarkModeToggle from '../DarkMode/DarkModeToggle';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import './PatientList.css';
+import './PatientEdit.css';
 
 export default function PatientList() {
     const navigate = useNavigate();
@@ -146,7 +146,7 @@ export default function PatientList() {
                         name="file"
                         accept=".csv"
                         maxFileSize={1000000}
-                        onSelect={onFileSelect}  // Change this to onSelect
+                        onSelect={onFileSelect} 
                         auto
                         chooseLabel="Import Mission"
                     />

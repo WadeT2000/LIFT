@@ -10,7 +10,7 @@ exports.up = function(knex) {
     table.bigInteger('patient_id');
     table.string('casualty_event', 250);
     table.string('requirements', 250);
-    table.string('attendants', 250);
+    table.integer('attendants', 250);
     table.string('originating_mtf', 250);
     table.string('destination_mtf', 250);
     table.string('primary_med_spec', 250);

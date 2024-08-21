@@ -115,6 +115,17 @@ app.get('/aircraft', (req, res) => {
         .catch(error => res.status(500).json({ error: error.message }));
 })
 
+app.get('/aircraftid', (req, res) => {
+    const { search } = req.query
+    let query = knex('aircraft').select('*')
+    if(search) {
+        query = query.where('id', search);
+    }
+    query
+        .then(data => res.status(200).json(data))
+        .catch(error => res.status(500).json({ error: error.message }));
+})
+
 app.post('/addpatient', async (req, res) => {
     const { patientInfo, attendantInfo } = req.body;
     console.log("testing:", attendantInfo)
@@ -326,19 +337,27 @@ app.delete('/attendantmission1/:id', async (req, res) => {
     }
 });
 
-
 app.delete('/attendant/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
+        const attendant = await knex('attendant_mission_1')
+            .where({ id })
+            .first();
+        if (!attendant) {
+            return res.status(404).json({ message: 'Attendant not found' });
+        }
+        const patientId = attendant.patient_id;
         await knex('attendant_mission_1')
             .where({ id })
             .del();
-
-        res.status(200).json({ message: 'Attendant deleted successfully' });
+        await knex('patient_mission_1')
+            .where('id', patientId)
+            .decrement('attendants', 1);
+        res.status(200).json({ message: 'Attendant deleted successfully and patient updated' });
     } catch (error) {
-        console.error("Error deleting item:", error);
-        res.status(500).json({ message: 'Failed to delete item' });
+        console.error("Error deleting attendant and updating patient:", error);
+        res.status(500).json({ message: 'Failed to delete attendant and update patient' });
     }
 });
 
@@ -354,6 +373,83 @@ app.get('/attendantm1/:id', async (req, res) => {
     }
 })
 
+app.put('/attendantsingle', async (req, res) => {
+    const { id, first_name, last_name, enplane, deplane, age, gender, passenger_weight, grade, attendant_specialty } = req.body;
+    try {
+        await knex('attendant_mission_1')
+            .where('id', id)
+            .update({
+                first_name,
+                last_name,
+                enplane,
+                deplane,
+                age,
+                gender,
+                passenger_weight,
+                grade,
+                attendant_specialty
+            });
+
+        res.status(200).json({ message: 'Attendant updated successfully' });
+    } catch (error) {
+        console.error('Error updating attendant:', error);
+        res.status(500).json({ message: 'Failed to update attendant' });
+    }
+});
+
+
+app.delete('/aircraftdelete/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await knex('aircraft')
+            .where({ id })
+            .del();
+
+        res.status(200).json({ message: 'Attendant deleted successfully' });
+    } catch (error) {
+        console.error("Error deleting item:", error);
+        res.status(500).json({ message: 'Failed to delete item' });
+    }
+})
+
+app.put('/aircraftedit/:id', async (req, res) => {
+    const { id, ac_name, ambulatory_left, ambulatory_right, litter_left, litter_right } = req.body;
+    try {
+        await knex('aircraft')
+            .where('id', id)
+            .update({
+                ac_name,
+                ambulatory_left,
+                ambulatory_right,
+                litter_left,
+                litter_right
+            });
+
+        res.status(200).json({ message: 'Aircraft updated successfully' });
+    } catch (error) {
+        console.error('Error updating Aircraft:', error);
+        res.status(500).json({ message: 'Failed to update Aircraft' });
+    }
+})
+
+app.post('/aircraftcreate', async (req, res) => {
+        const { ac_name, ambulatory_left, ambulatory_right, litter_left, litter_right } = req.body;
+        let aircraftExists = await knex('aircraft').select('*').where("ac_name", ac_name)    
+        if (aircraftExists.length === 0) {
+            await knex('aircraft')
+                .insert({
+                    ac_name,
+                    ambulatory_left,
+                    ambulatory_right,
+                    litter_left,
+                    litter_right
+                })
+                res.status(200).json({ message: "Aircraft Added to the list" });
+            } else {
+                res.status(401).json({ message: "Aircraft already exists" });
+            }
+})
 
 app.post('/updatepatients', (req, res) => {
     console.log(req.body)

@@ -39,17 +39,6 @@ function Load() {
       .catch(error => console.error('Error fetching attendants:', error));
   }, []);
 
-  // useEffect(() => {
-  //   //turn selectedPlane data to relevant array location
-  //   console.log("Plane:", selectedPlane)
-  //   let arrayspot = null
-  //   if (selectedPlane) { arrayspot = 0 } //
-  //   else if (selectedPlane) { arrayspot = 1 }
-  //   fetch('http://localhost:8080/aircraft')
-  //     .then(response => response.json())
-  //     .then(data => setPlane(data[0]))
-  //     .catch(error => console.error('Error fetching plane data:', error));
-  // }, []);
 
   const movePatient = (patientId, toSlot) => {
     setOccupiedSeats(prev => {

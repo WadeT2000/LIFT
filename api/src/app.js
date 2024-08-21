@@ -292,6 +292,24 @@ app.delete('/attendantmission1/:id', async (req, res) => {
 });
 
 
+app.get('/loadattendants', async (req, res) => {
+    try {
+        const data = await knex('attendant_mission_1 as am1')
+            .join('patient_mission_1 as pm1', 'pm1.id', 'am1.patient_id')
+            .select(
+                'pm1.first_name as patient_first_name',
+                'pm1.last_name as patient_last_name',
+                'am1.first_name as attendant_first_name',
+                'am1.last_name as attendant_last_name'
+            );
+
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({ error: 'An error occurred while fetching data.' });
+    }
+});
+
+
 
 
 

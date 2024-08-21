@@ -29,9 +29,12 @@ function Load() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/attendantsmission1')
+    fetch('http://localhost:8080/loadattendants')
       .then(response => response.json())
-      .then(data => setAttendants(data)) // Correctly stores attendant data
+      .then(data => {
+        console.log(data)
+        setAttendants(data)
+      })
       .catch(error => console.error('Error fetching attendants:', error));
   }, []);
 

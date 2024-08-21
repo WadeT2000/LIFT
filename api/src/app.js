@@ -330,14 +330,23 @@ app.delete('/attendant/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
+        const attendant = await knex('attendant_mission_1')
+            .where({ id })
+            .first();
+        if (!attendant) {
+            return res.status(404).json({ message: 'Attendant not found' });
+        }
+        const patientId = attendant.patient_id;
         await knex('attendant_mission_1')
             .where({ id })
             .del();
-
-        res.status(200).json({ message: 'Attendant deleted successfully' });
+        await knex('patient_mission_1')
+            .where('id', patientId)
+            .decrement('attendants', 1);
+        res.status(200).json({ message: 'Attendant deleted successfully and patient updated' });
     } catch (error) {
-        console.error("Error deleting item:", error);
-        res.status(500).json({ message: 'Failed to delete item' });
+        console.error("Error deleting attendant and updating patient:", error);
+        res.status(500).json({ message: 'Failed to delete attendant and update patient' });
     }
 });
 
@@ -352,6 +361,30 @@ app.get('/attendantm1/:id', async (req, res) => {
         res.status(500).json({ message: 'Failed to find attendant' });
     }
 })
+
+app.put('/attendantsingle', async (req, res) => {
+    const { id, first_name, last_name, enplane, deplane, age, gender, passenger_weight, grade, attendant_specialty } = req.body;
+    try {
+        await knex('attendant_mission_1')
+            .where('id', id)
+            .update({
+                first_name,
+                last_name,
+                enplane,
+                deplane,
+                age,
+                gender,
+                passenger_weight,
+                grade,
+                attendant_specialty
+            });
+
+        res.status(200).json({ message: 'Attendant updated successfully' });
+    } catch (error) {
+        console.error('Error updating attendant:', error);
+        res.status(500).json({ message: 'Failed to update attendant' });
+    }
+});
 
 
 app.post('/updatepatients', (req, res) => {

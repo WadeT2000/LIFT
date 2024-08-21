@@ -3,230 +3,72 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  padding: 20px;
   box-sizing: border-box;
+  background-color: #fff;
+  /* Default background color */
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+  /* Default box-shadow */
 }
 
 /* Card styles */
-.card {
+.pcard {
   width: 100%;
   max-width: 900px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
-/* Button container styles */
-.button-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-/* Success button styles */
-.p-button-success {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-.p-button-success:hover {
-  background-color: #0056b3;
-}
-
-/* Warning button styles */
-.p-button-warning {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ffc107;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
-}
-
-.p-button-warning:hover {
-  background-color: #e0a800;
-}
-
-/* Danger button styles */
-.p-button-danger {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #dc3545;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
-}
-
-.p-button-danger:hover {
-  background-color: #c82333;
-}
-
-
-.p-button-secondary {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
-}
-
-
-/* Patient list styles */
-.patient-list {
-  margin-top: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.patient-list-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  border-bottom: 1px solid #eee;
-
-}
-
-.patient-list-item:last-child {
-  border-bottom: none;
-}
-
-/* Radio button styles */
-.p-radiobutton {
-  margin-left: 10px;
-}
-
-
-
-/* Attendants list styles */
-.attendants-list {
-  margin-top: 20px;
-}
-
-.attendant-item {
-  margin-bottom: 10px;
-}
-
-*/
-
-/* File upload styles */
-.file-upload-container {
-  margin-bottom: 20px;
-}
-
-.p-listbox-item {
-  display: flex;
-  justify-content: flex-end;
-  align-content: center;
-  background-color: #333;
-  color: whitesmoke
-}
-
-
-
-.p-listbox-item div text {
-  justify-self: flex-start;
-
-}
-
-
-.p-radiobutton {
-  margin-left: 350px;
-}
-
-.edit-list {
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-*/ .p-listbox.p-component.listbox {
-  margin-left: 23%;
-}
-
-
+/* Grid layout for form */
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
+/* Form elements styles */
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  width: 100%;
+  /* Full width within grid cell */
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+/* Button styles */
 .form-button {
   grid-column: span 3;
+  /* Span across all columns */
   display: flex;
   justify-content: center;
   padding: 8px;
 }
 
-.heading-list {
-  display: flex;
-  justify-content: center;
-}
-
-.listbox {
-  width: 53%;
-  display: flex;
-  justify-content: center;
-}
-
+/* Dark mode styles */
 body.dark-mode {
   background-color: #333;
   color: #ffffff;
 }
 
-.card.dark-mode {
-  background-color: #555;
+body.dark-mode .card {
+  background-color: #333;
+  color: #ffffff;
   box-shadow: 0px 9px 46px 8px rgba(255, 255, 255, 0.12), 0px 24px 38px 3px rgba(255, 255, 255, 0.14), 0px 11px 15px rgba(255, 255, 255, 0.2);
 }
 
-/* Button styles */
-/* .p-button-success,
-.p-button-warning,
-.p-button-danger,
-.p-button-secondary {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-} */
-
-.p-button-success {
-  background-color: #007bff;
-  color: #fff;
+.dark-mode .container {
+  background-color: #333;
+  /* Light effect for dark mode */
+  box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8), 0px 0px 30px rgba(255, 255, 255, 0.6), 0px 0px 45px rgba(255, 255, 255, 0.4);
 }
-
-.p-button-warning {
-  background-color: #ffc107;
-  color: #fff;
-}
-
-.p-button-danger {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.p-button-secondary {
-  background-color: #6c757d;
-  color: #fff;
-}
-
-*/
 
 /* Button hover states */
 .p-button-success:hover {
@@ -245,83 +87,6 @@ body.dark-mode {
   background-color: #5a6268;
 }
 
-/* Dark mode button styles */
-.p-button-success.dark-mode,
-.p-button-warning.dark-mode,
-.p-button-danger.dark-mode,
-.p-button-secondary.dark-mode {
-  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
-}
-
-.darkmode-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-/* Dark mode button styles */
-.mode-toggle-button.dark-mode {
-  background-color: #555;
-  color: #fff;
-}
-
-.mode-toggle-button.light-mode {
-  background-color: #007bff;
-  color: #fff;
-}
-
-
-/* Container styles */
-.patient-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-
-}
-
-/* General Dark Mode Styles */
-body.dark-mode {
-  background-color: #333;
-  color: #ffffff;
-}
-
-/* Patient container */
-.patient-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-/* Card styles */
-.patient-card {
-  width: 100%;
-  max-width: 900px;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
-}
-
-*/
-
-/* Dark mode for patient container and card */
-.dark-mode .patient-container {
-  background-color: #444;
-}
-
-.dark-mode .patient-card {
-  background-color: #555;
-  color: #ffffff;
-  box-shadow: 0px 9px 46px 8px rgba(255, 255, 255, 0.12), 0px 24px 38px 3px rgba(255, 255, 255, 0.14), 0px 11px 15px rgba(255, 255, 255, 0.2);
-}
-
-.attendant-container .dark-mode {
-  background-color: #444;
-}
-
 .attendant-title {
   margin-top: 10px;
 }
@@ -332,12 +97,9 @@ body.dark-mode {
   justify-content: center;
 }
 
-.darkmode .attendant-title {
-  background-color: #444;
-}
-
-.darkmode .attendant-edit-list {
-  background-color: #444;
-  color: #fff;
-  border: 1px solid #666;
+.edit-list {
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

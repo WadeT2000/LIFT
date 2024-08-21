@@ -36,7 +36,7 @@ const useAutoAssign = () => {
                 });
                 setUprOrder(order);
 
-                const attendantsResponse = await fetch('http://localhost:8080/attendantsmission1');
+                const attendantsResponse = await fetch('http://localhost:8080/loadattendants');
                 const attendantsData = await attendantsResponse.json();
                 setAttendants(attendantsData);
 
@@ -111,6 +111,10 @@ const useAutoAssign = () => {
 
 
         const newOccupiedSeats = {};
+        const assignedPatients = new Set();
+        const assignedAttendants = new Set();
+
+
         const litterPatients = sortedPatients.filter(patient => litterRequirements.includes(patient.requirements));
         const ambulatoryPatients = sortedPatients.filter(patient => !litterRequirements.includes(patient.requirements));
     
@@ -118,29 +122,32 @@ const useAutoAssign = () => {
         const assignPatientAndAttendant = (patient, seatPool1, seatPool2) => {
             if (seatPool1.length > 0) {
                 const seat = seatPool1.shift();
-                newOccupiedSeats[seat.id] = patient.patient_id || patient.id;
+                newOccupiedSeats[seat.id] = patient.id;
+                assignedPatients.add(patient.id);
 
-                const patientAttendants = attendants.filter(a => a.patient_id === patient.patient_id || patient.id);
+                const patientAttendants = attendants.filter(a => a.patient_id === patient.id || a.patient_id === patient.patient_id); //IF patient.patient_id THEN does patients; IF patient.id THEN does attendants
                 patientAttendants.forEach(attendant => {
                      const nearestSeat = findNearestAmbulatorySeat(seat, allAmbulatorySeats);
                     if (nearestSeat) {
                         const index = allAmbulatorySeats.findIndex(s => s.id === nearestSeat.id);
                         if (index > -1) allAmbulatorySeats.splice(index, 1);
                         newOccupiedSeats[nearestSeat.id] = `attendant_${attendant.id}`;
+                        assignedAttendants.add(attendant.id);
                     }
                 });
 
             } else if (seatPool2.length > 0) {
                 const seat = seatPool2.shift();
-                newOccupiedSeats[seat.id] = patient.patient_id || patient.id;
+                newOccupiedSeats[seat.id] = patient.id;
                                     
-                const patientAttendants = attendants.filter(a => a.patient_id === patient.patient_id || patient.id);
+                const patientAttendants = attendants.filter(a => a.patient_id === patient.id || a.patient_id === patient.patient_id);//a
                 patientAttendants.forEach(attendant => {
                    const nearestSeat = findNearestAmbulatorySeat(seat, allAmbulatorySeats);
                     if (nearestSeat) {
                         const index = allAmbulatorySeats.findIndex(s => s.id === nearestSeat.id);
                         if (index > -1) allAmbulatorySeats.splice(index, 1);
                         newOccupiedSeats[nearestSeat.id] = `attendant_${attendant.id}`;
+                        assignedAttendants.add(attendant.id);
                     }
                 });
             };
@@ -163,7 +170,10 @@ const useAutoAssign = () => {
         }
     });
 
-        return newOccupiedSeats;
+        return { newOccupiedSeats,
+            assignedPatients: Array.from(assignedPatients),
+            assignedAttendants: Array.from(assignedAttendants)
+         }
     };
 
     return { autoAssignPatients, loading, error };

@@ -21,6 +21,8 @@ function Load() {
   const [attendants, setAttendants] = useState([])
   const { autoAssignPatients, loading } = useAutoAssign();
   const [, forceUpdate] = useReducer(x => x + 1, 0);
+  const [assignedPatients, setAssignedPatients] = useState([]);
+  const [assignedAttendants, setAssignedAttendants] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8080/patientsmission1')
@@ -30,7 +32,7 @@ function Load() {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost:8080/attendantsmission1')
+    fetch('http://localhost:8080/loadattendants')
       .then(response => response.json())
       .then(data => setAttendants(data)) // Correctly stores attendant data
       .catch(error => console.error('Error fetching attendants:', error));
@@ -87,11 +89,11 @@ function Load() {
   }
 
   const handleAutoAssign = () => {
-    const newOccupiedSeats = autoAssignPatients();
-    if (newOccupiedSeats) {
-      setOccupiedSeats(newOccupiedSeats);
-      forceUpdate();
-      console.log("Seats assigned:", newOccupiedSeats);
+    const result = autoAssignPatients();
+    if (result) {
+      setOccupiedSeats(result.newOccupiedSeats);
+      setAssignedPatients(result.assignedPatients);
+      setAssignedAttendants(result.assignedAttendants);
     }
   };
 

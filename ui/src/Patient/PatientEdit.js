@@ -240,56 +240,56 @@ export default function PatientEdit() {
           return attendantAdjustInfo.map((attendant, index) => (
               <Card key={index} title={`Attendant ${index + 1}`} style={{ marginTop: '10px', marginBottom: '20px' }}>
                     <form >
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`firstname-${index}`}>First Name</label>
                                 <InputText name="first_name" placeholder="First Name" value={attendant.first_name} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required  />
                             </FloatLabel>
                         </div>
 
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`lastname-${index}`}>Last Name</label>
                                 <InputText name="last_name" placeholder="Last Name" value={attendant.last_name} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required  />
                             </FloatLabel>
                         </div>
 
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`enplane-${index}`}>Enplane</label>
                                 <InputText name="enplane" placeholder="Enplane" value={attendant.enplane} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
                             </FloatLabel>
                         </div>
 
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`enplane-${index}`}>Deplane</label>
                                 <InputText name="deplane" placeholder="Deplane" value={attendant.deplane} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
                             </FloatLabel>
                         </div>
 
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`age-${index}`}>Age</label>
                                 <InputNumber name="age" placeholder="Age" value={attendant.age} onValueChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
                             </FloatLabel>
                         </div>
 
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`gender-${index}`}>Gender</label>
                                 <InputText name="gender" value={attendant.gender} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
                             </FloatLabel>
                         </div>
 
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`passenger-weight-${index}`}>Weight</label>
                                 <InputNumber name="passenger_weight" value={attendant.passenger_weight} onValueChange={(e) => handleAttendantAdjustInputChange(index, e)} required  />
                             </FloatLabel>
                         </div>
 
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`grade-${index}`}>Grade</label>
                                 <InputText name="grade" value={attendant.grade} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
@@ -297,7 +297,7 @@ export default function PatientEdit() {
                         </div>
 
 
-                        <div className="edit-list">
+                        <div className="attendant-edit-list">
                             <FloatLabel>
                                 <label htmlFor={`attendant_specialty-${index}`}>Attendant Specialty</label>
                                 <InputText name="attendant_specialty" value={attendant.attendant_specialty} onChange={(e) => handleAttendantAdjustInputChange(index, e)} required />
@@ -321,58 +321,58 @@ export default function PatientEdit() {
         const attendantCards = [];
         for(let i = 0; i < newAtt; i++) {
           attendantCards.push(
-            <Card key={i} title={`Attendant ${i + attendantAdjustInfo.length + 1}`} className="attedant-title">
+            <Card key={i} title={`Attendant ${i + attendantAdjustInfo.length + 1}`} className="attendant-title">
                   <form>
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label htmlFor={`firstname-${i}`}>First Name</label>
                               <InputText name="first_name" placeholder="First Name" value={attendantInfo[i]?.first_name || ''} onChange={(e) => handleAttendantInputChange(i, e)} required  />
                           </FloatLabel>
                       </div>
 
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label htmlFor={`lastname-${i}`}>Last Name</label>
                               <InputText name="last_name" placeholder="Last Name" value={attendantInfo[i]?.last_name || ''} onChange={(e) => handleAttendantInputChange(i, e)} required  />
                           </FloatLabel>
                       </div>
 
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label htmlFor={`enplane-${i}`}>Enplane</label>
                               <InputText name="enplane" placeholder="Enplane" value={attendantInfo[i]?.enplane || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
                           </FloatLabel>
                       </div>
 
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label htmlFor={`enplane-${i}`}>Deplane</label>
                               <InputText name="deplane" placeholder="Deplane" value={attendantInfo[i]?.deplane || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
                           </FloatLabel>
                       </div>
 
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label htmlFor={`age-${i}`}>Age</label>
                               <InputNumber name="age" placeholder="Age" value={attendantInfo[i]?.age || ''} onValueChange={(e) => handleAttendantInputChange(i, e)} required />
                           </FloatLabel>
                       </div>
 
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label htmlFor={`gender-${i}`}>Gender</label>
                               <InputText name="gender" value={attendantInfo[i]?.gender || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
                           </FloatLabel>
                       </div>
 
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label>Weight</label>
                               <InputNumber name="passenger_weight" value={attendantInfo[i]?.passenger_weight || ''} onValueChange={(e) => handleAttendantInputChange(i, e)} required  />
                           </FloatLabel>
                       </div>
 
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label htmlFor={`grade-${i}`}>Grade</label>
                               <InputText name="grade" value={attendantInfo[i]?.grade || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
@@ -380,7 +380,7 @@ export default function PatientEdit() {
                       </div>
 
 
-                      <div className="edit-list">
+                      <div className="attendant-edit-list">
                           <FloatLabel>
                               <label htmlFor={`attendant_specialty-${i}`}>Attendant Specialty</label>
                               <InputText name="attendant_specialty" value={attendantInfo[i]?.attendant_specialty || ''} onChange={(e) => handleAttendantInputChange(i, e)} required />
@@ -410,8 +410,8 @@ export default function PatientEdit() {
                 </div>
 
                 <div className="edit-list">
-                  <label htmlFor="lastname">Last Name</label>
-                  <InputText id="last_name" value={patientInfo.last_name} onChange={handleInputChange} required />
+                  <label>Last Name</label>
+                  <InputText name="last_name" value={patientInfo.last_name} onChange={handleInputChange} required />
                 </div>
 
                 <div className="edit-list">

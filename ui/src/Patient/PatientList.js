@@ -9,7 +9,7 @@ import DarkModeToggle from '../DarkMode/DarkModeToggle'
 //import Papa from 'papaparse'
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import './PatientEdit.css';
+import './PatientList.css';
 
 export default function PatientList() {
     const navigate = useNavigate();

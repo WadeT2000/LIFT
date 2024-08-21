@@ -134,7 +134,7 @@ function AmbulatorySlot({ slotId, patients, attendants, occupiedSeats, movePatie
       isOver: monitor.isOver(),
     }),
   });
-  
+
 
   return (
     <div
@@ -221,42 +221,42 @@ function PersonList({ people, movePatient, moveAttendant, isAttendantList }) {
 
   return (
     <>
-    <div ref={drop} className="patient-list-container" >
-      <h2 className="patient-list-title">{isAttendantList ? "Attendant List" : "Patient List"}</h2>
-      <div className="table-container">
-        <table className="patient-table">
-          <thead>
-            <tr>
-              <th>{isAttendantList ? "Attendant" : "Patient"}</th>
-              <th>{isAttendantList ? "Watching" : "DDS"}</th>
-              <th>{isAttendantList ? null: "Requirements"}</th>
-              <th>{isAttendantList ? null: "Attendants"}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {people.map((person) => (
-              <tr key={isAttendantList ? person.id : person.patient_id}> 
-                <td>
-                  <DraggablePerson
-                    person={person}
-                    movePatient={movePatient}
-                    moveAttendant={moveAttendant}
-                    isAttendant={isAttendantList}
+      <div ref={drop} className="patient-list-container" >
+        <h2 className="patient-list-title">{isAttendantList ? "Attendant List" : "Patient List"}</h2>
+        <div className="table-container">
+          <table className="patient-table">
+            <thead>
+              <tr>
+                <th>{isAttendantList ? "Attendant" : "Patient"}</th>
+                <th>{isAttendantList ? "Watching" : "DDS"}</th>
+                <th>{isAttendantList ? null : "Requirements"}</th>
+                <th>{isAttendantList ? null : "Attendants"}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {people.map((person) => (
+                <tr key={isAttendantList ? person.id : person.patient_id}>
+                  <td>
+                    <DraggablePerson
+                      person={person}
+                      movePatient={movePatient}
+                      moveAttendant={moveAttendant}
+                      isAttendant={isAttendantList}
                     // movePatient={isAttendantList ? moveAttendant : movePatient}
                     // isAttendant={isAttendantList}
-                  
-                  />
-                </td>
-                {/* <td>{isAttendantList ? person.watching : person.dds}</td> */}
-                <td>{isAttendantList ? `${person.patient_fn} ${person.patient_ln}` : person.dds}</td>
-                <td>{isAttendantList ? null: person.requirements}</td>
-                <td>{isAttendantList ? null: person.attendants==0 ? null : person.attendants}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+                    />
+                  </td>
+                  {/* <td>{isAttendantList ? person.watching : person.dds}</td> */}
+                  <td>{isAttendantList ? `${person.patient_fn} ${person.patient_ln}` : person.dds}</td>
+                  <td>{isAttendantList ? null : person.requirements}</td>
+                  <td>{isAttendantList ? null : person.attendants == 0 ? null : person.attendants}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
     </>
   );
 }

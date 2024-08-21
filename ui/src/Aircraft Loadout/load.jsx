@@ -16,11 +16,13 @@ function Load() {
   const [patients, setPatients] = useState([]);
   const location = useLocation()
   const selectedPlane = location.state?.selectedPlane //this grabs what plane was chosen on the homepage
-  const [plane, setPlane] = useState({}); //this grabs seat data from the fetch, depending on which plane was set in 'selectedPlane'
+  const [plane, setPlane] = useState(selectedPlane); //this grabs seat data from the fetch, depending on which plane was set in 'selectedPlane'
   const [occupiedSeats, setOccupiedSeats] = useState({});
   const [attendants, setAttendants] = useState([])
   const { autoAssignPatients, loading } = useAutoAssign();
   const [, forceUpdate] = useReducer(x => x + 1, 0);
+  const [assignedPatients, setAssignedPatients] = useState([]);
+  const [assignedAttendants, setAssignedAttendants] = useState([]);
 
   useEffect(() => {
     fetch('http://localhost:8080/patientsmission1')
@@ -39,17 +41,6 @@ function Load() {
       .catch(error => console.error('Error fetching attendants:', error));
   }, []);
 
-  useEffect(() => {
-    //turn selectedPlane data to relevant array location
-    console.log(selectedPlane)
-    let arrayspot = null
-    if (selectedPlane) { arrayspot = 0 } //
-    else if (selectedPlane) { arrayspot = 1 }
-    fetch('http://localhost:8080/aircraft')
-      .then(response => response.json())
-      .then(data => setPlane(data[selectedPlane.id -1]))
-      .catch(error => console.error('Error fetching plane data:', error));
-  }, []);
 
   const movePatient = (patientId, toSlot) => {
     setOccupiedSeats(prev => {
@@ -90,11 +81,11 @@ function Load() {
   }
 
   const handleAutoAssign = () => {
-    const newOccupiedSeats = autoAssignPatients();
-    if (newOccupiedSeats) {
-      setOccupiedSeats(newOccupiedSeats);
-      forceUpdate();
-      console.log("Seats assigned:", newOccupiedSeats);
+    const result = autoAssignPatients();
+    if (result) {
+      setOccupiedSeats(result.newOccupiedSeats);
+      setAssignedPatients(result.assignedPatients);
+      setAssignedAttendants(result.assignedAttendants);
     }
   };
 

@@ -250,6 +250,10 @@ export default function ViewLoadPlan() {
         })
     }, [])
 
+    const handleAutoClear = () => {
+        setOccupiedSeats([])
+      }
+
     useEffect(()=>{
         console.log("Seats", occupiedSeats)
         console.log("stops", sortedStops)
@@ -702,67 +706,6 @@ function DraggablePerson({ person, movePatient, moveAttendant, isAttendant }) {
 
 
 const StopsInOrder = ({ onUpdateStops }) => {
-//   const [patients, setPatients] = useState([]);
-//   const [sortedStops, setSortedStops] = useState([]);
-//   const [isLoading, setIsLoading] = useState(true);
-//   const [uprOrder, setUprOrder] = useState({});
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       fetch('http://localhost:8080/patientsmission1')
-//         .then(response => {
-//           if (!response.ok) {
-//             throw new Error(`HTTP error! status: ${response.status}`);
-//           }
-//           return response.json();
-//         })
-//         .then(data => {
-//           setPatients(data);
-
-//         //   // Extract unique UPR values and create UPR order
-//         //   const uniqueUPRs = [...new Set(data.map(patient => patient.upr))];
-//         //   const order = {};
-//         //   ['Priority', 'Urgent', 'Routine'].forEach((upr, index) => {
-//         //     if (uniqueUPRs.includes(upr)) {
-//         //       order[upr] = index;
-//         //     }
-//         //   });
-//         //   uniqueUPRs.forEach(upr => {
-//         //     if (!(upr in order)) {
-//         //       order[upr] = Object.keys(order).length;
-//         //     }
-//         //   });
-//         //   setUprOrder(order);
-
-//         //   setIsLoading(false);
-//         // })
-//         // .catch(error => {
-//         //   console.error('Error fetching data:', error);
-//         //   setIsLoading(false);
-//         });
-//     };
-//     fetchData();
-//   }, []);
-
-//   useEffect(() => {
-//     if (patients.length && Object.keys(uprOrder).length) {
-//       // Sort patients first by UPR, then by their order in the original list
-//       const sortedPatients = [...patients].sort((a, b) => {
-//         if (uprOrder[a.upr] !== uprOrder[b.upr]) {
-//           return uprOrder[a.upr] - uprOrder[b.upr];
-//         }
-//         return patients.indexOf(a) - patients.indexOf(b);
-//       });
-
-//       // Extract unique stops from the sorted patients
-//       const uniqueStops = Array.from(new Set(sortedPatients.map(patient => patient.dds)));
-//       setSortedStops(uniqueStops);
-
-//       // Pass the sorted stops back to the parent component
-//       onUpdateStops(uniqueStops);
-//     }
-//   }, [patients, uprOrder]);
-
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData('text/plain', index);
   };
@@ -778,10 +721,8 @@ const StopsInOrder = ({ onUpdateStops }) => {
     const [reorderedItem] = newStops.splice(dragIndex, 1);
     newStops.splice(dropIndex, 0, reorderedItem);
     setSortedStops(newStops);
-    onUpdateStops(newStops); // Update parent with reordered stops
+    onUpdateStops(newStops);
   };
-
-//   if (isLoading) return <div className="stops-in-order">Loading stops...</div>;
 
   return (
     <div className="stops-list">
@@ -824,8 +765,22 @@ return (
       <button className='Back-bttn' onClick={handleClick}>Home</button>
       <div className="stops">
         <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
+        <button className='auto-assign-btn' onClick={handleAutoClear}>Clear</button>
         <StopsInOrder onUpdateStops={handleUpdateStops} />
       </div>
+        <Card title={`Update Your Load Plan`} className="card">
+              <form className="form-grid" onSubmit={handleAllSubmit}>
+                <div className="edit-list">
+                  <FloatLabel>
+                    <label>Load Plan Name</label>
+                    <InputText name="lp_name" value={loadPlanInfo.lp_name} onChange={handleInputChange} required />
+                  </FloatLabel>
+                </div>
+                <div className="form-button">
+                    <Button label="Update" icon="pi pi-check" type="submit" className="p-button-success" />
+                </div>
+              </form>
+        </Card>
       <div className="main-content">
         <div className="airplane-section">
           {renderRows(plane, patients, attendants, occupiedSeats, movePatient, moveAttendant)}
@@ -846,21 +801,7 @@ return (
         </div>
 
       </div>
-      <Card title={`Update Your Load Plan`} className="card">
-                
-
-              <form className="form-grid" onSubmit={handleAllSubmit}>
-                <div className="edit-list">
-                  <FloatLabel>
-                    <label>Load Plan Name</label>
-                    <InputText name="lp_name" value={loadPlanInfo.lp_name} onChange={handleInputChange} required />
-                  </FloatLabel>
-                </div>
-                <div className="form-button">
-                    <Button label="Update" icon="pi pi-check" type="submit" className="p-button-success" />
-                </div>
-              </form>
-            </Card>
+      
             <div className="darkmode-container">
                     <DarkModeToggle />
                 </div>

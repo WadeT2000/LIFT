@@ -158,7 +158,9 @@ const handleAllSubmit = async (e) => {
   navigate('/home');
 };
 
-
+const handleAutoClear = () => {
+  setOccupiedSeats([])
+}
 
 
 
@@ -170,8 +172,22 @@ const handleAllSubmit = async (e) => {
       <button className='Back-bttn' onClick={handleClick}>Home</button>
       <div className="stops">
         <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
+        <button className='auto-assign-btn' onClick={handleAutoClear}>Clear</button>
         <StopsInOrder onUpdateStops={handleUpdateStops} />
       </div>
+      <Card title={`Save Your Load Plan`} className="card">
+              <form className="form-grid" onSubmit={handleAllSubmit}>
+                <div className="edit-list">
+                  <FloatLabel>
+                    <label>Load Plan Name</label>
+                    <InputText name="lp_name" value={loadPlanInfo.lp_name} onChange={handleInputChange} required />
+                  </FloatLabel>
+                </div>
+                <div className="form-button">
+                    <Button label="Save" icon="pi pi-check" type="submit" className="p-button-success" />
+                </div>
+              </form>
+      </Card>
       <div className="main-content">
         <div className="airplane-section">
           {renderRows(plane, patients, attendants, occupiedSeats, movePatient, moveAttendant)}
@@ -192,19 +208,6 @@ const handleAllSubmit = async (e) => {
         </div>
 
       </div>
-      <Card title={`Save Your Load Plan`} className="card">
-              <form className="form-grid" onSubmit={handleAllSubmit}>
-                <div className="edit-list">
-                  <FloatLabel>
-                    <label>Load Plan Name</label>
-                    <InputText name="lp_name" value={loadPlanInfo.lp_name} onChange={handleInputChange} required />
-                  </FloatLabel>
-                </div>
-                <div className="form-button">
-                    <Button label="Save" icon="pi pi-check" type="submit" className="p-button-success" />
-                </div>
-              </form>
-            </Card>
             <div className="darkmode-container">
                     <DarkModeToggle />
                 </div>

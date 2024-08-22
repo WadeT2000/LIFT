@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Stops.css';
 
-const StopsInOrder = () => {
+const StopsInOrder = ({ onUpdateStops }) => {
   const [patients, setPatients] = useState([]);
   const [sortedStops, setSortedStops] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +18,7 @@ const StopsInOrder = () => {
         })
         .then(data => {
           setPatients(data);
-          
+
           // Extract unique UPR values and create UPR order
           const uniqueUPRs = [...new Set(data.map(patient => patient.upr))];
           const order = {};
@@ -40,7 +40,7 @@ const StopsInOrder = () => {
           console.error('Error fetching data:', error);
           setIsLoading(false);
         });
-    }
+    };
     fetchData();
   }, []);
 
@@ -57,6 +57,9 @@ const StopsInOrder = () => {
       // Extract unique stops from the sorted patients
       const uniqueStops = Array.from(new Set(sortedPatients.map(patient => patient.dds)));
       setSortedStops(uniqueStops);
+
+      // Pass the sorted stops back to the parent component
+      onUpdateStops(uniqueStops);
     }
   }, [patients, uprOrder]);
 
@@ -75,9 +78,10 @@ const StopsInOrder = () => {
     const [reorderedItem] = newStops.splice(dragIndex, 1);
     newStops.splice(dropIndex, 0, reorderedItem);
     setSortedStops(newStops);
-  }
+    onUpdateStops(newStops); // Update parent with reordered stops
+  };
 
-  if (isLoading) return <div className="stops-in-order">Loading stops...</div>
+  if (isLoading) return <div className="stops-in-order">Loading stops...</div>;
 
   return (
     <div className="stops-list">
@@ -102,7 +106,7 @@ const StopsInOrder = () => {
         <p>No stops found.</p>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default StopsInOrder;

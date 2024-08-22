@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
-import { renderRows, Ambulatory, Litter, AmbulatorySlot, LitterSlot, PersonList, DraggablePerson } from './builder.jsx'
+import { renderRows, PersonList} from './builder.jsx';
+import { FloatLabel } from 'primereact/floatlabel';
+import { InputText } from 'primereact/inputtext';
+import { Card } from 'primereact/card';
 import './patientTable.css';
 import './load.css';
 
@@ -15,15 +17,16 @@ import { Button } from 'primereact/button';
 function Load() {
   const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
-  const location = useLocation()
-  const selectedPlane = location.state?.selectedPlane //this grabs what plane was chosen on the homepage
-  const [plane, setPlane] = useState(selectedPlane); //this grabs seat data from the fetch, depending on which plane was set in 'selectedPlane'
+  const location = useLocation();
+  const [sortedStops, setSortedStops] = useState([]);
+  const selectedPlane = location.state?.selectedPlane
+  const [plane, setPlane] = useState(selectedPlane); 
   const [occupiedSeats, setOccupiedSeats] = useState({});
   const [attendants, setAttendants] = useState([])
   const { autoAssignPatients, loading } = useAutoAssign();
   const [, forceUpdate] = useReducer(x => x + 1, 0);
-  const [assignedPatients, setAssignedPatients] = useState([]);
-  const [assignedAttendants, setAssignedAttendants] = useState([]);
+  const [loadPlanInfo, setLoadPlanInfo] = useState({ lp_name: ''});
+
 
   useEffect(() => {
     fetch('http://localhost:8080/patientsmission1')
@@ -41,6 +44,10 @@ function Load() {
       })
       .catch(error => console.error('Error fetching attendants:', error));
   }, []);
+
+  const handleUpdateStops = (stops) => {
+    setSortedStops(stops); 
+  };
 
 
   const movePatient = (patientId, toSlot) => {
@@ -85,30 +92,71 @@ function Load() {
     const result = autoAssignPatients();
     if (result) {
       setOccupiedSeats(result.newOccupiedSeats);
-      setAssignedPatients(result.assignedPatients);
-      setAssignedAttendants(result.assignedAttendants);
-      console.log("Occupied Seats:", result.newOccupiedSeats);
-      console.log("Assigned Patients:", result.assignedPatients);
-      console.log("Assigned Attendants:", result.assignedAttendants);
+      // console.log("Occupied Seats:", result.newOccupiedSeats);
     }
   };
 
 
 
 
+  const handlesaveLP = async (e) => {
+    e.preventDefault();
+        try {
+            const response = await fetch(`http://localhost:8080/lpsave`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                  loadPlanInfo: loadPlanInfo, 
+                  occupiedSeats: occupiedSeats,
+                  sortedStops: sortedStops,
+                  plane: plane
+                })
+            });
 
-  const saveLP = () => {
-
-  }
+            if (response.ok) {
+                const data = await response.json();
+                alert(data.message);
+            } else {
+                console.error('Failed to update LoadPlan');
+            }
+        } catch (error) {
+            console.error('Error updating LoadPlan:', error);
+        }
+    };
 
 useEffect(()=>{
-  console.log("Testing", occupiedSeats)
-}, [occupiedSeats])
+  // console.log("Seating", occupiedSeats)
+  // console.log("Stops", sortedStops)
+  console.log("LP name", loadPlanInfo)
+}, [ loadPlanInfo])
 
 
+const validateFields = () => {
+  for (const key in loadPlanInfo) {
+      if (loadPlanInfo[key] === '' || loadPlanInfo[key] === null) {
+          return false;
+      }
+  }
+  return true;
+};
 
+const handleInputChange = (e) => {
+  const { name, value } = e.target;
+  setLoadPlanInfo({ ...loadPlanInfo, [name]: value });
+};
 
-
+const handleAllSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateFields()) {
+      alert('Please fill in all the fields before submitting.');
+      return;
+  }
+  await handlesaveLP(e);
+  navigate('/home');
+};
 
 
 
@@ -122,7 +170,7 @@ useEffect(()=>{
       <button className='Back-bttn' onClick={handleClick}>Home</button>
       <div className="stops">
         <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
-        <StopsInOrder />
+        <StopsInOrder onUpdateStops={handleUpdateStops} />
       </div>
       <div className="main-content">
         <div className="airplane-section">
@@ -144,10 +192,23 @@ useEffect(()=>{
         </div>
 
       </div>
-      <Button>Save</Button>
-      <div className="darkmode-container">
-        <DarkModeToggle />
-      </div>
+      <Card title={`Save Your Load Plan`} className="card">
+                <div className="darkmode-container">
+                    <DarkModeToggle />
+                </div>
+
+              <form className="form-grid" onSubmit={handleAllSubmit}>
+                <div className="edit-list">
+                  <FloatLabel>
+                    <label>Load Plan Name</label>
+                    <InputText name="lp_name" value={loadPlanInfo.lp_name} onChange={handleInputChange} required />
+                  </FloatLabel>
+                </div>
+                <div className="form-button">
+                    <Button label="Save" icon="pi pi-check" type="submit" className="p-button-success" />
+                </div>
+              </form>
+            </Card>
     </div>
   );
 }

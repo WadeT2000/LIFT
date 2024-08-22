@@ -452,7 +452,71 @@ app.post('/aircraftcreate', async (req, res) => {
 })
 
 app.get('/loadplans', (req, res) => {
-    knex('load_plan').select('*').then(data => res.status(200).json(data))
+    const { search } = req.query
+    let query = knex('load_plan').select('*')
+    if (search) {
+        query = query.where('id', search);
+    }
+    query
+        .then(data => res.status(200).json(data))
+        .catch(error => res.status(500).json({ error: error.message }));
+})
+
+
+app.post('/lpsave', async (req, res) => {
+    const { loadPlanInfo, occupiedSeats, sortedStops, plane } = req.body;
+    let saveExists = await knex('load_plan').select("*").where('lp_name', loadPlanInfo.lp_name);
+    if(saveExists.length === 0) {
+        const occupiedSeatsJson = JSON.stringify(occupiedSeats);
+        const stopsOrderJson = JSON.stringify(sortedStops);
+        const planeJson = JSON.stringify(plane);
+        await knex('load_plan').insert({
+            lp_name: loadPlanInfo.lp_name,
+            occupied_seats: occupiedSeatsJson,
+            stops_order: stopsOrderJson,
+            plane: planeJson
+        })
+        res.status(200).json({ message: "Load Plan has been saved" });
+    } else {
+        res.status(401).json({ message: "Load Plan already exists" });
+    }
+})
+
+app.delete('/loadplandelete/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        await knex('load_plan')
+            .where({ id })
+            .del();
+
+        res.status(200).json({ message: 'Load Plan deleted successfully' });
+    } catch (error) {
+        console.error("Error deleting Load Plan:", error);
+        res.status(500).json({ message: 'Failed to delete Load Plan' });
+    }
+})
+
+app.put('/lpupdate/:id', async (req, res) => {
+    const { id } = req.params
+    const { loadPlanInfo, occupiedSeats, sortedStops, plane } = req.body;
+    try {
+        const occupiedSeatsJson = JSON.stringify(occupiedSeats);
+        const stopsOrderJson = JSON.stringify(sortedStops);
+        const planeJson = JSON.stringify(plane);
+        await knex('load_plan')
+            .where('id', id)
+            .update({
+            lp_name: loadPlanInfo.lp_name,
+            occupied_seats: occupiedSeatsJson,
+            stops_order: stopsOrderJson,
+            plane: planeJson
+        });
+        res.status(200).json({ message: 'Load PLan updated successfully' });
+    } catch (error) {
+        console.error('Error updating Load Plan:', error);
+        res.status(500).json({ message: 'Failed to update Load Plan' });
+    }
 })
 
 app.post('/updatepatients', (req, res) => {

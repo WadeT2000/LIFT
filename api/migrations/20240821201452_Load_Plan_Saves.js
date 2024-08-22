@@ -6,11 +6,9 @@ exports.up = function(knex) {
   return knex.schema.createTable('load_plan', table => {
     table.increments();
     table.string('lp_name');
-    table.json('amb_left').notNullable();
-    table.json('lit_left').notNullable();
-    table.json('amb_right').notNullable();
-    table.json('lit_right').notNullable();
+    table.json('occupied_seats').notNullable();
     table.json('stops_order').notNullable();
+    table.json('plane').notNullable();
   })
 };
 

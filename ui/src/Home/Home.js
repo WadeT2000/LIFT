@@ -124,6 +124,23 @@ export default function HomePage() {
         </div>
       );
     }
+
+    async function deleteLoadPlan(loadplanid) {
+      try {
+          const response = await fetch(`http://localhost:8080/loadplandelete/${loadplanid}`, {
+              method: 'DELETE',
+              credentials: 'include'
+          });
+          if (response.ok) {
+              setLoadPlans(loadPlans.filter(loadplan => loadplan.id !== loadplanid));
+              setSelectedLoadPlan(null);
+          } else {
+              console.error("Failed to delete Load Plan");
+          }
+      } catch (error) {
+          console.error("Error deleting Load Plan:", error);
+      }
+  }
   
     return (
       <div className="homepage-container">
@@ -169,17 +186,17 @@ export default function HomePage() {
 
                 <div className="form-button">
                     <Button
-                        label="Edit Aircraft"
+                        label="View Loadplan"
                         icon="pi pi-pencil"
                         className="p-button-warning"
                         onClick={() => navigate(`/LoadPlanView/${selectedLoadPlan}`)}
                         disabled={selectedLoadPlan === null}
                     />
                     <Button
-                        label="Edit Load Plan"
+                        label="Delete Load Plan"
                         icon="pi pi-trash"
                         className="p-button-danger"
-                        onClick={() => navigate(`/LoadPlanEdit/${selectedLoadPlan}`)}
+                        onClick={() => deleteLoadPlan(selectedLoadPlan)}
                         disabled={selectedLoadPlan === null}
                     />
                 </div>

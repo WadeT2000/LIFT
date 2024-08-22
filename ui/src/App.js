@@ -14,6 +14,7 @@ import PatientTable from './Aircraft Loadout/patientTable';
 import AircraftList from './Aircraft Builder/AirCraftList';
 import AircraftEdit from './Aircraft Builder/AirCraftEdit';
 import AircraftCreate from './Aircraft Builder/AirCraftCreate';
+import ViewLoadPlan from './Load Plans/LoadPlanView';
 import { PrimeReactProvider } from 'primereact/api';
 import Load from './Aircraft Loadout/load';
 // import StopsInOrder from './Aircraft Loudout/Stops';
@@ -68,6 +69,7 @@ function App() {
                   <Route path='/AircraftEdit/:aircraftid' element={<AircraftEdit/>}/>
                   <Route path='/AircraftCreate' element={<AircraftCreate/>}/>
                   <Route path="/lp" element={<Load />} />
+                  <Route path='/LoadPlanView/:lpId' element={<ViewLoadPlan/>}/>
                   {/* Will Delete */}
                   <Route path='/table' element={<PatientTable />} />
                 <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />

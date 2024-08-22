@@ -22,7 +22,6 @@ export default function LoginPage() {
       setUsername(savedUsername);
     }
 
-   
     const savedDarkMode = localStorage.getItem('darkMode') === 'true';
     setDarkMode(savedDarkMode);
 
@@ -45,9 +44,9 @@ export default function LoginPage() {
 
   const login = async (e) => {
     e.preventDefault();
-    if(username == 'rickroll' || username == 'Rick Astley' || password == 'rickroll'){
-      window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ")
-      
+    if (username === 'rickroll' || username === 'Rick Astley' || password === 'rickroll') {
+      window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+      return;
     }
     const userValidation = formValidation(username, `Username`);
     const passValidation = formValidation(password, `Password`);
@@ -69,7 +68,7 @@ export default function LoginPage() {
       if (passValidation) {
         msg = msg.concat(passValidation);
       }
-      handlealert(msg);
+      handleAlert(msg);
     }
   };
 
@@ -103,39 +102,39 @@ export default function LoginPage() {
     }
   };
 
-  const handlealert = (msg) => {
+  const handleAlert = (msg) => {
     alert(msg);
   };
 
   return (
     <div className={`loginbackground ${darkMode ? 'dark-mode' : ''}`}>
       <div className="loginbox">
-        <p className="loginUser">Username:</p>
-        <input 
-          type="text" 
-          className='loginuserinput' 
-          minLength="5" 
-          maxLength="30" 
-          placeholder={checked && username !== '' ? username : ""} 
-          value={username} 
-          onChange={(e) => setUsername(e.target.value)}
-          onKeyPress={handleKeyPress} 
-          required
-        /><br/>
-        <p className="loginPass">Password:</p>
-        <input 
-          type="password" 
-          className='loginpassinput' 
-          minLength="5" 
-          maxLength="30" 
-          placeholder="" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          onKeyPress={handleKeyPress}
-          required
-        /><br/>
-        <button className="login-button" onClick={login}>Login</button><br/>
-        <button className="register-button" onClick={() => navigate('/registration')}>Create Account</button>
+        <form onSubmit={login}>
+          <p className="loginUser">Username:</p>
+          <input 
+            type="text" 
+            className='loginuserinput' 
+            minLength="5" 
+            maxLength="30" 
+            placeholder={checked && username !== '' ? username : ""} 
+            value={username} 
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          /><br/>
+          <p className="loginPass">Password:</p>
+          <input 
+            type="password" 
+            className='loginpassinput' 
+            minLength="5" 
+            maxLength="30" 
+            placeholder="" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required
+          /><br/>
+          <button type="submit" className="login-button">Login</button><br/>
+          <button className="register-button" onClick={() => navigate('/registration')}>Create Account</button>
+        </form>
       </div>
       <div className="toggle-container">
         <button 

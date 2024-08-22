@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState} from "react";
 import authenticate from './Auth';
 import './Register.css';
-
+// import '/path/to/your/Register.css';
 
 export default function Register() {
    const navigate = useNavigate();
@@ -91,8 +91,8 @@ export default function Register() {
 
    return (
        <div>
-           <div className="registerbox">
-               <button className="logrback" onClick={() => navigate('/')}>Back to Login</button><br/>
+           <div className="registerbox"> 
+               <button className="logback" onClick={() => navigate('/')}>Back to Login</button><br/>
                <p className="registerfname">First Name:</p>
                <input type="text" className="regfnameinput" minLength="1" maxLength="30" placeholder="" value={fName} onChange={(e) => setFname(e.target.value)} required/>
                <p className="registerlname">Last Name:</p>

@@ -8,7 +8,7 @@ import { FileUpload } from 'primereact/fileupload';
 import DarkModeToggle from '../DarkMode/DarkModeToggle';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import './PatientEdit.css';
+import './PatientList.css';
 
 export default function PatientList() {
     const navigate = useNavigate();
@@ -133,115 +133,123 @@ export default function PatientList() {
 
     return (
         <div className="container">
-            <div className="card">
-                <div className="darkmode-container">
-                    <DarkModeToggle />
-                </div>
-
-                <Toast ref={toast} />
-
-                <div className="form-button">
-                    <FileUpload
-                        mode="basic"
-                        name="file"
-                        accept=".csv"
-                        maxFileSize={1000000}
-                        onSelect={onFileSelect} 
-                        auto
-                        chooseLabel="Import Mission"
-                    />
-                    <Button label="Export Mission" onClick={downloadCSV} />
-                </div>
-
-                <div className="form-button">
-                    <Button
-                        label="Add Single Patient"
-                        icon="pi pi-plus"
-                        onClick={() => navigate('/PatientAddPage')}
-                        className="p-button-success"
-                    />
-                </div>
-
-                <div>
-                    <h1 className="heading-list">Patients</h1>
-                    <ListBox
-                        value={selectedPatient}
-                        options={patients.map(patient => ({
-                            label: (
-                                <div>
-                                    {`${patient.first_name} ${patient.last_name} - ${patient.patient_id}`}
-                                    <RadioButton
-                                        value={patient.id}
-                                        checked={selectedPatient === patient.id}
-                                    />
-                                </div>
-                            ),
-                            value: patient.id,
-                        }))}
-                        onChange={(e) => setSelectedPatient(e.value)}
-                        className="listbox"
-                    />
-                </div>
-
-                <div className="form-button">
-                    <Button
-                        label="Edit Patient"
-                        icon="pi pi-pencil"
-                        className="p-button-warning"
-                        onClick={() => navigate(`/PatientEdit/${selectedPatient}`)}
-                        disabled={selectedPatient === null}
-                    />
-                    <Button
-                        label="Delete Patient"
-                        icon="pi pi-trash"
-                        className="p-button-danger"
-                        onClick={() => deletepatient(selectedPatient)}
-                        disabled={selectedPatient === null}
-                    />
-                    <Button
-                        label="Back"
-                        icon="pi pi-arrow-left"
-                        onClick={() => navigate('/home')}
-                        className="p-button-secondary"
-                    />
-                </div>
-                <div>
-                    <h1 className="heading-list">Attendants</h1>
-                    <ListBox
-                        value={selectedAttendant}
-                        options={attendants.map(attendant => ({
-                            label: (
-                                <div>
-                                    {`${attendant.first_name} ${attendant.last_name} - ${attendant.patient_fn} ${attendant.patient_ln}`}
-                                    <RadioButton
-                                        value={attendant.id}
-                                        checked={selectedAttendant === attendant.id}
-                                    />
-                                </div>
-                            ),
-                            value: attendant.id,
-                        }))}
-                        onChange={(e) => setSelectedAttendant(e.value)}
-                        className="listbox"
-                    />
-                </div>
-                <div className="form-button">
-                    <Button
-                        label="Edit Attendant"
-                        icon="pi pi-pencil"
-                        className="p-button-warning"
-                        onClick={() => navigate(`/AttendantEdit/${selectedAttendant}`)}
-                        disabled={selectedAttendant === null}
-                    />
-                    <Button
-                        label="Delete Attendant"
-                        icon="pi pi-trash"
-                        className="p-button-danger"
-                        onClick={() => deleteAttendant(selectedAttendant)}
-                        disabled={selectedAttendant === null}
-                    />
-                </div>
+          <div className="card">
+            <div className="darkmode-container">
+              <DarkModeToggle />
             </div>
+      
+            <Toast ref={toast} />
+      
+            <div className="form-button">
+              <FileUpload
+                mode="basic"
+                name="file"
+                accept=".csv"
+                maxFileSize={1000000}
+                onSelect={onFileSelect} 
+                auto
+                chooseLabel="Import Mission"
+              />
+              <Button label="Export Mission" onClick={downloadCSV} />
+            </div>
+      
+            <div className="form-button">
+              <Button
+                label="Add Single Patient"
+                icon="pi pi-plus"
+                onClick={() => navigate('/PatientAddPage')}
+                className="p-button-success"
+              />
+            </div>
+      
+            <div>
+              <h1 className="heading-list">Patients</h1>
+              <ListBox
+  value={selectedPatient}
+  options={patients.map(patient => ({
+    label: (
+      <div className="p-listbox-item">
+        <div className="p-listbox-item-content">
+          {`${patient.first_name} ${patient.last_name} - ${patient.patient_id}`}
         </div>
-    );
-}
+        <RadioButton
+          value={patient.id}
+          checked={selectedPatient === patient.id}
+        />
+      </div>
+    ),
+    value: patient.id,
+  }))}
+  onChange={(e) => setSelectedPatient(e.value)}
+  className="listbox"
+/>
+
+            </div>
+      
+            <div className="form-button">
+              <Button
+                label="Edit Patient"
+                icon="pi pi-pencil"
+                className="p-button-warning"
+                onClick={() => navigate(`/PatientEdit/${selectedPatient}`)}
+                disabled={selectedPatient === null}
+              />
+              <Button
+                label="Delete Patient"
+                icon="pi pi-trash"
+                className="p-button-danger"
+                onClick={() => deletepatient(selectedPatient)}
+                disabled={selectedPatient === null}
+              />
+              <Button
+                label="Back"
+                icon="pi pi-arrow-left"
+                onClick={() => navigate('/home')}
+                className="p-button-secondary"
+              />
+            </div>
+      
+            <div>
+              <h1 className="heading-list">Attendants</h1>
+              <ListBox
+  value={selectedAttendant}
+  options={attendants.map(attendant => ({
+    label: (
+      <div className="p-listbox-item">
+        <div className="p-listbox-item-content">
+          {`${attendant.first_name} ${attendant.last_name} - ${attendant.patient_fn} ${attendant.patient_ln}`}
+        </div>
+        <RadioButton
+          value={attendant.id}
+          checked={selectedAttendant === attendant.id}
+        />
+      </div>
+    ),
+    value: attendant.id,
+  }))}
+  onChange={(e) => setSelectedAttendant(e.value)}
+  className="listbox"
+ />
+
+            </div>
+      
+            <div className="form-button">
+              <Button
+                label="Edit Attendant"
+                icon="pi pi-pencil"
+                className="p-button-warning"
+                onClick={() => navigate(`/AttendantEdit/${selectedAttendant}`)}
+                disabled={selectedAttendant === null}
+              />
+              <Button
+                label="Delete Attendant"
+                icon="pi pi-trash"
+                className="p-button-danger"
+                onClick={() => deleteAttendant(selectedAttendant)}
+                disabled={selectedAttendant === null}
+              />
+            </div>
+          </div>
+        </div>
+      );
+    } 

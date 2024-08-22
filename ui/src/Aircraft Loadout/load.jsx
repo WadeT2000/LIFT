@@ -193,10 +193,6 @@ const handleAllSubmit = async (e) => {
 
       </div>
       <Card title={`Save Your Load Plan`} className="card">
-                <div className="darkmode-container">
-                    <DarkModeToggle />
-                </div>
-
               <form className="form-grid" onSubmit={handleAllSubmit}>
                 <div className="edit-list">
                   <FloatLabel>
@@ -209,6 +205,9 @@ const handleAllSubmit = async (e) => {
                 </div>
               </form>
             </Card>
+            <div className="darkmode-container">
+                    <DarkModeToggle />
+                </div>
     </div>
   );
 }

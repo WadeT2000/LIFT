@@ -1,3 +1,4 @@
+/* General container styles */
 .container {
   display: flex;
   justify-content: center;
@@ -14,71 +15,48 @@
   padding: 20px;
   border-radius: 8px;
   background-color: #fff;
+  position: relative;
 }
 
 /* Dark mode card */
-.card.dark-mode {
+body.dark-mode .card {
   background-color: #444;
-  color: #ffffff;
+  color: #FFFFFF;
   box-shadow: 0px 9px 46px 8px rgba(255, 255, 255, 0.12), 0px 24px 38px 3px rgba(255, 255, 255, 0.14), 0px 11px 15px rgba(255, 255, 255, 0.2);
 }
 
-/* Button styles */
-.p-button-success,
-.p-button-warning,
-.p-button-danger,
-.p-button-secondary {
-  padding: 10px;
+/* Dark mode toggle container */
+.darkmode-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Dark mode toggle button styles */
+.mode-toggle-button {
+  background-color: #007BFF;
+  color: #fff;
   border: none;
   border-radius: 5px;
+  padding: 10px 20px;
   cursor: pointer;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
+  margin: 0;
 }
 
-.p-button-success {
-  background-color: #007bff;
+.mode-toggle-button.dark-mode {
+  background-color: #555;
   color: #fff;
-}
-
-.p-button-warning {
-  background-color: #ffc107;
-  color: #fff;
-}
-
-.p-button-danger {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.p-button-secondary {
-  background-color: #6c757d;
-  color: #fff;
-}
-
-/* Button hover states */
-.p-button-success:hover {
-  background-color: #0056b3;
-}
-
-.p-button-warning:hover {
-  background-color: #e0a800;
-}
-
-.p-button-danger:hover {
-  background-color: #c82333;
-}
-
-.p-button-secondary:hover {
-  background-color: #5a6268;
-}
-
-/* Dark mode button styles */
-.p-button-success.dark-mode,
-.p-button-warning.dark-mode,
-.p-button-danger.dark-mode,
-.p-button-secondary.dark-mode {
   box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Form button container styles */
+.form-button {
+  display: flex;
+  justify-content: center; /* Center align the "Add Single Patient" button */
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 /* Patient list styles */
@@ -89,10 +67,10 @@
   padding: 10px;
   max-height: 300px;
   overflow-y: auto;
-  background-color: #f8f9fa;
+  background-color: #F8F9FA;
 }
 
-.patient-list.dark-mode {
+body.dark-mode .patient-list {
   background-color: #444;
   border-color: #666;
 }
@@ -103,13 +81,14 @@
   justify-content: space-between;
   padding: 10px;
   border-bottom: 1px solid #eee;
+  align-items: center;
 }
 
 .patient-list-item:last-child {
   border-bottom: none;
 }
 
-.patient-list-item.dark-mode {
+body.dark-mode .patient-list-item {
   background-color: #555;
   color: #fff;
   border-bottom-color: #555;
@@ -117,35 +96,40 @@
 
 /* Radio button styles */
 .p-radiobutton {
-  margin-left: 30px;
-
-}
-
-/* File upload styles */
-.file-upload-container {
-  margin-bottom: 10px;
-
+  margin-left: auto;
 }
 
 /* ListBox styles */
 .p-listbox {
   background-color: #fff;
   color: #000;
+  padding: 0;
 }
 
-.dark-mode .p-listbox {
+body.dark-mode .p-listbox {
   background-color: #333;
   color: #fff;
 }
 
 .p-listbox-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* Space between content and radio button */
   align-items: center;
-
+  padding: 10px; /* Add padding around the content */
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  width: 100%; /* Ensure the item takes up full width */
 }
 
-.p-listbox-item.dark-mode {
+/* Content container within the ListBox item */
+.p-listbox-item-content {
+  flex: 1; /* Allow the content to grow and take available space */
+  margin-right: 10px; /* Space between content and radio button */
+  display: flex; /* Use flexbox to center content */
+  justify-content: center; /* Center content horizontally */
+  text-align: center; /* Center text within the content */
+}
+
+body.dark-mode .p-listbox-item {
   background-color: #444;
   color: #fff;
 }
@@ -159,314 +143,11 @@
   margin-bottom: 10px;
 }
 
-.heading-list.dark-mode {
+body.dark-mode .heading-list {
   color: #fff;
 }
 
-/* Dark mode container */
-.darkmode-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20px;
-}
-
-/* Form button styles */
-.form-button {
-  display: flex;
-  justify-content: center;
-  padding: 8px;
-}
-
-.form-button.dark-mode {
-  background-color: #444;
-  color: #fff;
-}
-
-/* -------------------------------- old css code
-
-/* Container styles */
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-/* Card styles */
-.card {
-  width: 100%;
-  max-width: 900px;
-  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  border-radius: 8px;
-}
-
-/* Button container styles */
-.button-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
-
-/* Success button styles */
-.p-button-success {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-.p-button-success:hover {
-  background-color: #0056b3;
-}
-
-/* Warning button styles */
-.p-button-warning {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #ffc107;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
-}
-
-.p-button-warning:hover {
-  background-color: #e0a800;
-}
-
-/* Danger button styles */
-.p-button-danger {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #dc3545;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
-}
-
-.p-button-danger:hover {
-  background-color: #c82333;
-}
-
-
-.p-button-secondary {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-  margin: 10px;
-}
-
-
-/* Patient list styles */
-.patient-list {
-  margin-top: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.patient-list-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  border-bottom: 1px solid #eee;
-
-}
-
-.patient-list-item:last-child {
-  border-bottom: none;
-}
-
-
-/* Radio button styles */
-.p-radiobutton {
-  margin-left: 10px;
-}
-
-
-
-/* Attendants list styles */
-.attendants-list {
-  margin-top: 20px;
-}
-
-.attendant-item {
-  margin-bottom: 10px;
-}
-
-/* File upload styles */
-.file-upload-container {
-  margin-bottom: 20px;
-}
-
-.p-listbox-item {
-  display: flex;
-  justify-content: flex-end;
-  align-content: center;
-  background-color: #333;
-  color: whitesmoke
-}
-
-.p-listbox-item div text {
-  justify-self: flex-start;
-
-}
-
-
-.p-radiobutton {
-  margin-left: 350px;
-}
-
-.edit-list {
-  margin-bottom: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.p-listbox.p-component.listbox {
-  margin-left: 23%;
-}
-
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 25px;
-}
-
-.form-button {
-  grid-column: span 3;
-  display: flex;
-  justify-content: center;
-  padding: 8px;
-}
-
-.heading-list {
-  display: flex;
-  justify-content: center;
-}
-
-.listbox {
-  width: 53%;
-  display: flex;
-  justify-content: center;
-}
-
-body.dark-mode {
-  background-color: #333;
-  color: #ffffff;
-}
-
-
-/* Button styles */
-.p-button-success,
-.p-button-warning,
-.p-button-danger,
-.p-button-secondary {
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-.p-button-success {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.p-button-warning {
-  background-color: #ffc107;
-  color: #fff;
-}
-
-.p-button-danger {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.p-button-secondary {
-  background-color: #6c757d;
-  color: #fff;
-}
-
-*/
-
-/* Button hover states */
-.p-button-success:hover {
-  background-color: #0056b3;
-}
-
-.p-button-warning:hover {
-  background-color: #e0a800;
-}
-
-.p-button-danger:hover {
-  background-color: #c82333;
-}
-
-.p-button-secondary:hover {
-  background-color: #5a6268;
-}
-
-/* Dark mode button styles */
-.p-button-success.dark-mode,
-.p-button-warning.dark-mode,
-.p-button-danger.dark-mode,
-.p-button-secondary.dark-mode {
-  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
-}
-
-.darkmode-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
-/* Dark mode button styles */
-.mode-toggle-button.dark-mode {
-  background-color: #555;
-  color: #fff;
-}
-
-.mode-toggle-button.light-mode {
-  background-color: #007bff;
-  color: #fff;
-}
-
-
-/* Container styles */
-.patient-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  box-sizing: border-box;
-
-}
-
-/* General Dark Mode Styles */
-body.dark-mode {
-  background-color: #333;
-  color: #ffffff;
-}
-
-/* Patient container */
+/* Patient container styles */
 .patient-container {
   display: flex;
   justify-content: center;
@@ -475,7 +156,7 @@ body.dark-mode {
   box-sizing: border-box;
 }
 
-/* Card styles */
+/* Card styles for patient section */
 .patient-card {
   width: 100%;
   max-width: 900px;
@@ -484,20 +165,23 @@ body.dark-mode {
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
 }
 
-*/
-
 /* Dark mode for patient container and card */
-.dark-mode .patient-container {
+body.dark-mode .patient-container {
   background-color: #444;
 }
 
-.dark-mode .patient-card {
+body.dark-mode .patient-card {
   background-color: #444;
-  color: #ffffff;
+  color: #FFFFFF;
   box-shadow: 0px 9px 46px 8px rgba(255, 255, 255, 0.12), 0px 24px 38px 3px rgba(255, 255, 255, 0.14), 0px 11px 15px rgba(255, 255, 255, 0.2);
 }
 
-.attendant-container .dark-mode {
+/* Additional styles for attendants list */
+.attendant-container {
+  background-color: #fff;
+}
+
+body.dark-mode .attendant-container {
   background-color: #444;
 }
 
@@ -511,11 +195,11 @@ body.dark-mode {
   justify-content: center;
 }
 
-.darkmode .attendant-title {
+body.dark-mode .attendant-title {
   background-color: #444;
 }
 
-.darkmode .attendant-edit-list {
+body.dark-mode .attendant-edit-list {
   background-color: #444;
   color: #fff;
   border: 1px solid #666;

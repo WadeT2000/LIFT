@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import LoginPage from './Login/Login';
 import Register from './Login/Register';
@@ -26,7 +26,16 @@ import { TouchBackend } from 'react-dnd-touch-backend';
 import { DarkModeProvider } from './DarkMode/DarkModeContext'
 // import { isTouchDevice } from './utils'; 
 
-
+function Navbar() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  return(<>
+    {location.pathname !== '/' && location.pathname !== '/registration' && (
+      <button className="login-button" onClick={() => navigate('/logout')}>Log out</button>
+    )}
+  </>
+  )
+}
 
 export const AuthContext = React.createContext();
 
@@ -56,6 +65,7 @@ function App() {
         <DarkModeProvider>
           <Router>
             <AuthContext.Provider value={{ auth, setAuth }}>
+              <Navbar/>
                 <Routes>
                   <Route path="/" element={<LoginPage />} />
                   <Route path="/registration" element={<Register />} />

@@ -60,37 +60,37 @@ export default function HomePage() {
     }
 
     function showpatientpreview() {
-        return (
-                <div className="homepage">
-                    <div className="preview-container">
-                        <div className="preview-column">
-                <p>Patient Name:</p>
-                <ul>
-                    {patients.map(patient => (
-                        <li key={patient.first_name}>
-                            {patient.first_name} {patient.last_name}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="preview-column2">
-                <p>Destination:</p>
-                <ul>
-                    {patients.map(patient => (
-                        <li key={patient.last_name}>
-                            {patient.dds}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
-    </div>
-        );
-    }
+      return (
+          <div className="homepage">
+              <div className="preview-container">
+                  <div className="preview-column">
+                      <div className="header-row">
+                          <h1 className="header-name">Patient Name</h1>
+                          <h1 className="header-destination">Destination</h1>
+                      </div>
+                      <div className="patient-destination-box">
+                          {patients.map(patient => (
+                              <div key={patient.first_name} className="patient-destination-row">
+                                  <span className="patient-name">
+                                      {patient.first_name} {patient.last_name}
+                                  </span>
+                                  <span className="patient-destination">
+                                      {patient.dds}
+                                  </span>
+                              </div>
+                          ))}
+                      </div>
+                  </div>
+              </div>
+          </div>
+      );
+  }
+  
   
     function aircraftoptions() {
       return (
         <div>
+          
           <select
             className="aircraft-dropdown"
             value={selectedAircraft}

@@ -15,31 +15,86 @@ html {
   justify-content: center;
   width: 100%;
   margin: 15px;
+  max-width: 800px;
 }
 
-.preview-column,
-.preview-column2 {
+.preview-column {
   padding: 0 15px;
   font-size: 30px;
   color: yellow;
-  text-align: left;
+  text-align: center;
   border: 2px solid #d1d5db;
   border-radius: 12px;
   line-height: 1.2;
   margin: 10px;
   background-color: #333;
+  max-height: 300px; 
+  overflow-y: auto;
+  width: 650px;
 }
 
-.preview-column p,
-.preview-column2 p {
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px; 
+  
+}
+
+.header-name, .header-destination {
+  margin: 0;
+  width: 45%;
+  font-size: 24px;
   text-align: center;
-  font-size: 40px;
-  text-decoration: underline;
-  color: whitesmoke;
-  text-transform: uppercase;
-  margin-bottom: 50px;
 }
 
+.patient-destination-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.patient-destination-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px; 
+}
+
+.patient-name {
+  width: 45%; 
+}
+
+.patient-destination {
+  width: 45%; 
+}
+
+/* Scrollbar styling */
+.preview-column::-webkit-scrollbar {
+  width: 12px; 
+}
+
+.preview-column::-webkit-scrollbar-track {
+  background: #444; 
+  border-radius: 10px; 
+}
+
+.preview-column::-webkit-scrollbar-thumb {
+  background-color: #888; 
+  border-radius: 10px; 
+  border: 3px solid #444; 
+}
+
+/* Scrollbar styling for Firefox */
+.preview-column {
+  scrollbar-width: thin; 
+  scrollbar-color: #888 #444; 
+}
+
+.preview-column::-moz-scrollbar-track {
+  border-radius: 10px; 
+}
+
+.preview-column::-moz-scrollbar-thumb {
+  border-radius: 10px; 
+}
 .homepage-container {
   background-image: url("https://media.defense.gov/2021/Sep/29/2002864215/2000/2000/0/170327-F-RU983-9032.JPG");
   background-attachment: fixed;
@@ -49,7 +104,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 15px;
+  
 }
 
 .homepage-content {

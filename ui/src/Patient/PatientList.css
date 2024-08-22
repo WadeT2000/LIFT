@@ -117,7 +117,7 @@ body.dark-mode .p-listbox {
   align-items: center;
   padding: 10px; /* Add padding around the content */
   box-sizing: border-box; /* Ensure padding is included in the width */
-  width: 100%; /* Ensure the item takes up full width */
+  width: 100%; /*Ensure the item takes up full width */
 }
 
 /* Content container within the ListBox item */

@@ -169,6 +169,12 @@ export default function AddPatientPage() {
     return (
       <div className="patient-container">
           <Card title="Patient List" className='patient-card'>
+          <Button
+                label="Back"
+                icon="pi pi-arrow-left"
+                onClick={() => navigate('/PatientList')}
+                className="p-button-secondary"
+              />
         <form onSubmit={AddPatient} className='form-grid'>
           
         <div className="edit-list">
@@ -321,7 +327,7 @@ export default function AddPatientPage() {
         <div className="edit-list">
           <FloatLabel>
             <label htmlFor='maxalt'>Max Altitude</label>
-            <InputText name="maxAlt" placeholder="Max Altitude" value={patientInfo.maxAlt || ''} onChange={handleInputChange} required  />
+            <InputText name="maxAlt" value={patientInfo.maxAlt || ''} onChange={handleInputChange} required  />
           </FloatLabel>
         </div>
 

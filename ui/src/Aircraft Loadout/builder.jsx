@@ -98,7 +98,6 @@ function Litter({ length, location, patients, attendants, occupiedSeats, movePat
 
 function AmbulatorySlot({ slotId, patients, attendants, occupiedSeats, movePatient, moveAttendant }) {
   const occupantId = occupiedSeats[slotId];
-  console.log(occupiedSeats)
   const occupant = patients.find(p => p.patient_id === occupantId) || attendants.find(a => a.id === occupantId);
 
   const [{ isDragging }, drag] = useDrag({

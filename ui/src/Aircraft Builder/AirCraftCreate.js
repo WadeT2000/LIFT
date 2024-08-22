@@ -9,7 +9,7 @@ import DarkModeToggle from '../DarkMode/DarkModeToggle';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova/theme.css';
-import '../Patient/AddPatientPage.css';
+import './Aircraft.css';
 
 export default function AircraftCreate() {
     const navigate = useNavigate();
@@ -80,7 +80,7 @@ export default function AircraftCreate() {
     };
 
     return (
-        <div className="container">
+        <div className="aircraft-container">
             <Card title={`Create Your Aircraft`} className="card">
                 <div className="darkmode-container">
                     <DarkModeToggle />

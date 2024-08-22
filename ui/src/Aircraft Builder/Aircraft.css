@@ -1,14 +1,28 @@
 /* Container styles */
-.container {
+.aircraft-container {
   display: flex;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  background-color: #fff;
-  /* position: relative; */
+  position: relative;
   box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
+.create-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: #333;
+  position: relative;
+  box-shadow: 0px 9px 46px 8px rgba(0, 0, 0, 0.12), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 11px 15px rgba(0, 0, 0, 0.2);
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 /* Card styles */
 .pcard {
   width: 100%;
@@ -97,9 +111,9 @@ body.dark-mode .card {
   cursor: pointer;
   position: absolute;
   top: -10px;
-  left: -500px;
+  left: -800px;
+} 
 
-}
 .p-button-secondary:hover {
   background-color: #0056b3
 }
@@ -120,3 +134,4 @@ body.dark-mode .card {
   align-items: center;
   justify-content: center;
 }
+

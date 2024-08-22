@@ -89,7 +89,7 @@ app.get('/loadattendants', async (req, res) => {
                 "am1.first_name",
                 "am1.last_name",
                 // "am1.enplane",
-                // "am1.deplane",
+                "am1.deplane",
                 // "am1.age",
                 // "am1.gender",
                 // "am1.passenger_weight",

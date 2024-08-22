@@ -254,13 +254,6 @@ export default function ViewLoadPlan() {
         setOccupiedSeats([])
       }
 
-    useEffect(()=>{
-        console.log("Seats", occupiedSeats)
-        console.log("stops", sortedStops)
-        console.log("name", loadPlanInfo)
-        console.log("plane", plane)
-    }, [occupiedSeats, sortedStops, loadPlanInfo, plane])
-
   const navigate = useNavigate();
   const [patients, setPatients] = useState([]);
   const [attendants, setAttendants] = useState([])
@@ -285,8 +278,27 @@ export default function ViewLoadPlan() {
   }, []);
 
   const handleUpdateStops = (stops) => {
+    const reversedStops = [...stops].reverse();
     setSortedStops(stops); 
+    const sortedPatients = [...patients].sort((a, b) => {
+      const indexA = reversedStops.indexOf(a.dds);
+      const indexB = reversedStops.indexOf(b.dds);
+      return indexA - indexB;
+    });
+    const sortedAttendants = [...attendants].sort((a, b) => {
+      const patientA = sortedPatients.find(patient => patient.id === a.patient_id);
+      const patientB = sortedPatients.find(patient => patient.id === b.patient_id);
+      return sortedPatients.indexOf(patientA) - sortedPatients.indexOf(patientB);
+    });
+    setPatients(sortedPatients); 
+    setAttendants(sortedAttendants);
   };
+
+  useEffect(() => {
+    if (sortedStops.length > 0) {
+      handleUpdateStops(sortedStops);
+    }
+  }, [sortedStops]);
 
 
   const movePatient = (patientId, toSlot) => {
@@ -331,7 +343,6 @@ export default function ViewLoadPlan() {
     const result = autoAssignPatients();
     if (result) {
       setOccupiedSeats(result.newOccupiedSeats);
-      // console.log("Occupied Seats:", result.newOccupiedSeats);
     }
   };
 
@@ -364,12 +375,6 @@ export default function ViewLoadPlan() {
             console.error('Error updating LoadPlan:', error);
         }
     };
-
-useEffect(()=>{
-  // console.log("Seating", occupiedSeats)
-  // console.log("Stops", sortedStops)
-  console.log("LP name", loadPlanInfo)
-}, [ loadPlanInfo])
 
 
 const validateFields = () => {
@@ -763,13 +768,14 @@ const StopsInOrder = ({ onUpdateStops }) => {
 return (
     <div className="load-container">
       <button className='Back-bttn' onClick={handleClick}>Home</button>
-      <div className="stops">
-        <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
-        <button className='auto-assign-btn' onClick={handleAutoClear}>Clear</button>
-        <StopsInOrder onUpdateStops={handleUpdateStops} />
-      </div>
-        <Card title={`Update Your Load Plan`} className="card">
-              <form className="form-grid" onSubmit={handleAllSubmit}>
+      <div className='topboxesload'>
+        <div className="stops">
+          <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
+          <button className='auto-assign-btn' onClick={handleAutoClear}>Clear</button>
+          <StopsInOrder onUpdateStops={handleUpdateStops} />
+        </div>
+        <Card title={`Save Your Load Plan`} className="load-card">
+              <form className="form-grid1" onSubmit={handleAllSubmit}>
                 <div className="edit-list">
                   <FloatLabel>
                     <label>Load Plan Name</label>
@@ -777,10 +783,11 @@ return (
                   </FloatLabel>
                 </div>
                 <div className="form-button">
-                    <Button label="Update" icon="pi pi-check" type="submit" className="p-button-success" />
+                    <Button label="Save" icon="pi pi-check" type="submit" className="p-button-success meow-button" />
                 </div>
               </form>
         </Card>
+      </div>
       <div className="main-content">
         <div className="airplane-section">
           {renderRows(plane, patients, attendants, occupiedSeats, movePatient, moveAttendant)}

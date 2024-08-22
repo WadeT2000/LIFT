@@ -31,7 +31,7 @@ function Navbar() {
   const location = useLocation()
   return(<>
     {location.pathname !== '/' && location.pathname !== '/registration' && (
-      <button className="login-button" onClick={() => navigate('/logout')}>Log out</button>
+      <button className="logout-button" onClick={() => navigate('/logout')}>Log out</button>
     )}
   </>
   )

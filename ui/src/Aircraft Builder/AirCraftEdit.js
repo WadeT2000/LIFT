@@ -8,7 +8,7 @@ import { FloatLabel } from "primereact/floatlabel";
 import  DarkModeToggle from '../DarkMode/DarkModeToggle';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import '../Patient/PatientEdit.css';
+import './Aircraft.css';
 
 
 export default function AircraftEdit() {
@@ -77,7 +77,7 @@ export default function AircraftEdit() {
     }
 
     return (
-      <div className="container">
+      <div className="aircraft-container">
           <Card title={`${aircraftInfo.ac_name}'s Info`} className="card">
           <div className="darkmode-container">
             <DarkModeToggle />

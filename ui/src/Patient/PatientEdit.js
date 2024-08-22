@@ -398,6 +398,12 @@ export default function PatientEdit() {
     return (
       <div className="container">
           <Card title={`${patientInfo.first_name} ${patientInfo.last_name}'s Info`} className="card">
+          <Button
+                label="Back"
+                icon="pi pi-arrow-left"
+                onClick={() => navigate('/PatientList')}
+                className="p-button-secondary"
+              />
           <div className="darkmode-container">
             <DarkModeToggle />
           </div>
@@ -405,123 +411,171 @@ export default function PatientEdit() {
               <form className="form-grid" onSubmit={handleAllSubmit}>
 
                 <div className="edit-list">
+                <FloatLabel>
                   <label>First Name</label>
                   <InputText name="first_name" value={patientInfo.first_name} onChange={handleInputChange} required />
+                </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                <FloatLabel>
                   <label>Last Name</label>
                   <InputText name="last_name" value={patientInfo.last_name} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                <FloatLabel>
                   <label>Patient ID</label>
                   <InputNumber name="patient_id" value={patientInfo.patient_id} onValueChange={handleInputChange} required useGrouping={false} />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Casualty Event</label>
                   <InputText name="casualty_event" value={patientInfo.casualty_event} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
                 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Requirements</label>
                   <InputText name="requirements" value={patientInfo.requirements} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Attendants</label>
                   <InputNumber name="attendants" value={patientInfo.attendants} onValueChange={handleInputChange} min={0} max={15} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Originating MTF</label>
                   <InputText name="originating_mtf" value={patientInfo.originating_mtf} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Destination MTF</label>
                   <InputText name="destination_mtf" value={patientInfo.destination_mtf} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
   
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Primary Med Spec</label>
                   <InputText name="primary_med_spec" value={patientInfo.primary_med_spec} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Primary Diagnosis</label>
                   <InputText name="primary_diagnosis" value={patientInfo.primary_diagnosis} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
   
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Secondary Diagnosis</label>
                   <InputText name="secondary_diagnosis" value={patientInfo.secondary_diagnosis} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Other Diagnosis</label>
                   <InputText name="other_diagnosis" value={patientInfo.other_diagnosis} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>E/PS </label>
                   <InputText name="eps" value={patientInfo.eps} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>D/DS</label>
                   <InputText name="dds" value={patientInfo.dds} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>UPR </label>
                   <InputText name="upr" value={patientInfo.upr} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Passenger Age</label>
                   <InputNumber name="age" value={patientInfo.age} onValueChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Gender</label>
                   <InputText name="gender" value={patientInfo.gender} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Weight</label>
                   <InputNumber name="passenger_weight" value={patientInfo.passenger_weight} onValueChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Grade</label>
                   <InputText name="grade" value={patientInfo.grade} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
                 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Equipment</label>
                   <InputText name="equipment" value={patientInfo.equipment} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Diet Restrictions</label>
                   <InputText name="diet" value={patientInfo.diet} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
 
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Altitude Restriction</label>
                   <InputText name="max_alt" value={patientInfo.max_alt} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
   
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Spec</label>
                   <InputText name="spec" value={patientInfo.spec} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
   
                 <div className="edit-list">
+                  <FloatLabel>
                   <label>Specialty Team</label>
                   <InputText name="special_team" value={patientInfo.special_team} onChange={handleInputChange} required />
+                  </FloatLabel>
                 </div>
   
                   <div className="form-button">

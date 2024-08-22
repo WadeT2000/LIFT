@@ -3,7 +3,7 @@ import { renderRows, PersonList} from './builder.jsx';
 import { FloatLabel } from 'primereact/floatlabel';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
-import './patientTable.css';
+// import './patientTable.css';
 import './load.css';
 
 
@@ -19,8 +19,7 @@ function Load() {
   const [patients, setPatients] = useState([]);
   const location = useLocation();
   const [sortedStops, setSortedStops] = useState([]);
-  const selectedPlane = location.state?.selectedPlane
-  const [plane, setPlane] = useState(selectedPlane); 
+  const plane = location.state?.selectedPlane 
   const [occupiedSeats, setOccupiedSeats] = useState({});
   const [attendants, setAttendants] = useState([])
   const { autoAssignPatients, loading } = useAutoAssign();
@@ -31,23 +30,39 @@ function Load() {
   useEffect(() => {
     fetch('http://localhost:8080/patientsmission1')
       .then(response => response.json())
-      .then(data => setPatients(data)) // Correctly stores patient data
+      .then(data => setPatients(data))
       .catch(error => console.error('Error fetching patients:', error));
   }, []);
 
   useEffect(() => {
     fetch('http://localhost:8080/loadattendants')
       .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        setAttendants(data)
-      })
+      .then(data => setAttendants(data))
       .catch(error => console.error('Error fetching attendants:', error));
   }, []);
 
   const handleUpdateStops = (stops) => {
+    const reversedStops = [...stops].reverse();
     setSortedStops(stops); 
+    const sortedPatients = [...patients].sort((a, b) => {
+      const indexA = reversedStops.indexOf(a.dds);
+      const indexB = reversedStops.indexOf(b.dds);
+      return indexA - indexB;
+    });
+    const sortedAttendants = [...attendants].sort((a, b) => {
+      const patientA = sortedPatients.find(patient => patient.id === a.patient_id);
+      const patientB = sortedPatients.find(patient => patient.id === b.patient_id);
+      return sortedPatients.indexOf(patientA) - sortedPatients.indexOf(patientB);
+    });
+    setPatients(sortedPatients); 
+    setAttendants(sortedAttendants);
   };
+
+  useEffect(() => {
+    if (sortedStops.length > 0) {
+      handleUpdateStops(sortedStops);
+    }
+  }, [sortedStops]);
 
 
   const movePatient = (patientId, toSlot) => {
@@ -92,7 +107,6 @@ function Load() {
     const result = autoAssignPatients();
     if (result) {
       setOccupiedSeats(result.newOccupiedSeats);
-      // console.log("Occupied Seats:", result.newOccupiedSeats);
     }
   };
 
@@ -126,13 +140,6 @@ function Load() {
             console.error('Error updating LoadPlan:', error);
         }
     };
-
-useEffect(()=>{
-  // console.log("Seating", occupiedSeats)
-  // console.log("Stops", sortedStops)
-  console.log("LP name", loadPlanInfo)
-}, [ loadPlanInfo])
-
 
 const validateFields = () => {
   for (const key in loadPlanInfo) {
@@ -170,13 +177,14 @@ const handleAutoClear = () => {
   return (
     <div className="load-container">
       <button className='Back-bttn' onClick={handleClick}>Home</button>
-      <div className="stops">
-        <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
-        <button className='auto-assign-btn' onClick={handleAutoClear}>Clear</button>
-        <StopsInOrder onUpdateStops={handleUpdateStops} />
-      </div>
-      <Card title={`Save Your Load Plan`} className="card">
-              <form className="form-grid" onSubmit={handleAllSubmit}>
+      <div className='topboxesload'>
+        <div className="stops">
+          <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>
+          <button className='auto-assign-btn' onClick={handleAutoClear}>Clear</button>
+          <StopsInOrder onUpdateStops={handleUpdateStops} />
+        </div>
+        <Card title={`Save Your Load Plan`} className="load-card">
+              <form className="form-grid1" onSubmit={handleAllSubmit}>
                 <div className="edit-list">
                   <FloatLabel>
                     <label>Load Plan Name</label>
@@ -184,10 +192,11 @@ const handleAutoClear = () => {
                   </FloatLabel>
                 </div>
                 <div className="form-button">
-                    <Button label="Save" icon="pi pi-check" type="submit" className="p-button-success" />
+                    <Button label="Save" icon="pi pi-check" type="submit" className="p-button-success meow-button" />
                 </div>
               </form>
-      </Card>
+        </Card>
+      </div>
       <div className="main-content">
         <div className="airplane-section">
           {renderRows(plane, patients, attendants, occupiedSeats, movePatient, moveAttendant)}
@@ -196,14 +205,14 @@ const handleAutoClear = () => {
           <PersonList
             people={patients.filter(p => !Object.values(occupiedSeats).includes(p.patient_id))}
             movePatient={movePatient}
-            isAttendantList={false} // Specifies this is the Patient List
+            isAttendantList={false}
           />
         </div>
         <div className="person-list">
           <PersonList
             people={attendants.filter(a => !Object.values(occupiedSeats).includes(a.id))}
-            moveAttendant={moveAttendant} // Change this line
-            isAttendantList={true} // Specifies this is the Attendant List
+            moveAttendant={moveAttendant}
+            isAttendantList={true}
           />
         </div>
 

@@ -6,7 +6,7 @@ import { RadioButton } from 'primereact/radiobutton';
 import DarkModeToggle from '../DarkMode/DarkModeToggle';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import '../Patient/PatientEdit.css';
+import './Aircraft.css';
 
 function PreviewAmbulatory({ length, location }) {
     return (
@@ -95,7 +95,7 @@ export default function AircraftList() {
     }
 
     return (
-        <div className="container">
+        <div className="aircraft-container">
             <div className="card">
                 <div className="darkmode-container">
                     <DarkModeToggle />

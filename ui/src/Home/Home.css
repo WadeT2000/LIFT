@@ -236,6 +236,25 @@ ul {
   border-radius: 8px;
 }
 
+button.logout-button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #a00505;
+  color: #e7e4e4;
+  cursor: pointer;
+  position: absolute;
+  top: 3px;
+  right: 30px;
+
+}
+
+button.logout-button:hover {
+  background-color: #db1111;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
 .preview-ambulatory.la,
 .preview-litter.la {
   grid-area: la;
@@ -267,6 +286,7 @@ ul {
   color: #AA0000;
 }
 
+
 @media (max-width: 768px) {
   .aircraft-dropdown {
     width: 100%;
@@ -282,3 +302,34 @@ ul {
       "ra";
   }
 }
+
+.loadplanbox {
+  max-width: 420px; 
+  margin: 0 auto;
+}
+
+.loadplanbox .p-listbox-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+   
+}
+
+.loadplanbox .p-listbox-item div {
+  flex: 1;  
+  justify-content: left;
+  margin-right: 20px;
+}
+
+.loadplanbox .p-listbox-item .p-radiobutton {
+  margin-left: 250px; 
+}
+
+.aircraftselectbox  .p-listbox-item .p-radiobutton {
+  max-width: 400px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 430px; 
+}
+

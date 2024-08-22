@@ -89,23 +89,37 @@ export default function HomePage() {
   
     function aircraftoptions() {
       return (
+      <div>
         <div>
-          
-          <select
-            className="aircraft-dropdown"
+          <ListBox
             value={selectedAircraft}
+            options={plane.map(aircraft => ({
+              label: (
+                <div className="aircraft-item">
+                  <span>{aircraft.ac_name}</span>
+                  <RadioButton
+                    value={aircraft.ac_name}
+                    checked={selectedAircraft === aircraft.ac_name}
+                    onChange={handleAircraftChange}
+                  />
+                </div>
+              ),
+              value: aircraft.ac_name,
+              }))}
             onChange={handleAircraftChange}
-          >
-            <option value="" disabled>Select an Aircraft</option>
-            {plane.map(aircraft => (
-              <option key={aircraft.ac_name} value={aircraft.ac_name}>
-                {aircraft.ac_name}
-              </option>
-            ))}
-          </select>
-          <Button onClick={() => navigate('/AircraftList') }>View Aircraft List</Button> 
+            className="listbox"
+          />
+        </div>
+        <div className="form-button">
+          <Button 
+            label='Select this aircraft' 
+            icon="pi pi-pencil" 
+            className="p-button-warning" 
+            onClick={() => navigate('/lp', {state: {selectedPlane: planeData}})} 
+            disabled={selectedAircraft  === ''}
+          /> 
+        </div>
           {planeData ? (<>
-              <Button onClick={() => navigate('/lp', {state: {selectedPlane: planeData}}) }>Select this aircraft</Button> 
             <div className="airplane-preview">
               <div className="preview-ambulatory la">
                 <PreviewAmbulatory length={planeData.ambulatory_left} location="LA" />
@@ -120,10 +134,11 @@ export default function HomePage() {
                 <PreviewAmbulatory length={planeData.ambulatory_right} location="RA" />
                 </div>
             </div>
-          </>) : null}
-        </div>
-      );
-    }
+          </>) : null
+          }
+      </div>
+    );
+  }
 
     async function deleteLoadPlan(loadplanid) {
       try {
@@ -149,8 +164,7 @@ export default function HomePage() {
           <div className="patientbox">
             <div className="patientselectbox">
               <h2>Patient List</h2>
-              <p>Mission 1</p>
-              <Button onClick={() => navigate('/PatientList')}>Edit Patients</Button>
+              <Button onClick={() => navigate('/PatientList')}>View Patients List</Button>
             </div>
             <div className="patientpreview">
               {showpatientpreview()}
@@ -159,6 +173,7 @@ export default function HomePage() {
           <div className="aircraftbox">
             <div className="aircraftselectbox">
               <h2>Aircraft List</h2>
+              <Button onClick={() => navigate('/AircraftList') }>View Aircraft List</Button> 
               {aircraftoptions()}
             </div>
           </div>

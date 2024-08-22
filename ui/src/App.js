@@ -69,21 +69,17 @@ function App() {
                 <Routes>
                   <Route path="/" element={<LoginPage />} />
                   <Route path="/registration" element={<Register />} />
-                  <Route path='/home' element={<HomePage />} />
-                  {/* <Route path="/home" element={auth ? <HomePage /> : <Navigate to='/' />} /> */}
+                  <Route path='/home' element={auth ? <HomePage /> : <Navigate to='/' />} />
                   <Route path="/logout" element={<Logout />} />
-                  <Route path="/PatientList" element={<PatientList />} />
-                  <Route path="/PatientAddPage" element={<AddPatientPage />} />
-                  <Route path="/AttendantEdit/:attendantid" element={<AttendantEdit />} />
-                  <Route path='/AircraftList' element={<AircraftList/>}/>
-                  <Route path='/AircraftEdit/:aircraftid' element={<AircraftEdit/>}/>
-                  <Route path='/AircraftCreate' element={<AircraftCreate/>}/>
-                  <Route path="/lp" element={<Load />} />
-                  <Route path='/LoadPlanView/:lpId' element={<ViewLoadPlan/>}/>
-                  {/* Will Delete */}
-                  <Route path='/table' element={<PatientTable />} />
-                <Route path="/PatientEdit/:patientid" element={<PatientEdit />} />
-                {/* <Route path="/Stops" element={<StopsInOrder />} /> */}
+                  <Route path="/PatientList" element={auth ? <PatientList /> : <Navigate to='/' />} />
+                  <Route path="/PatientAddPage" element={auth ? <AddPatientPage /> : <Navigate to='/' />} />
+                  <Route path="/AttendantEdit/:attendantid" element={auth ? <AttendantEdit /> : <Navigate to='/' />} />
+                  <Route path='/AircraftList' element={auth ? <AircraftList/> : <Navigate to='/' />}/>
+                  <Route path='/AircraftEdit/:aircraftid' element={auth ? <AircraftEdit/> : <Navigate to='/' />}/>
+                  <Route path='/AircraftCreate' element={auth ? <AircraftCreate/> : <Navigate to='/' />}/>
+                  <Route path="/lp" element={auth ? <Load /> : <Navigate to='/' />} />
+                  <Route path='/LoadPlanView/:lpId' element={auth ? <ViewLoadPlan/> : <Navigate to='/' />}/>
+                <Route path="/PatientEdit/:patientid" element={auth ? <PatientEdit /> : <Navigate to='/' />} />
               </Routes>
             </AuthContext.Provider>
           </Router>

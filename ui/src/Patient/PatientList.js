@@ -138,7 +138,6 @@ export default function PatientList() {
               <DarkModeToggle />
             </div>
             <Toast ref={toast} />
-      
             <div className="form-button">
               <FileUpload
                 mode="basic"
@@ -153,6 +152,11 @@ export default function PatientList() {
             </div>
       
             <div className="form-button">
+            <Button
+                label="Home"
+                onClick={() => navigate('/home')}
+                className="p-button-success"
+              />
               <Button
                 label="Add Single Patient"
                 icon="pi pi-plus"

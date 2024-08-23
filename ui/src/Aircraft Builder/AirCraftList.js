@@ -102,6 +102,11 @@ export default function AircraftList() {
                 </div>
 
                 <div className="form-button">
+                <Button
+                        label="Home"
+                        onClick={() => navigate('/home')}
+                        className="p-button-success"
+                    />
                     <Button
                         label="Add Aircraft"
                         icon="pi pi-plus"

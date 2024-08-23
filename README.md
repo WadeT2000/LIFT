@@ -1,17 +1,45 @@
-# This is my Docker-Compose template
+# L.I.F.T (Lifesaving Immediate Flight Transport)
 
-- Under docker-compose.yaml change my_database to the name of the database you want to create
-    Line 10 - POSTGRES_DB=my_database
-    Line 35 - DB_CONNECTION_STRING=postgresql://postgres:docker@db:5432/my_database 
-    (Save the document)
-      
-- In ./api/.env change my_database to the name of the database you want to create as well.
-      - DB_CONNECTION_STRING=postgresql://postgres:docker@db:5432/my_database
+![Excalidraw Diagram](https://excalidraw.com/#room=0a969a71b32ff93a144d,w3M0_P5VNehwf4HVj87d-w)
 
-- All other ports and DockerFiles should be configured for 3000:3000 for the ui(frontend) and 8080:8080 for the api(backend). The database will be hosted on the default 5432:5432
+![Trello Board](https://trello.com/b/ndC2NooN)
 
-# First step before running
-    
+## Overview
+
+L.I.F.T (Lifesaving Immediate Flight Transport) is a robust and responsive web application designed to manage and streamline aeromedical evacuation missions. Built using a modern tech stack, it facilitates the planning and execution of critical patient transport operations.
+
+This application is containerized using Docker Compose, ensuring a consistent development and deployment environment. The front-end is built with React, styled using PrimeReact for a modern and user-friendly interface. Authentication and session management are implemented to provide secure access and maintain user preferences across sessions, including light and dark mode themes.
+
+## Features
+
+- **User Authentication:** Secure login with username and password using bcrypt for password hashing.
+- **Session Management:** Session cookies maintain state and theme preferences (light/dark mode) across app pages.
+- **Responsive Design:** Fully responsive for use on mobile devices, tablets, and desktops. Supports both cursor and touchscreen interactions.
+- **Dynamic Data Presentation:** Most pages use cards that adjust size based on the content, ensuring optimal data display.
+- **Mission Management:** Access and manage patient, attendant, and aircraft information for current missions. 
+- **Auto-Assign Triage System:**  Prioritize patients based on the urgency of care needs.
+- **Data Export:** Capability to export mission data to CSV format for reporting and documentation.
+- **Editable Mission Details:** Users can edit patient and attendant information, create new missions, and change aircraft platforms.
+
+## Getting Started
+
+### Prerequisites
+
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [Node.js](https://nodejs.org/en/)
+- [npm](https://www.npmjs.com/get-npm)
+
+# Installation
+    1. Fork and Clone the repository:
+        Fork https://github.com/WadeT2000/LIFT
+        ```bash
+        git clone https://github.com/WadeT2000/LIFT.git
+
+    2. Navigate to the project directory:
+        ```bash
+        cd LIFT
+
+
     Open docker-desktop in the background
         
         (Windows Users)
@@ -186,31 +214,44 @@ Do not go to a step base off of the error code. Read the error and the potential
 
                     
 
-# The application should be up and running
+##   Frontend Endpoints
 
-    Your basic testing application should be running
-        localhost:3000/ should display 
-            - Testing
-        localhost:8080/ should display
-                - My API is up and running!
-            As well as and end point
-        localhost:8080/testingtable
-                - [{"id":1,"name":"rowValue1"},{"id":2,"name":"rowValue2"},{"id":3,"name":"rowValue3"}]
+The L.I.F.T. application routes are managed using React Router. Below are the primary routes:
 
+* /: Directs to the LoginPage.
+* /home: Redirects to the HomePage if authenticated, otherwise back to LoginPage.
+* /logout: Logs out the user.
+* /PatientList: Displays the list of patients associated with a mission.
 
+## Backend Endpoints
 
-# Navigating docker-compose
+The L.I.F.T. API is built using Express.js with Knex.js as the query builder for database operations. Below are the key API endpoints:
 
-    In the teminal
+* GET /: Health check endpoint to confirm API is up and running.
+* GET /users: Retrieve all user information from the database.
+* GET /testingtable: Fetch data from a test table for validation and testing purposes.
+* GET /patientsmission1: Retrieve patient information for mission 1.
+* GET /attendantsmission1: Retrieve attendant information for mission 1.
+* GET /aircraft: Retrieve aircraft information.
 
-    - Press L-ctrl + C
-    - ` docker-compose down `
+## Industry Standards and Best Practices
 
-    From here you can build your Frontend(ui) and backend(api)
-    Follow the Readme's for each directory to build your database and react-app
+The L.I.F.T. app adheres to the following industry standards to ensure robust and maintainable code:
 
-Once you have completed your database run ` docker-compose up --build `
-You can work on your backend endpoints in api/src/app.js and it will show your changes at each localhost:8080.
-You can work on your frontend ui/src and it will show your changes at each localhost:3000.
+**Security**: User authentication with bcrypt for secure password storage. Sensitive information is not exposed through the API.
+**Containerization**: Docker Compose is used to manage dependencies and ensure consistent environments across different stages of development and deployment.
+**Responsive Design**: The app is optimized for various devices, ensuring accessibility and usability across platforms.
+**API Design**: RESTful principles guide the API design, with clear and predictable routes for data access.
+**Version Control**: Git is used for version control, with branches for feature development and bug fixes.
+**Continuous Integration**: A CI/CD pipeline ensures that changes are tested and deployed consistently.
+Usage
+**Login**: Users must log in to access the app functionalities.
+**Navigation**: After login, the HomePage provides an overview of current missions, including patients, attendants, and aircraft.
+**Data Interaction**: Users can view, edit, and manage mission-related data, add new missions, and export information.
+**Logout**: Securely log out to end the session.
 
-    (Keep in mind and changes to the actual database you will need to ` docker-compose down ` and ` docker-compose up --build ` to see these new changes)
+## Contribution
+Contributions are welcome! Please fork the repository and submit a pull request for review.
+
+## License
+This project is licensed under the MIT License.

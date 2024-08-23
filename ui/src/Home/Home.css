@@ -142,10 +142,8 @@ html {
   text-align: center;
   width: 100%;
   text-align: left;
-  border: 2px solid #d1d5db;
   border-radius: 10px;
   padding-bottom: 20px;
-  background-color: #333;
   width: 45%;
 }
 
@@ -250,8 +248,27 @@ button.logout-button {
 
 }
 
+
 button.logout-button:hover {
   background-color: #db1111;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+button.previous-page-button {
+  padding: 10px 20px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #e7e4e4;
+  cursor: pointer;
+  position: absolute;
+  top: 3px;
+  left: 30px;
+}
+
+button.previous-page-button:hover {
+  background-color: #0056b3;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -310,9 +327,8 @@ button.logout-button:hover {
 
 .loadplanbox .p-listbox-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-   
+  justify-content: space-evenly;
 }
 
 .loadplanbox .p-listbox-item div {
@@ -325,11 +341,25 @@ button.logout-button:hover {
   margin-left: 250px; 
 }
 
+
 .aircraftselectbox  .p-listbox-item .p-radiobutton {
-  max-width: 400px; 
+  /* max-width: 400px;  */
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   margin-left: 430px; 
 }
 
+.aircraft-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dark-mode .aircraft-item{
+  color: white;
+}
+
+.aircraft-button {
+  display: flex;
+  justify-content: space-around;
+}

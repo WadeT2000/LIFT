@@ -29,7 +29,11 @@ import { DarkModeProvider } from './DarkMode/DarkModeContext'
 function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
-  return(<>
+  return(
+  <>
+    {location.pathname !== '/' && location.pathname !== '/registration' && location.pathname !== '/home' && (
+      <button className="previous-page-button" onClick={() => navigate(-1)}>Previous Page</button>
+    )}
     {location.pathname !== '/' && location.pathname !== '/registration' && (
       <button className="logout-button" onClick={() => navigate('/logout')}>Log out</button>
     )}

@@ -137,12 +137,6 @@ export default function PatientList() {
             <div className="darkmode-container">
               <DarkModeToggle />
             </div>
-            <Button
-                label="Back"
-                icon="pi pi-arrow-left"
-                onClick={() => navigate('/home')}
-                className="p-button-secondary"
-              />
             <Toast ref={toast} />
       
             <div className="form-button">

@@ -101,6 +101,7 @@ export default function HomePage() {
                     value={aircraft.ac_name}
                     checked={selectedAircraft === aircraft.ac_name}
                     onChange={handleAircraftChange}
+                    className='aircraft-button'
                   />
                 </div>
               ),

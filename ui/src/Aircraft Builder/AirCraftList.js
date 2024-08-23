@@ -147,12 +147,6 @@ export default function AircraftList() {
                         onClick={() => deleteAircraft(selectedAircraft)}
                         disabled={selectedAircraft === null}
                     />
-                    <Button
-                        label="Back"
-                        icon="pi pi-arrow-left"
-                        onClick={() => navigate('/home')}
-                        className="p-button-secondary"
-                    />
                 </div>
                 {aircraftoptions()}
             </div>

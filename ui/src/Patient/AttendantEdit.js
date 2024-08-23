@@ -86,12 +86,6 @@ export default function AttendantEdit() {
     return (
         <div className="container">
             <Card title={`${attendant.first_name} ${attendant.last_name}'s Info`} className="card">
-            <Button
-                label="Back"
-                icon="pi pi-arrow-left"
-                onClick={() => navigate('/PatientList')}
-                className="p-button-secondary"
-              />
                 <div className="darkmode-container">
                     <DarkModeToggle />
                 </div>

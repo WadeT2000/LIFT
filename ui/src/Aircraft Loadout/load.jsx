@@ -99,10 +99,6 @@ function Load() {
     });
   };
 
-  const handleClick = () => {
-    navigate('/home');
-  }
-
   const handleAutoAssign = () => {
     const result = autoAssignPatients();
     if (result) {
@@ -176,7 +172,6 @@ const handleAutoClear = () => {
 
   return (
     <div className="load-container">
-      <button className='Back-bttn' onClick={handleClick}>Home</button>
       <div className='topboxesload'>
         <div className="stops">
           <button className="auto-assign-btn" onClick={handleAutoAssign}>Auto Assign</button>

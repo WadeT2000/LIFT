@@ -48,7 +48,7 @@ app.post("/verify", async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    res.status(200).send('My API is up and running! Endpoints are /users, /patients<mission#>, /attendants<mission#>, /aircrafts')
+    res.status(200).send('My API is up and running! Endpoints are /users, /patientsmission1, /attendantsmission1, /aircrafts, /loadplans')
 })
 
 app.get('/users', (req, res) => {
@@ -522,121 +522,5 @@ app.put('/lpupdate/:id', async (req, res) => {
 app.post('/updatepatients', (req, res) => {
     console.log(req.body)
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // After this line will be the route to the seating saver
-
-
-// app.get('/patient-seatings', async (req, res) => {
-//     try {
-//       const seatings = await knex('patient_seatings').select('*');
-//       res.json(seatings);
-//     } catch (error) {
-//       res.status(500).json({ error: 'Could not retrieve patient seatings' });
-//     }
-//   });
-  
-//   app.post('/patient-seatings', async (req, res) => {
-//     const { patient_id, seat_type, seat_location } = req.body;
-//     try {
-//       const [id] = await knex('patient_seatings').insert({
-//         patient_id,
-//         seat_type,
-//         seat_location
-//       }).returning('id');
-//       res.status(201).json({ id, message: 'Patient seating added successfully' });
-//     } catch (error) {
-//       res.status(500).json({ error: 'Could not add patient seating' });
-//     }
-//   });
-  
-//   app.put('/patient-seatings/:id', async (req, res) => {
-//     const { id } = req.params;
-//     const { patient_id, seat_type, seat_location } = req.body;
-//     try {
-//       await knex('patient_seatings').where({ id }).update({
-//         patient_id,
-//         seat_type,
-//         seat_location
-//       });
-//       res.json({ message: 'Patient seating updated successfully' });
-//     } catch (error) {
-//       res.status(500).json({ error: 'Could not update patient seating' });
-//     }
-//   });
-  
-//   app.delete('/patient-seatings/:id', async (req, res) => {
-//     const { id } = req.params;
-//     try {
-//       await knex('patient_seatings').where({ id }).del();
-//       res.json({ message: 'Patient seating deleted successfully' });
-//     } catch (error) {
-//       res.status(500).json({ error: 'Could not delete patient seating' });
-//     }
-//   });
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.listen(port, () => console.log(`Express server listening on port ${port}`))
